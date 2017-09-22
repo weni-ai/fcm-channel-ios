@@ -1,0 +1,16 @@
+PODS:
+  - fcm-channel-ios (0.1.0)
+
+DEPENDENCIES:
+  - fcm-channel-ios (from `../`)
+
+EXTERNAL SOURCES:
+  fcm-channel-ios:
+    :path: ../
+
+SPEC CHECKSUMS:
+  fcm-channel-ios: 4342dfece4fb5503c08c3ec00316d4e50a92330d
+
+PODFILE CHECKSUM: 32c98040672c0bb53f7dd1469fbace192f382298
+
+COCOAPODS: 1.3.1

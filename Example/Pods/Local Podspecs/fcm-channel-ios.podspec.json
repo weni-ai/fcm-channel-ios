@@ -1,0 +1,22 @@
+{
+  "name": "fcm-channel-ios",
+  "version": "0.1.0",
+  "summary": "A short description of fcm-channel-ios.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/rubenspessoa/fcm-channel-ios",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "rubenspessoa": "pessoadebarros@gmail.com"
+  },
+  "source": {
+    "git": "https://github.com/rubenspessoa/fcm-channel-ios.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "fcm-channel-ios/Classes/**/*"
+}
