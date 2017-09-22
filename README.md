@@ -22,10 +22,6 @@ it, simply add the following line to your Podfile:
 pod 'fcm-channel-ios'
 ```
 
-## Author
-
-rubenspessoa, pessoadebarros@gmail.com
-
 ## License
 
 fcm-channel-ios is available under the AGPL-3.0 license. See the LICENSE file for more info.
