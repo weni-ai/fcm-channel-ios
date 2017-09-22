@@ -6,6 +6,7 @@ target 'fcm-channel-ios_Example' do
   target 'fcm-channel-ios_Tests' do
     inherit! :search_paths
 
-    
+    pod 'ISScrollViewPageSwift', :git => 'https://github.com/ilhasoft/ISScrollViewPageSwift', :branch => 'master'
+
   end
 end

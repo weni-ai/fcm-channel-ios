@@ -33,30 +33,30 @@
 		0467CE295279D3C87F8BCD2E5E399F7F /* Pods-fcm-channel-ios_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-fcm-channel-ios_Tests-dummy.m"; sourceTree = "<group>"; };
 		105D9FA481AF08477696F929909CB145 /* Pods-fcm-channel-ios_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-fcm-channel-ios_Tests-umbrella.h"; sourceTree = "<group>"; };
 		12C514375F389C98C14E5BE49FBD57BC /* fcm-channel-ios-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "fcm-channel-ios-dummy.m"; sourceTree = "<group>"; };
-		19D39165F632EF005443756C9ED7952F /* Pods-fcm-channel-ios_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-fcm-channel-ios_Example.modulemap"; sourceTree = "<group>"; };
+		19D39165F632EF005443756C9ED7952F /* Pods-fcm-channel-ios_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-fcm-channel-ios_Example.modulemap"; sourceTree = "<group>"; };
 		1C1C5905A2795A15A5F12B97B0E2D76F /* Pods-fcm-channel-ios_Tests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-fcm-channel-ios_Tests-frameworks.sh"; sourceTree = "<group>"; };
 		2D877BA11EE9F3FE5EFFB2BC04E38694 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3AA1DB464516044D41FF8B247876B81A /* Pods_fcm_channel_ios_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_fcm_channel_ios_Example.framework; path = "Pods-fcm-channel-ios_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3AA1DB464516044D41FF8B247876B81A /* Pods_fcm_channel_ios_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_fcm_channel_ios_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3AB3B293BCFEE51DD8EC1471B574D496 /* Pods-fcm-channel-ios_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-fcm-channel-ios_Example-frameworks.sh"; sourceTree = "<group>"; };
 		54445C4AA25234C1409302B59E70C480 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5EE4F2F18D0104701C3694CE9EDAC39F /* Pods_fcm_channel_ios_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_fcm_channel_ios_Tests.framework; path = "Pods-fcm-channel-ios_Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5EE4F2F18D0104701C3694CE9EDAC39F /* Pods_fcm_channel_ios_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_fcm_channel_ios_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		61296241EECE276713F88F42717030D3 /* Pods-fcm-channel-ios_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-fcm-channel-ios_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		6485FAA639C3614992EA05A1CC42F329 /* fcm-channel-ios-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "fcm-channel-ios-umbrella.h"; sourceTree = "<group>"; };
 		6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		77347D74FBBC2F93B20746BC33B58778 /* fcm_channel_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = fcm_channel_ios.framework; path = "fcm-channel-ios.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		77347D74FBBC2F93B20746BC33B58778 /* fcm_channel_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = fcm_channel_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F24B79E9B4A55A6AECB8516DD4526AE /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8BFB7D0E6FE50440B87BB9CB44991A31 /* fcm-channel-ios.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "fcm-channel-ios.xcconfig"; sourceTree = "<group>"; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A08ABA1EDFCB8EF2492EE5E159FB06F3 /* Pods-fcm-channel-ios_Example-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-fcm-channel-ios_Example-resources.sh"; sourceTree = "<group>"; };
 		A17013D8CB9241B9DD6A8DEAF979F795 /* ReplaceMe.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReplaceMe.swift; path = "fcm-channel-ios/Classes/ReplaceMe.swift"; sourceTree = "<group>"; };
 		AA7991DB6510CF33C96BBC0EFC494EB8 /* Pods-fcm-channel-ios_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-fcm-channel-ios_Example-acknowledgements.plist"; sourceTree = "<group>"; };
 		AAA2321CF2183B65853003B58D96BE3F /* Pods-fcm-channel-ios_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-fcm-channel-ios_Tests.release.xcconfig"; sourceTree = "<group>"; };
-		B394D2F1BC96467894F223B407976654 /* fcm-channel-ios.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "fcm-channel-ios.modulemap"; sourceTree = "<group>"; };
+		B394D2F1BC96467894F223B407976654 /* fcm-channel-ios.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "fcm-channel-ios.modulemap"; sourceTree = "<group>"; };
 		BFC8B44CA4F28979A6ADCD44D8A9A510 /* Pods-fcm-channel-ios_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-fcm-channel-ios_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
 		C1D31428ACCF650ADF0C644D4959FE8B /* fcm-channel-ios-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "fcm-channel-ios-prefix.pch"; sourceTree = "<group>"; };
 		C42165F6D4DDC775ECEBF59E4D12E212 /* Pods-fcm-channel-ios_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-fcm-channel-ios_Example-dummy.m"; sourceTree = "<group>"; };
 		CFFECD84EAE42DB6B68B1DBB30B09510 /* Pods-fcm-channel-ios_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-fcm-channel-ios_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		D3240E9F0606D729C6A51E82BF583596 /* Pods-fcm-channel-ios_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-fcm-channel-ios_Tests.modulemap"; sourceTree = "<group>"; };
+		D3240E9F0606D729C6A51E82BF583596 /* Pods-fcm-channel-ios_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-fcm-channel-ios_Tests.modulemap"; sourceTree = "<group>"; };
 		D9D8DA77CDC089BD9AE195711844F1A4 /* Pods-fcm-channel-ios_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-fcm-channel-ios_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		EB53C078AF5D58307C8625F7072A52DB /* Pods-fcm-channel-ios_Tests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-fcm-channel-ios_Tests-resources.sh"; sourceTree = "<group>"; };
 		FAF7DFF0249BC79C8453BF590D6B997A /* Pods-fcm-channel-ios_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-fcm-channel-ios_Example-umbrella.h"; sourceTree = "<group>"; };
@@ -190,11 +190,19 @@
 		DF2C5B6D00D6BE85DACAE52130F15C7C /* fcm-channel-ios */ = {
 			isa = PBXGroup;
 			children = (
-				A17013D8CB9241B9DD6A8DEAF979F795 /* ReplaceMe.swift */,
+				EAEDA25A1F75ABC700A6CA70 /* Classes */,
 				7A8C7226770728957A9108327CF5A13E /* Support Files */,
 			);
 			name = "fcm-channel-ios";
 			path = ../..;
+			sourceTree = "<group>";
+		};
+		EAEDA25A1F75ABC700A6CA70 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				A17013D8CB9241B9DD6A8DEAF979F795 /* ReplaceMe.swift */,
+			);
+			name = Classes;
 			sourceTree = "<group>";
 		};
 		F21D2E3EF3F1A9C28DE9C66B0F54ED55 /* Targets Support Files */ = {

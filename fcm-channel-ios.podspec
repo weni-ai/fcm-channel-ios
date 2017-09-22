@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
   s.name             = 'fcm-channel-ios'
   s.version          = '0.1.0'
-  s.summary          = 'A short description of fcm-channel-ios.'
+  s.summary          = 'FCM Channel iOS is a client library for Push platform.'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -18,17 +18,17 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+FCM Channel iOS is a client library for Push platform that can be used inside iOS apps to enable users receive and send messages through Firebase Cloud Messaging channel.
                        DESC
 
-  s.homepage         = 'https://github.com/rubenspessoa/fcm-channel-ios'
+  s.homepage         = 'https://github.com/push-flow/fcm-channel-ios'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
-  s.license          = { :type => 'MIT', :file => 'LICENSE' }
+  s.license          = { :type => 'AGPL-3.0', :file => 'LICENSE' }
   s.author           = { 'rubenspessoa' => 'pessoadebarros@gmail.com' }
-  s.source           = { :git => 'https://github.com/rubenspessoa/fcm-channel-ios.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/push-flow/fcm-channel-ios.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '8.0'
+  s.ios.deployment_target = '9.0'
 
   s.source_files = 'fcm-channel-ios/Classes/**/*'
   
@@ -37,6 +37,11 @@ TODO: Add long description of the pod here.
   # }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+  s.frameworks = 'UIKit'
+  s.dependency 'AlamofireObjectMapper'
+  s.dependency 'Alamofire'
+  s.dependency 'MDHTMLLabel'
+  # s.dependency 'ISScrollViewPageSwift', :git => 'https://github.com/ilhasoft/ISScrollViewP$
+  s.dependency 'MBProgressHUD'
+  s.dependency 'TPKeyboardAvoiding'
 end
