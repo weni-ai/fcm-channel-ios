@@ -29,7 +29,7 @@
 
 /* Begin PBXFileReference section */
 		208CA89B7E29964998B2F170 /* Pods-fcm-channel-ios_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fcm-channel-ios_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-fcm-channel-ios_Example/Pods-fcm-channel-ios_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		3470974FD9843938423F3312 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		3470974FD9843938423F3312 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		3A7D49AAD2471A958A3EF07A /* Pods-fcm-channel-ios_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fcm-channel-ios_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-fcm-channel-ios_Tests/Pods-fcm-channel-ios_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		42C25F4A36F5AF4ACE2A31BC /* Pods_fcm_channel_ios_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_fcm_channel_ios_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		58312183A6495CA1BA0377FA /* Pods_fcm_channel_ios_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_fcm_channel_ios_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -44,8 +44,8 @@
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		8387608C97BAFCBB24082E3D /* Pods-fcm-channel-ios_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fcm-channel-ios_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-fcm-channel-ios_Example/Pods-fcm-channel-ios_Example.release.xcconfig"; sourceTree = "<group>"; };
-		98D4E138E1DAD20FED8EB081 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
-		AF41517B27DA1D77E7D607C6 /* fcm-channel-ios.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = "fcm-channel-ios.podspec"; path = "../fcm-channel-ios.podspec"; sourceTree = "<group>"; };
+		98D4E138E1DAD20FED8EB081 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		AF41517B27DA1D77E7D607C6 /* fcm-channel-ios.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = "fcm-channel-ios.podspec"; path = "../fcm-channel-ios.podspec"; sourceTree = "<group>"; };
 		DA711977116341A801D523A0 /* Pods-fcm-channel-ios_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fcm-channel-ios_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-fcm-channel-ios_Tests/Pods-fcm-channel-ios_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -215,6 +215,7 @@
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = ZE9A9HAM9Z;
 						LastSwiftMigration = 0820;
 					};
 					607FACE41AFB9204008FA782 = {
@@ -505,10 +506,12 @@
 			baseConfigurationReference = 208CA89B7E29964998B2F170 /* Pods-fcm-channel-ios_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = ZE9A9HAM9Z;
 				INFOPLIST_FILE = "fcm-channel-ios/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.push-flow.fcm-channel-ios-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -519,10 +522,12 @@
 			baseConfigurationReference = 8387608C97BAFCBB24082E3D /* Pods-fcm-channel-ios_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = ZE9A9HAM9Z;
 				INFOPLIST_FILE = "fcm-channel-ios/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.push-flow.fcm-channel-ios-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};

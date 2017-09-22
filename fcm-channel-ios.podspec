@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'fcm-channel-ios'
-  s.version          = '0.1.0'
+  s.version          = '0.1.1'
   s.summary          = 'FCM Channel iOS is a client library for Push platform.'
 
 # This description is used to generate tags and improve search results.
@@ -28,7 +28,7 @@ FCM Channel iOS is a client library for Push platform that can be used inside iO
   s.source           = { :git => 'https://github.com/push-flow/fcm-channel-ios.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '9.0'
+  s.ios.deployment_target = '10.3'
 
   s.source_files = 'fcm-channel-ios/Classes/**/*'
   
@@ -40,8 +40,4 @@ FCM Channel iOS is a client library for Push platform that can be used inside iO
   s.frameworks = 'UIKit'
   s.dependency 'AlamofireObjectMapper'
   s.dependency 'Alamofire'
-  s.dependency 'MDHTMLLabel'
-  # s.dependency 'ISScrollViewPageSwift', :git => 'https://github.com/ilhasoft/ISScrollViewP$
-  s.dependency 'MBProgressHUD'
-  s.dependency 'TPKeyboardAvoiding'
 end

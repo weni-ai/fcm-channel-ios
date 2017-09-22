@@ -1,6 +1,6 @@
 import UIKit
 import XCTest
-import fcm-channel-ios
+//import fcm-channel-ios
 
 class Tests: XCTestCase {
     

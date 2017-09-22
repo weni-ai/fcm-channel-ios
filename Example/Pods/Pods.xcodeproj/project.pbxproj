@@ -10,12 +10,49 @@
 		10E5FFE218972579EF18A0B11C77C65E /* Pods-fcm-channel-ios_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 105D9FA481AF08477696F929909CB145 /* Pods-fcm-channel-ios_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4D5DD391FBF54D1CB7C4C299985B1D4E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
 		4DD93493C9BFFD6900F5A6ED5440EC6A /* Pods-fcm-channel-ios_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = FAF7DFF0249BC79C8453BF590D6B997A /* Pods-fcm-channel-ios_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6412DFBBB6E5B22AEF6596901EE67813 /* ReplaceMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = A17013D8CB9241B9DD6A8DEAF979F795 /* ReplaceMe.swift */; };
 		6BBB72A5BA5F09F7D557D510959A59BA /* Pods-fcm-channel-ios_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0467CE295279D3C87F8BCD2E5E399F7F /* Pods-fcm-channel-ios_Tests-dummy.m */; };
 		81D3792954D8BC403E2C60C21872436D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
 		83298430EEB566CF79A0A6CE75F7B5D1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
 		8A1BD855AB2372508F599784F3BF0389 /* fcm-channel-ios-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 6485FAA639C3614992EA05A1CC42F329 /* fcm-channel-ios-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C94E46973893E87F6630BF1F674FF37D /* Pods-fcm-channel-ios_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = C42165F6D4DDC775ECEBF59E4D12E212 /* Pods-fcm-channel-ios_Example-dummy.m */; };
+		EAEDA2941F75B39200A6CA70 /* ISPushSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEDA25B1F75B39100A6CA70 /* ISPushSettings.swift */; };
+		EAEDA2951F75B39200A6CA70 /* ISPushFlowManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEDA25D1F75B39200A6CA70 /* ISPushFlowManager.swift */; };
+		EAEDA2961F75B39200A6CA70 /* ISPushFlowTypeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEDA25E1F75B39200A6CA70 /* ISPushFlowTypeManager.swift */; };
+		EAEDA2971F75B39200A6CA70 /* ISRapidProManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEDA25F1F75B39200A6CA70 /* ISRapidProManager.swift */; };
+		EAEDA2981F75B39200A6CA70 /* ISPushContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEDA2611F75B39200A6CA70 /* ISPushContact.swift */; };
+		EAEDA2991F75B39200A6CA70 /* ISPushCountry.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEDA2621F75B39200A6CA70 /* ISPushCountry.swift */; };
+		EAEDA29A1F75B39200A6CA70 /* ISPushFlowAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEDA2631F75B39200A6CA70 /* ISPushFlowAction.swift */; };
+		EAEDA29B1F75B39200A6CA70 /* ISPushFlowActionSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEDA2641F75B39200A6CA70 /* ISPushFlowActionSet.swift */; };
+		EAEDA29C1F75B39200A6CA70 /* ISPushFlowDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEDA2651F75B39200A6CA70 /* ISPushFlowDefinition.swift */; };
+		EAEDA29D1F75B39200A6CA70 /* ISPushFlowMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEDA2661F75B39200A6CA70 /* ISPushFlowMetadata.swift */; };
+		EAEDA29E1F75B39200A6CA70 /* ISPushFlowRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEDA2671F75B39200A6CA70 /* ISPushFlowRule.swift */; };
+		EAEDA29F1F75B39200A6CA70 /* ISPushFlowRuleset.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEDA2681F75B39200A6CA70 /* ISPushFlowRuleset.swift */; };
+		EAEDA2A01F75B39200A6CA70 /* ISPushFlowRuleTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEDA2691F75B39200A6CA70 /* ISPushFlowRuleTest.swift */; };
+		EAEDA2A11F75B39200A6CA70 /* ISPushFlowRun.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEDA26A1F75B39200A6CA70 /* ISPushFlowRun.swift */; };
+		EAEDA2A21F75B39200A6CA70 /* ISPushFlowType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEDA26B1F75B39200A6CA70 /* ISPushFlowType.swift */; };
+		EAEDA2A31F75B39200A6CA70 /* ISPushFlowTypeValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEDA26C1F75B39200A6CA70 /* ISPushFlowTypeValidation.swift */; };
+		EAEDA2A41F75B39200A6CA70 /* ISPushMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEDA26D1F75B39200A6CA70 /* ISPushMessage.swift */; };
+		EAEDA2A51F75B39200A6CA70 /* ISPushServerDateTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEDA26E1F75B39200A6CA70 /* ISPushServerDateTime.swift */; };
+		EAEDA2A61F75B39200A6CA70 /* ISPushFlowRunResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEDA2701F75B39200A6CA70 /* ISPushFlowRunResponse.swift */; };
+		EAEDA2A71F75B39200A6CA70 /* ISPushMessagesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEDA2711F75B39200A6CA70 /* ISPushMessagesResponse.swift */; };
+		EAEDA2A81F75B39200A6CA70 /* ISPushRulesetResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEDA2721F75B39200A6CA70 /* ISPushRulesetResponse.swift */; };
+		EAEDA2A91F75B39200A6CA70 /* ISColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEDA2741F75B39200A6CA70 /* ISColorExtension.swift */; };
+		EAEDA2AA1F75B39200A6CA70 /* ISModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEDA2751F75B39200A6CA70 /* ISModalViewController.swift */; };
+		EAEDA2AB1F75B39200A6CA70 /* ISPushDateUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEDA2761F75B39200A6CA70 /* ISPushDateUtil.swift */; };
+		EAEDA2AC1F75B39200A6CA70 /* ISPushRapidProContactUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEDA2771F75B39200A6CA70 /* ISPushRapidProContactUtil.swift */; };
+		EAEDA2AD1F75B39200A6CA70 /* ISPushRapidPRODateTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEDA2781F75B39200A6CA70 /* ISPushRapidPRODateTransform.swift */; };
+		EAEDA2AE1F75B39200A6CA70 /* ISPushStringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEDA2791F75B39200A6CA70 /* ISPushStringExtension.swift */; };
+		EAEDA2AF1F75B39200A6CA70 /* NSLocale+ISO639_2.h in Headers */ = {isa = PBXBuildFile; fileRef = EAEDA27A1F75B39200A6CA70 /* NSLocale+ISO639_2.h */; };
+		EAEDA2B01F75B39200A6CA70 /* NSLocale+ISO639_2.m in Sources */ = {isa = PBXBuildFile; fileRef = EAEDA27B1F75B39200A6CA70 /* NSLocale+ISO639_2.m */; };
+		EAEDA2B11F75B39200A6CA70 /* ISPushChatMessageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEDA27F1F75B39200A6CA70 /* ISPushChatMessageViewCell.swift */; };
+		EAEDA2B21F75B39200A6CA70 /* ISPushIncomingChatMessageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEDA2801F75B39200A6CA70 /* ISPushIncomingChatMessageViewCell.swift */; };
+		EAEDA2B31F75B39200A6CA70 /* ISPushOutgoingChatMessageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEDA2821F75B39200A6CA70 /* ISPushOutgoingChatMessageViewCell.swift */; };
+		EAEDA2B41F75B39200A6CA70 /* ISPushChoiceResponseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEDA2851F75B39200A6CA70 /* ISPushChoiceResponseView.swift */; };
+		EAEDA2B51F75B39200A6CA70 /* ISPushCurrentPollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEDA2881F75B39200A6CA70 /* ISPushCurrentPollView.swift */; };
+		EAEDA2B61F75B39200A6CA70 /* ISPushOpenFieldResponseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEDA28B1F75B39200A6CA70 /* ISPushOpenFieldResponseView.swift */; };
+		EAEDA2B71F75B39200A6CA70 /* ISPushResponseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEDA28E1F75B39200A6CA70 /* ISPushResponseView.swift */; };
+		EAEDA2B81F75B39200A6CA70 /* ISPushChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEDA2901F75B39200A6CA70 /* ISPushChatViewController.swift */; };
+		EAEDA2B91F75B39200A6CA70 /* ISPushModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAEDA2921F75B39200A6CA70 /* ISPushModalViewController.swift */; };
 		FC8A68DF6CF6B609DB917CE44E436AF9 /* fcm-channel-ios-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 12C514375F389C98C14E5BE49FBD57BC /* fcm-channel-ios-dummy.m */; };
 /* End PBXBuildFile section */
 
@@ -48,7 +85,6 @@
 		8BFB7D0E6FE50440B87BB9CB44991A31 /* fcm-channel-ios.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "fcm-channel-ios.xcconfig"; sourceTree = "<group>"; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A08ABA1EDFCB8EF2492EE5E159FB06F3 /* Pods-fcm-channel-ios_Example-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-fcm-channel-ios_Example-resources.sh"; sourceTree = "<group>"; };
-		A17013D8CB9241B9DD6A8DEAF979F795 /* ReplaceMe.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReplaceMe.swift; path = "fcm-channel-ios/Classes/ReplaceMe.swift"; sourceTree = "<group>"; };
 		AA7991DB6510CF33C96BBC0EFC494EB8 /* Pods-fcm-channel-ios_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-fcm-channel-ios_Example-acknowledgements.plist"; sourceTree = "<group>"; };
 		AAA2321CF2183B65853003B58D96BE3F /* Pods-fcm-channel-ios_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-fcm-channel-ios_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		B394D2F1BC96467894F223B407976654 /* fcm-channel-ios.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "fcm-channel-ios.modulemap"; sourceTree = "<group>"; };
@@ -58,6 +94,51 @@
 		CFFECD84EAE42DB6B68B1DBB30B09510 /* Pods-fcm-channel-ios_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-fcm-channel-ios_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		D3240E9F0606D729C6A51E82BF583596 /* Pods-fcm-channel-ios_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-fcm-channel-ios_Tests.modulemap"; sourceTree = "<group>"; };
 		D9D8DA77CDC089BD9AE195711844F1A4 /* Pods-fcm-channel-ios_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-fcm-channel-ios_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		EAEDA25B1F75B39100A6CA70 /* ISPushSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ISPushSettings.swift; path = "fcm-channel-ios/Classes/ISPushSettings.swift"; sourceTree = "<group>"; };
+		EAEDA25D1F75B39200A6CA70 /* ISPushFlowManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISPushFlowManager.swift; sourceTree = "<group>"; };
+		EAEDA25E1F75B39200A6CA70 /* ISPushFlowTypeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISPushFlowTypeManager.swift; sourceTree = "<group>"; };
+		EAEDA25F1F75B39200A6CA70 /* ISRapidProManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISRapidProManager.swift; sourceTree = "<group>"; };
+		EAEDA2611F75B39200A6CA70 /* ISPushContact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISPushContact.swift; sourceTree = "<group>"; };
+		EAEDA2621F75B39200A6CA70 /* ISPushCountry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISPushCountry.swift; sourceTree = "<group>"; };
+		EAEDA2631F75B39200A6CA70 /* ISPushFlowAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISPushFlowAction.swift; sourceTree = "<group>"; };
+		EAEDA2641F75B39200A6CA70 /* ISPushFlowActionSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISPushFlowActionSet.swift; sourceTree = "<group>"; };
+		EAEDA2651F75B39200A6CA70 /* ISPushFlowDefinition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISPushFlowDefinition.swift; sourceTree = "<group>"; };
+		EAEDA2661F75B39200A6CA70 /* ISPushFlowMetadata.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISPushFlowMetadata.swift; sourceTree = "<group>"; };
+		EAEDA2671F75B39200A6CA70 /* ISPushFlowRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISPushFlowRule.swift; sourceTree = "<group>"; };
+		EAEDA2681F75B39200A6CA70 /* ISPushFlowRuleset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISPushFlowRuleset.swift; sourceTree = "<group>"; };
+		EAEDA2691F75B39200A6CA70 /* ISPushFlowRuleTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISPushFlowRuleTest.swift; sourceTree = "<group>"; };
+		EAEDA26A1F75B39200A6CA70 /* ISPushFlowRun.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISPushFlowRun.swift; sourceTree = "<group>"; };
+		EAEDA26B1F75B39200A6CA70 /* ISPushFlowType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISPushFlowType.swift; sourceTree = "<group>"; };
+		EAEDA26C1F75B39200A6CA70 /* ISPushFlowTypeValidation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISPushFlowTypeValidation.swift; sourceTree = "<group>"; };
+		EAEDA26D1F75B39200A6CA70 /* ISPushMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISPushMessage.swift; sourceTree = "<group>"; };
+		EAEDA26E1F75B39200A6CA70 /* ISPushServerDateTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISPushServerDateTime.swift; sourceTree = "<group>"; };
+		EAEDA2701F75B39200A6CA70 /* ISPushFlowRunResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISPushFlowRunResponse.swift; sourceTree = "<group>"; };
+		EAEDA2711F75B39200A6CA70 /* ISPushMessagesResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISPushMessagesResponse.swift; sourceTree = "<group>"; };
+		EAEDA2721F75B39200A6CA70 /* ISPushRulesetResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISPushRulesetResponse.swift; sourceTree = "<group>"; };
+		EAEDA2741F75B39200A6CA70 /* ISColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISColorExtension.swift; sourceTree = "<group>"; };
+		EAEDA2751F75B39200A6CA70 /* ISModalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISModalViewController.swift; sourceTree = "<group>"; };
+		EAEDA2761F75B39200A6CA70 /* ISPushDateUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISPushDateUtil.swift; sourceTree = "<group>"; };
+		EAEDA2771F75B39200A6CA70 /* ISPushRapidProContactUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISPushRapidProContactUtil.swift; sourceTree = "<group>"; };
+		EAEDA2781F75B39200A6CA70 /* ISPushRapidPRODateTransform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISPushRapidPRODateTransform.swift; sourceTree = "<group>"; };
+		EAEDA2791F75B39200A6CA70 /* ISPushStringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISPushStringExtension.swift; sourceTree = "<group>"; };
+		EAEDA27A1F75B39200A6CA70 /* NSLocale+ISO639_2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLocale+ISO639_2.h"; sourceTree = "<group>"; };
+		EAEDA27B1F75B39200A6CA70 /* NSLocale+ISO639_2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSLocale+ISO639_2.m"; sourceTree = "<group>"; };
+		EAEDA27F1F75B39200A6CA70 /* ISPushChatMessageViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISPushChatMessageViewCell.swift; sourceTree = "<group>"; };
+		EAEDA2801F75B39200A6CA70 /* ISPushIncomingChatMessageViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISPushIncomingChatMessageViewCell.swift; sourceTree = "<group>"; };
+		EAEDA2811F75B39200A6CA70 /* ISPushIncomingChatMessageViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ISPushIncomingChatMessageViewCell.xib; sourceTree = "<group>"; };
+		EAEDA2821F75B39200A6CA70 /* ISPushOutgoingChatMessageViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISPushOutgoingChatMessageViewCell.swift; sourceTree = "<group>"; };
+		EAEDA2831F75B39200A6CA70 /* ISPushOutgoingChatMessageViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ISPushOutgoingChatMessageViewCell.xib; sourceTree = "<group>"; };
+		EAEDA2851F75B39200A6CA70 /* ISPushChoiceResponseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISPushChoiceResponseView.swift; sourceTree = "<group>"; };
+		EAEDA2861F75B39200A6CA70 /* ISPushChoiceResponseView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ISPushChoiceResponseView.xib; sourceTree = "<group>"; };
+		EAEDA2881F75B39200A6CA70 /* ISPushCurrentPollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISPushCurrentPollView.swift; sourceTree = "<group>"; };
+		EAEDA2891F75B39200A6CA70 /* ISPushCurrentPollView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ISPushCurrentPollView.xib; sourceTree = "<group>"; };
+		EAEDA28B1F75B39200A6CA70 /* ISPushOpenFieldResponseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISPushOpenFieldResponseView.swift; sourceTree = "<group>"; };
+		EAEDA28C1F75B39200A6CA70 /* ISPushOpenFieldResponseView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ISPushOpenFieldResponseView.xib; sourceTree = "<group>"; };
+		EAEDA28E1F75B39200A6CA70 /* ISPushResponseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISPushResponseView.swift; sourceTree = "<group>"; };
+		EAEDA2901F75B39200A6CA70 /* ISPushChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISPushChatViewController.swift; sourceTree = "<group>"; };
+		EAEDA2911F75B39200A6CA70 /* ISPushChatViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ISPushChatViewController.xib; sourceTree = "<group>"; };
+		EAEDA2921F75B39200A6CA70 /* ISPushModalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISPushModalViewController.swift; sourceTree = "<group>"; };
+		EAEDA2931F75B39200A6CA70 /* ISPushModalViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ISPushModalViewController.xib; sourceTree = "<group>"; };
 		EB53C078AF5D58307C8625F7072A52DB /* Pods-fcm-channel-ios_Tests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-fcm-channel-ios_Tests-resources.sh"; sourceTree = "<group>"; };
 		FAF7DFF0249BC79C8453BF590D6B997A /* Pods-fcm-channel-ios_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-fcm-channel-ios_Example-umbrella.h"; sourceTree = "<group>"; };
 		FCD24966EC02FF1F2FCF0E4A279120F1 /* Pods-fcm-channel-ios_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-fcm-channel-ios_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
@@ -200,9 +281,155 @@
 		EAEDA25A1F75ABC700A6CA70 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				A17013D8CB9241B9DD6A8DEAF979F795 /* ReplaceMe.swift */,
+				EAEDA25B1F75B39100A6CA70 /* ISPushSettings.swift */,
+				EAEDA25C1F75B39100A6CA70 /* Manager */,
+				EAEDA2601F75B39200A6CA70 /* Model */,
+				EAEDA26F1F75B39200A6CA70 /* Network */,
+				EAEDA2731F75B39200A6CA70 /* Util */,
+				EAEDA27C1F75B39200A6CA70 /* View */,
+				EAEDA28F1F75B39200A6CA70 /* ViewController */,
 			);
 			name = Classes;
+			sourceTree = "<group>";
+		};
+		EAEDA25C1F75B39100A6CA70 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				EAEDA25D1F75B39200A6CA70 /* ISPushFlowManager.swift */,
+				EAEDA25E1F75B39200A6CA70 /* ISPushFlowTypeManager.swift */,
+				EAEDA25F1F75B39200A6CA70 /* ISRapidProManager.swift */,
+			);
+			name = Manager;
+			path = "fcm-channel-ios/Classes/Manager";
+			sourceTree = "<group>";
+		};
+		EAEDA2601F75B39200A6CA70 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				EAEDA2611F75B39200A6CA70 /* ISPushContact.swift */,
+				EAEDA2621F75B39200A6CA70 /* ISPushCountry.swift */,
+				EAEDA2631F75B39200A6CA70 /* ISPushFlowAction.swift */,
+				EAEDA2641F75B39200A6CA70 /* ISPushFlowActionSet.swift */,
+				EAEDA2651F75B39200A6CA70 /* ISPushFlowDefinition.swift */,
+				EAEDA2661F75B39200A6CA70 /* ISPushFlowMetadata.swift */,
+				EAEDA2671F75B39200A6CA70 /* ISPushFlowRule.swift */,
+				EAEDA2681F75B39200A6CA70 /* ISPushFlowRuleset.swift */,
+				EAEDA2691F75B39200A6CA70 /* ISPushFlowRuleTest.swift */,
+				EAEDA26A1F75B39200A6CA70 /* ISPushFlowRun.swift */,
+				EAEDA26B1F75B39200A6CA70 /* ISPushFlowType.swift */,
+				EAEDA26C1F75B39200A6CA70 /* ISPushFlowTypeValidation.swift */,
+				EAEDA26D1F75B39200A6CA70 /* ISPushMessage.swift */,
+				EAEDA26E1F75B39200A6CA70 /* ISPushServerDateTime.swift */,
+			);
+			name = Model;
+			path = "fcm-channel-ios/Classes/Model";
+			sourceTree = "<group>";
+		};
+		EAEDA26F1F75B39200A6CA70 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				EAEDA2701F75B39200A6CA70 /* ISPushFlowRunResponse.swift */,
+				EAEDA2711F75B39200A6CA70 /* ISPushMessagesResponse.swift */,
+				EAEDA2721F75B39200A6CA70 /* ISPushRulesetResponse.swift */,
+			);
+			name = Network;
+			path = "fcm-channel-ios/Classes/Network";
+			sourceTree = "<group>";
+		};
+		EAEDA2731F75B39200A6CA70 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				EAEDA2741F75B39200A6CA70 /* ISColorExtension.swift */,
+				EAEDA2751F75B39200A6CA70 /* ISModalViewController.swift */,
+				EAEDA2761F75B39200A6CA70 /* ISPushDateUtil.swift */,
+				EAEDA2771F75B39200A6CA70 /* ISPushRapidProContactUtil.swift */,
+				EAEDA2781F75B39200A6CA70 /* ISPushRapidPRODateTransform.swift */,
+				EAEDA2791F75B39200A6CA70 /* ISPushStringExtension.swift */,
+				EAEDA27A1F75B39200A6CA70 /* NSLocale+ISO639_2.h */,
+				EAEDA27B1F75B39200A6CA70 /* NSLocale+ISO639_2.m */,
+			);
+			name = Util;
+			path = "fcm-channel-ios/Classes/Util";
+			sourceTree = "<group>";
+		};
+		EAEDA27C1F75B39200A6CA70 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				EAEDA27D1F75B39200A6CA70 /* Cell */,
+				EAEDA2841F75B39200A6CA70 /* ChoiceResponse */,
+				EAEDA2871F75B39200A6CA70 /* CurrentPoll */,
+				EAEDA28A1F75B39200A6CA70 /* OpenFieldResponse */,
+				EAEDA28D1F75B39200A6CA70 /* Response */,
+			);
+			name = View;
+			path = "fcm-channel-ios/Classes/View";
+			sourceTree = "<group>";
+		};
+		EAEDA27D1F75B39200A6CA70 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				EAEDA27E1F75B39200A6CA70 /* Chat */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		EAEDA27E1F75B39200A6CA70 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				EAEDA27F1F75B39200A6CA70 /* ISPushChatMessageViewCell.swift */,
+				EAEDA2801F75B39200A6CA70 /* ISPushIncomingChatMessageViewCell.swift */,
+				EAEDA2811F75B39200A6CA70 /* ISPushIncomingChatMessageViewCell.xib */,
+				EAEDA2821F75B39200A6CA70 /* ISPushOutgoingChatMessageViewCell.swift */,
+				EAEDA2831F75B39200A6CA70 /* ISPushOutgoingChatMessageViewCell.xib */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		EAEDA2841F75B39200A6CA70 /* ChoiceResponse */ = {
+			isa = PBXGroup;
+			children = (
+				EAEDA2851F75B39200A6CA70 /* ISPushChoiceResponseView.swift */,
+				EAEDA2861F75B39200A6CA70 /* ISPushChoiceResponseView.xib */,
+			);
+			path = ChoiceResponse;
+			sourceTree = "<group>";
+		};
+		EAEDA2871F75B39200A6CA70 /* CurrentPoll */ = {
+			isa = PBXGroup;
+			children = (
+				EAEDA2881F75B39200A6CA70 /* ISPushCurrentPollView.swift */,
+				EAEDA2891F75B39200A6CA70 /* ISPushCurrentPollView.xib */,
+			);
+			path = CurrentPoll;
+			sourceTree = "<group>";
+		};
+		EAEDA28A1F75B39200A6CA70 /* OpenFieldResponse */ = {
+			isa = PBXGroup;
+			children = (
+				EAEDA28B1F75B39200A6CA70 /* ISPushOpenFieldResponseView.swift */,
+				EAEDA28C1F75B39200A6CA70 /* ISPushOpenFieldResponseView.xib */,
+			);
+			path = OpenFieldResponse;
+			sourceTree = "<group>";
+		};
+		EAEDA28D1F75B39200A6CA70 /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				EAEDA28E1F75B39200A6CA70 /* ISPushResponseView.swift */,
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
+		EAEDA28F1F75B39200A6CA70 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				EAEDA2901F75B39200A6CA70 /* ISPushChatViewController.swift */,
+				EAEDA2911F75B39200A6CA70 /* ISPushChatViewController.xib */,
+				EAEDA2921F75B39200A6CA70 /* ISPushModalViewController.swift */,
+				EAEDA2931F75B39200A6CA70 /* ISPushModalViewController.xib */,
+			);
+			name = ViewController;
+			path = "fcm-channel-ios/Classes/ViewController";
 			sourceTree = "<group>";
 		};
 		F21D2E3EF3F1A9C28DE9C66B0F54ED55 /* Targets Support Files */ = {
@@ -222,6 +449,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8A1BD855AB2372508F599784F3BF0389 /* fcm-channel-ios-umbrella.h in Headers */,
+				EAEDA2AF1F75B39200A6CA70 /* NSLocale+ISO639_2.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -337,8 +565,44 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EAEDA2B61F75B39200A6CA70 /* ISPushOpenFieldResponseView.swift in Sources */,
+				EAEDA2B71F75B39200A6CA70 /* ISPushResponseView.swift in Sources */,
+				EAEDA2A71F75B39200A6CA70 /* ISPushMessagesResponse.swift in Sources */,
+				EAEDA2B91F75B39200A6CA70 /* ISPushModalViewController.swift in Sources */,
+				EAEDA2B51F75B39200A6CA70 /* ISPushCurrentPollView.swift in Sources */,
+				EAEDA2B81F75B39200A6CA70 /* ISPushChatViewController.swift in Sources */,
+				EAEDA2AC1F75B39200A6CA70 /* ISPushRapidProContactUtil.swift in Sources */,
+				EAEDA2AA1F75B39200A6CA70 /* ISModalViewController.swift in Sources */,
+				EAEDA29A1F75B39200A6CA70 /* ISPushFlowAction.swift in Sources */,
+				EAEDA2B01F75B39200A6CA70 /* NSLocale+ISO639_2.m in Sources */,
+				EAEDA2961F75B39200A6CA70 /* ISPushFlowTypeManager.swift in Sources */,
 				FC8A68DF6CF6B609DB917CE44E436AF9 /* fcm-channel-ios-dummy.m in Sources */,
-				6412DFBBB6E5B22AEF6596901EE67813 /* ReplaceMe.swift in Sources */,
+				EAEDA2AB1F75B39200A6CA70 /* ISPushDateUtil.swift in Sources */,
+				EAEDA2971F75B39200A6CA70 /* ISRapidProManager.swift in Sources */,
+				EAEDA2A31F75B39200A6CA70 /* ISPushFlowTypeValidation.swift in Sources */,
+				EAEDA2AD1F75B39200A6CA70 /* ISPushRapidPRODateTransform.swift in Sources */,
+				EAEDA2A61F75B39200A6CA70 /* ISPushFlowRunResponse.swift in Sources */,
+				EAEDA2A21F75B39200A6CA70 /* ISPushFlowType.swift in Sources */,
+				EAEDA29B1F75B39200A6CA70 /* ISPushFlowActionSet.swift in Sources */,
+				EAEDA2A91F75B39200A6CA70 /* ISColorExtension.swift in Sources */,
+				EAEDA29C1F75B39200A6CA70 /* ISPushFlowDefinition.swift in Sources */,
+				EAEDA2A81F75B39200A6CA70 /* ISPushRulesetResponse.swift in Sources */,
+				EAEDA2951F75B39200A6CA70 /* ISPushFlowManager.swift in Sources */,
+				EAEDA2B21F75B39200A6CA70 /* ISPushIncomingChatMessageViewCell.swift in Sources */,
+				EAEDA2A51F75B39200A6CA70 /* ISPushServerDateTime.swift in Sources */,
+				EAEDA2A11F75B39200A6CA70 /* ISPushFlowRun.swift in Sources */,
+				EAEDA2AE1F75B39200A6CA70 /* ISPushStringExtension.swift in Sources */,
+				EAEDA29E1F75B39200A6CA70 /* ISPushFlowRule.swift in Sources */,
+				EAEDA2B11F75B39200A6CA70 /* ISPushChatMessageViewCell.swift in Sources */,
+				EAEDA29D1F75B39200A6CA70 /* ISPushFlowMetadata.swift in Sources */,
+				EAEDA2981F75B39200A6CA70 /* ISPushContact.swift in Sources */,
+				EAEDA2B31F75B39200A6CA70 /* ISPushOutgoingChatMessageViewCell.swift in Sources */,
+				EAEDA2991F75B39200A6CA70 /* ISPushCountry.swift in Sources */,
+				EAEDA29F1F75B39200A6CA70 /* ISPushFlowRuleset.swift in Sources */,
+				EAEDA2941F75B39200A6CA70 /* ISPushSettings.swift in Sources */,
+				EAEDA2A01F75B39200A6CA70 /* ISPushFlowRuleTest.swift in Sources */,
+				EAEDA2B41F75B39200A6CA70 /* ISPushChoiceResponseView.swift in Sources */,
+				EAEDA2A41F75B39200A6CA70 /* ISPushMessage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
