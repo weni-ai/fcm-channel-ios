@@ -1,4 +1,6 @@
-# fcm-channel-ios
+# FCM Channel iOS
+
+FCM Channel iOS is a client library for [Push](http://push.al) platform that can be used inside iOS apps to enable users receive and send messages through Firebase Cloud Messaging channel.
 
 [![CI Status](http://img.shields.io/travis/rubenspessoa/fcm-channel-ios.svg?style=flat)](https://travis-ci.org/rubenspessoa/fcm-channel-ios)
 [![Version](https://img.shields.io/cocoapods/v/fcm-channel-ios.svg?style=flat)](http://cocoapods.org/pods/fcm-channel-ios)
@@ -26,4 +28,4 @@ rubenspessoa, pessoadebarros@gmail.com
 
 ## License
 
-fcm-channel-ios is available under the MIT license. See the LICENSE file for more info.
+fcm-channel-ios is available under the AGPL-3.0 license. See the LICENSE file for more info.
