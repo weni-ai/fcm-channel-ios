@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'fcm-channel-ios_Example' do
+  pod 'fcm-channel-ios', :path => '../'
+
+  target 'fcm-channel-ios_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
