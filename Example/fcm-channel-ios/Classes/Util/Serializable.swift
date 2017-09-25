@@ -31,11 +31,9 @@ open class Serializable: NSObject {
                             break
                         }
                     }
-                }
-                
+                }       
             }
         }
-        
     }
     
     /**

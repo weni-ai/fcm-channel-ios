@@ -2,11 +2,24 @@ use_frameworks!
 
 target 'fcm-channel-ios_Example' do
   pod 'fcm-channel-ios', :path => '../'
+  
+  pod 'FBSDKLoginKit', '4.23.0'
+  pod 'FBSDKCoreKit', '4.23.0'
 
+  pod 'Firebase/Core', '4.0.4'
+  pod 'Firebase/Messaging', '4.0.4'
+  pod 'Firebase/Auth', '4.0.4'
+  pod 'Firebase/Database', '4.0.4'
+  
+  pod 'AlamofireObjectMapper', '4.1.0'
+  pod 'Alamofire', '4.5.0'
+  pod 'MDHTMLLabel', '1.0.2'
+  pod 'MBProgressHUD', '1.0.0'
+  pod 'TPKeyboardAvoiding', '1.3'
+  
+  pod 'ISScrollViewPageSwift', '1.0.0'
+  
   target 'fcm-channel-ios_Tests' do
     inherit! :search_paths
-
-    pod 'ISScrollViewPageSwift', :git => 'https://github.com/ilhasoft/ISScrollViewPageSwift', :branch => 'master'
-
   end
 end

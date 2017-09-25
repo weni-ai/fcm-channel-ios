@@ -49,10 +49,9 @@ class User: Serializable {
         if encodedData != nil {
             let user: User = User(jsonDict: NSKeyedUnarchiver.unarchiveObject(with: encodedData!) as? NSDictionary)
             return user
-        }else{
+        } else {
             return nil
         }
-        
     }
     
     static func setActiveUser(_ user: User!) {

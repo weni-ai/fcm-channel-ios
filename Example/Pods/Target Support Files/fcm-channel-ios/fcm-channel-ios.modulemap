@@ -1,6 +1,0 @@
-framework module fcm_channel_ios {
-  umbrella header "fcm-channel-ios-umbrella.h"
-
-  export *
-  module * { export * }
-}
