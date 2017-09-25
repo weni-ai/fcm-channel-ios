@@ -30,4 +30,8 @@ Carthage
 # Note: if you ignore the Pods directory, make sure to uncomment
 # `pod install` in .travis.yml
 #
-# Pods/
+Pods/
+
+# Project files to ignore
+Example/fcm-channel-ios/Supporting Files/Key-debug.plist
+Example/fcm-channel-ios/Supporting Files/FirebaseDatabaseDev-Info.plist
