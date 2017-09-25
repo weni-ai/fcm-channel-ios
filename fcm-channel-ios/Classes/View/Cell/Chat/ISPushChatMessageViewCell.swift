@@ -42,7 +42,7 @@ open class ISPushChatMessageViewCell: UITableViewCell, MDHTMLLabelDelegate {
         self.baloonView.isHidden = false
         self.lbMessage.htmlText = message.text
         
-        //self.lbUserName?.text = message.user.name
+        // self.lbUserName?.text = message.user.name
     }
 
     open func setupLayout(_ msgColor:UIColor!,bubbleColor:UIColor!,userName:String?) {

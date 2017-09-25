@@ -35,3 +35,4 @@ Pods/
 # Project files to ignore
 Example/fcm-channel-ios/Supporting Files/Key-debug.plist
 Example/fcm-channel-ios/Supporting Files/FirebaseDatabaseDev-Info.plist
+Example/fcm-channel-ios/Supporting Files/GoogleService-Info.plist

@@ -8,23 +8,21 @@
 
 import UIKit
 import Firebase
+import UserNotifications
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        if let databaseOptions = FirebaseOptions(contentsOfFile: Bundle.main.path(forResource: "FirebaseDatabaseDev-Info", ofType: "plist")!) {
-            FirebaseApp.configure(name: "database", options: databaseOptions)
-        }
-        
-        
         FirebaseApp.configure()
+//        requestPermissionForPushNotification(application)
+        Messaging.messaging().delegate = self
         
         return true
-    }
+        }
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -47,7 +45,121 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
+    
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print(error.localizedDescription)
+    }
+    
+    func requestPermissionForPushNotification(_ application:UIApplication) {
+        
+        if #available(iOS 10.0, *) {
+            let center  = UNUserNotificationCenter.current()
+            center.delegate = self
+            // set the type as sound or badge
+            center.requestAuthorization(options: [.sound,.alert,.badge], completionHandler: { (success, error) in
+                if let error = error {
+                    print(error.localizedDescription)
+                } else {
+                    print("success: \(success)")
+                    application.registerForRemoteNotifications()
+                }
+            })
+        } else {
+            let types:UIUserNotificationType = ([.alert, .badge, .sound])
+            let settings:UIUserNotificationSettings = UIUserNotificationSettings(types: types, categories: nil)
+            application.registerUserNotificationSettings(settings)
+            application.registerForRemoteNotifications()
+        }
+    }
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        
+//        var debugMode = true
+//        
+//        Messaging.messaging().apnsToken = deviceToken
+//        
+//        if let fcmToken = PushManager.getFCMToken(){
+//            
+//            URUserManager.updatePushIdentity(user, completion: { success in
+//                guard success else { return }
+//                URGCMManager.onFCMRegistered(user: user)
+//            })
+//        }
+        
+    }
+    
+    //MARK: Application Methods
+    
+    @available(iOS 10.0, *)
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        //Enter on touch notification
+        let userInfo = response.notification.request.content.userInfo
+        
+        if let _ = User.activeUser() {
+            openNotification(userInfo)
+        }
+    }
+    
+    
+    @available(iOS 10.0, *)
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        let userInfo = notification.request.content.userInfo
+        if let _ = User.activeUser() {
+            openNotification(userInfo)
+        }
+    }
+    
+    func openNotification(_ userInfo:[AnyHashable:Any]) {
+        
+//        var notificationType:String? = nil
+//        
+//        if let type = userInfo["type"] as? String {
+//            notificationType = type
+//        }else if let type = userInfo["gcm.notification.type"] as? String {
+//            notificationType = type
+//        }
+//        
+//        if let notificationType = notificationType {
+//            switch notificationType {
+//            case URConstant.NotificationType.CHAT:
+//                
+//                if let chatRoomKey = getChatRoomKey(userInfo) {
+//                    if UIApplication.shared.applicationState != UIApplicationState.active {
+//                        URNavigationManager.setupNavigationControllerWithMainViewController(URMainViewController(chatRoomKey: chatRoomKey))
+//                    }else{
+//                        
+//                        NotificationCenter.default.post(name: Notification.Name(rawValue: "newChatReceived"), object: userInfo)
+//                        
+//                        if let visibleViewController = URNavigationManager.navigation.visibleViewController {
+//                            if !(visibleViewController is URMessagesViewController) {
+//                                //                                AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+//                            }
+//                        }
+//                    }
+//                }
+//                
+//                break
+//            case URConstant.NotificationType.RAPIDPRO:
+//                
+//                if URRapidProManager.sendingAnswers {
+//                    break
+//                }
+//                
+//                URNavigationManager.setupNavigationControllerWithMainViewController(URMainViewController(viewControllerToShow: URClosedPollTableViewController()))
+//                break
+//            default:
+//                break
+//            }
+//        }
+        
+    }
 
+}
 
+extension AppDelegate: MessagingDelegate {
+    func messaging(_ messaging: Messaging, didRefreshRegistrationToken fcmToken: String) {
+        print("Firebase registration token was refreshed: \(fcmToken)")
+        PushManager.saveFCMToken(fcmToken: fcmToken)
+    }
 }
 
