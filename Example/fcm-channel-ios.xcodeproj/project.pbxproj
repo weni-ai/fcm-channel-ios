@@ -20,8 +20,7 @@
 		EA650D161F79A405004905DD /* Key-debug.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA650D141F79A405004905DD /* Key-debug.plist */; };
 		EA650D1A1F79B254004905DD /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA650D181F79B254004905DD /* LoginViewController.swift */; };
 		EA650D1B1F79B254004905DD /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA650D191F79B254004905DD /* LoginViewController.xib */; };
-		EA650D201F79B286004905DD /* PushViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA650D1E1F79B286004905DD /* PushViewController.swift */; };
-		EA650D211F79B286004905DD /* PushViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA650D1F1F79B286004905DD /* PushViewController.xib */; };
+		EA88724F1F7AD4700017335B /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA88724E1F7AD4700017335B /* LoginViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,8 +58,8 @@
 		EA650D141F79A405004905DD /* Key-debug.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Key-debug.plist"; path = "Supporting Files/Key-debug.plist"; sourceTree = "<group>"; };
 		EA650D181F79B254004905DD /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = Login/LoginViewController.swift; sourceTree = "<group>"; };
 		EA650D191F79B254004905DD /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LoginViewController.xib; path = Login/LoginViewController.xib; sourceTree = "<group>"; };
-		EA650D1E1F79B286004905DD /* PushViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PushViewController.swift; path = Push/PushViewController.swift; sourceTree = "<group>"; };
-		EA650D1F1F79B286004905DD /* PushViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PushViewController.xib; path = Push/PushViewController.xib; sourceTree = "<group>"; };
+		EA88724B1F7AC9A10017335B /* fcm-channel-ios_Example.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "fcm-channel-ios_Example.entitlements"; sourceTree = "<group>"; };
+		EA88724E1F7AD4700017335B /* LoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewModel.swift; path = Login/LoginViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +94,7 @@
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
+				EA88724B1F7AC9A10017335B /* fcm-channel-ios_Example.entitlements */,
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACD21AFB9204008FA782 /* Example for fcm-channel-ios */,
 				607FACE81AFB9204008FA782 /* Tests */,
@@ -180,7 +180,6 @@
 				EA650D171F79B239004905DD /* Login */,
 				EA650D091F7994EA004905DD /* Managers */,
 				EA650D0B1F7994EA004905DD /* Models */,
-				EA650D1D1F79B26F004905DD /* Push */,
 				EA650D0D1F7994EA004905DD /* Util */,
 			);
 			path = Classes;
@@ -213,19 +212,11 @@
 		EA650D171F79B239004905DD /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				EA650D181F79B254004905DD /* LoginViewController.swift */,
 				EA650D191F79B254004905DD /* LoginViewController.xib */,
+				EA650D181F79B254004905DD /* LoginViewController.swift */,
+				EA88724E1F7AD4700017335B /* LoginViewModel.swift */,
 			);
 			name = Login;
-			sourceTree = "<group>";
-		};
-		EA650D1D1F79B26F004905DD /* Push */ = {
-			isa = PBXGroup;
-			children = (
-				EA650D1E1F79B286004905DD /* PushViewController.swift */,
-				EA650D1F1F79B286004905DD /* PushViewController.xib */,
-			);
-			name = Push;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -286,9 +277,15 @@
 						CreatedOnToolsVersion = 6.3.1;
 						DevelopmentTeam = ZE9A9HAM9Z;
 						LastSwiftMigration = 0820;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					607FACE41AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = ZE9A9HAM9Z;
 						LastSwiftMigration = 0820;
 						TestTargetID = 607FACCF1AFB9204008FA782;
 					};
@@ -322,7 +319,6 @@
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				EA650D161F79A405004905DD /* Key-debug.plist in Resources */,
 				EA650D151F79A405004905DD /* GoogleService-Info.plist in Resources */,
-				EA650D211F79B286004905DD /* PushViewController.xib in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -473,10 +469,10 @@
 			files = (
 				EA650D101F7994EA004905DD /* User.swift in Sources */,
 				EA650D111F7994EA004905DD /* Serializable.swift in Sources */,
-				EA650D201F79B286004905DD /* PushViewController.swift in Sources */,
 				EA650D0F1F7994EA004905DD /* PushManager.swift in Sources */,
 				EA650D1A1F79B254004905DD /* LoginViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				EA88724F1F7AD4700017335B /* LoginViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -602,6 +598,7 @@
 			baseConfigurationReference = 41E4E0EECC78CB08617EDF41 /* Pods-fcm-channel-ios_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "fcm-channel-ios_Example.entitlements";
 				DEVELOPMENT_TEAM = ZE9A9HAM9Z;
 				INFOPLIST_FILE = "fcm-channel-ios/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
@@ -618,6 +615,7 @@
 			baseConfigurationReference = 7034A434DC99863A34DBD0AD /* Pods-fcm-channel-ios_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "fcm-channel-ios_Example.entitlements";
 				DEVELOPMENT_TEAM = ZE9A9HAM9Z;
 				INFOPLIST_FILE = "fcm-channel-ios/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
@@ -633,6 +631,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 127665570C7B0ECBDAD04AD6 /* Pods-fcm-channel-ios_Tests.debug.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = ZE9A9HAM9Z;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -653,6 +652,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 34208B2B7C6A1B1FD4D013D0 /* Pods-fcm-channel-ios_Tests.release.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = ZE9A9HAM9Z;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",

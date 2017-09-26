@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import UserNotifications
+import FBSDKLoginKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
@@ -18,10 +19,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         FirebaseApp.configure()
-//        requestPermissionForPushNotification(application)
         Messaging.messaging().delegate = self
+        requestPermissionForPushNotification(application)
+        PushManager.setupPush()
         
-        return true
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        self.window!.backgroundColor = UIColor.white
+        self.window!.makeKeyAndVisible()
+        self.window!.rootViewController = LoginViewController()
+        
+        return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         }
 
     func applicationWillResignActive(_ application: UIApplication) {
@@ -55,7 +62,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         if #available(iOS 10.0, *) {
             let center  = UNUserNotificationCenter.current()
             center.delegate = self
-            // set the type as sound or badge
             center.requestAuthorization(options: [.sound,.alert,.badge], completionHandler: { (success, error) in
                 if let error = error {
                     print(error.localizedDescription)
@@ -74,6 +80,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         
+        Messaging.messaging().apnsToken = deviceToken
+        
 //        var debugMode = true
 //        
 //        Messaging.messaging().apnsToken = deviceToken
@@ -86,6 +94,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 //            })
 //        }
         
+    }
+    
+    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        return FBSDKApplicationDelegate.sharedInstance().application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
     }
     
     //MARK: Application Methods
@@ -151,9 +163,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 //                break
 //            }
 //        }
-        
     }
-
 }
 
 extension AppDelegate: MessagingDelegate {

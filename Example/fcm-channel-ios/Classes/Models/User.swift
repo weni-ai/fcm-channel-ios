@@ -7,35 +7,68 @@
 //
 
 import UIKit
-import ObjectMapper
+import FirebaseDatabase
+import fcm_channel_ios
 
 class User: Serializable {
+    
+    private let ref = Database.database().reference().child("users")
+    static var current = User()
     
     var key: String!
     var nickname: String?
     var email: String?
-    var state: String?
-    var birthday: NSNumber?
-    var country: String?
-    var picture: String?
-    var gender: String?
-    var type: String?
-    var countryProgram: String?
-    var chatRooms:NSDictionary?
-    var contributions:NSNumber?
-    var points:NSNumber?
-    var stories:NSNumber?
-    var polls:NSNumber?
     var pushIdentity:String?
-    var publicProfile:NSNumber?
-    var born:String?
-    var district:String?
-    var moderator:NSNumber?
-    var masterModerator:NSNumber?
-    var socialUid:String?
+    var pushContact: ISPushContact?
     
     override init() {
         super.init()
+    }
+    
+    func save(completion: @escaping (_ success: Bool) -> ()) {
+        let userRef = ref.child(User.current.key)
+        
+        userRef.setValue(["nickname": User.current.nickname, "email": User.current.email, "pushIdentity": User.current.pushIdentity]) {
+            error, _ in
+            
+            if error != nil {
+                completion(false)
+            } else {
+                PushManager.createPushContact() {
+                    success in
+                    
+                    completion(success)
+                }
+            }
+        }
+    }
+    
+    func getUser(by key: String, completion: @escaping (User?) -> ()) {
+        let userRef = ref.child(key)
+        
+        userRef.observeSingleEvent(of: .value, with: {
+            (snapshot) in
+            
+            if let value = snapshot.value as? NSDictionary {
+                if let email = value["email"] as? String, let nickname = value["nickname"] as? String, let pushIdentity = value["pushIdentity"] as? String {
+                    
+                    User.current.key = key
+                    User.current.email = email
+                    User.current.nickname = nickname
+                    User.current.pushIdentity = pushIdentity
+                    
+                    completion(User.current)
+                } else {
+                    completion(nil)
+                }
+            } else {
+                completion(nil)
+            }
+        })
+    }
+    
+    class func formatExtUserId(_ key: String) -> String {
+        return key.replacingOccurrences(of: ":", with: "") .replacingOccurrences(of: "-", with: "")
     }
     
     //MARK: User Account Manager
