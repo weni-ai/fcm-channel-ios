@@ -55,7 +55,7 @@ class PushManager {
                 uuid in
                 
                 if let uuid = uuid {
-                    print(uuid)
+                    User.current.pushContact?.uuid = uuid
                     completion(true)
                 } else {
                     print("Error: User couldn't register to channel.")
