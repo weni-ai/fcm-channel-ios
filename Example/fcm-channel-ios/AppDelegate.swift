@@ -79,15 +79,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        var debugMode = true
         
         Messaging.messaging().apnsToken = deviceToken
-        
-//        var debugMode = true
-//        
-//        Messaging.messaging().apnsToken = deviceToken
-//        
-//        if let fcmToken = PushManager.getFCMToken(){
-//            
+
+//        if let fcmToken = PushManager.getFCMToken() {
+//
 //            URUserManager.updatePushIdentity(user, completion: { success in
 //                guard success else { return }
 //                URGCMManager.onFCMRegistered(user: user)
@@ -123,14 +120,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     func openNotification(_ userInfo:[AnyHashable:Any]) {
         
-//        var notificationType:String? = nil
-//        
-//        if let type = userInfo["type"] as? String {
-//            notificationType = type
-//        }else if let type = userInfo["gcm.notification.type"] as? String {
-//            notificationType = type
-//        }
-//        
+        var notificationType:String? = nil
+
+        if let type = userInfo["type"] as? String {
+            notificationType = type
+        } else if let type = userInfo["gcm.notification.type"] as? String {
+            notificationType = type
+        }
+//
 //        if let notificationType = notificationType {
 //            switch notificationType {
 //            case URConstant.NotificationType.CHAT:
