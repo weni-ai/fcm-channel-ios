@@ -165,7 +165,7 @@ open class ISPushCurrentPollView: UITableViewCell, ISPushChoiceResponseDelegate,
             self.setupData(currentFlow!, flowActionSet: currentActionSet!, flowRuleset: currentRuleset, contact: contact!)
             currentPollHeight = self.getCurrentPollHeight()
             
-        }else if currentActionSet == nil {
+        } else if currentActionSet == nil {
             let hud = MBProgressHUD.showAdded(to: self, animated: true)
             hud.labelText = sendingAnswerMessage
             

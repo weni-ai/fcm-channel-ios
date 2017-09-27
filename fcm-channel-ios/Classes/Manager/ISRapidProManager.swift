@@ -61,12 +61,39 @@ open class ISPushManager: NSObject {
         offsetComponents.month = -1;
         return (gregorian as NSCalendar).date(byAdding: offsetComponents, to: date, options: [])!;
     }
+    
+    class func sendMessage(_ contact: ISPushContact, message: String, completion:@escaping (_ success: Bool) -> Void) {
+        if let token = ISPushSettings.token, let channel = ISPushSettings.channel, let urn = contact.urn, let handlerUrl = ISPushSettings.handlerURL {
+            let params = [
+                "from": urn,
+                "msg": message,
+                "fcm_token": token
+            ]
+            
+            let url = "\(handlerUrl)receive/\(channel)"
+            
+            Alamofire.request(url, method: .post, parameters: params).responseString {
+                (response) in
+                
+                switch response.result {
+                    
+                case .failure(let error):
+                    print("error \(String(describing: error.localizedDescription))")
+                    completion(false)
+                    
+                case .success(let value):
+                    print(value)
+                    completion(true)
+                }
+            }
+        }
+    }
 
     class func sendRulesetResponses(_ contact:ISPushContact, responses:[ISPushRulesetResponse], completion:@escaping () -> Void) {
         let token = ISPushSettings.token
         let channel = ISPushSettings.channel
 
-        let url = "\(ISPushSettings.handlerURL!)\(channel!)"
+        let url = "\(ISPushSettings.handlerURL!)receive/\(ISPushSettings.channel!)"
 
         let group = DispatchGroup();
         let queue = DispatchQueue(label: "in.ureport-poll-responses", attributes: []);
@@ -105,7 +132,7 @@ open class ISPushManager: NSObject {
             "from": contactKey,
             "text": text
         ]
-        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
+        Alamofire.request(url, method: .post, parameters: parameters)
     }
 
     class func getContactFields(_ completion:@escaping ([String]?) -> Void) {
@@ -125,8 +152,10 @@ open class ISPushManager: NSObject {
         }
     }
 
-    open class func getMessagesFromContact(_ contact:ISPushContact,completion:@escaping (_ messages:[ISPushMessage]?) -> Void ) {
+    open class func getMessagesFromContact(_ contact: ISPushContact, completion: @escaping (_ messages:[ISPushMessage]?) -> Void ) {
+        
         let url = "\(ISPushSettings.url!)\(ISPushSettings.V2)messages.json?contact=\(contact.uuid!)"
+        
         Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers).responseObject { (response: DataResponse<ISPushMessagesResponse>) in
             if let response = response.result.value {
                 if response.results != nil && !response.results.isEmpty {
@@ -134,19 +163,21 @@ open class ISPushManager: NSObject {
                 }else{
                     completion(nil)
                 }
-            }else{
+            } else {
                 print(response.result.error)
             }
         }
     }
 
-    open class func getMessageByID(_ messageID:Int,completion:@escaping (_ message:ISPushMessage?) -> Void ) {
+    open class func getMessageByID(_ messageID: Int, completion: @escaping (_ message: ISPushMessage?) -> Void ) {
+        
         let url = "\(ISPushSettings.url!)\(ISPushSettings.V2)messages.json?id=\(messageID)"
+        
         Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers).responseObject { (response: DataResponse<ISPushMessagesResponse>) in
             if let response = response.result.value {
                 if !response.results.isEmpty {
                     completion(response.results[0])
-                }else{
+                } else {
                     completion(nil)
                 }
             }else{
@@ -166,7 +197,7 @@ open class ISPushManager: NSObject {
     }
 
     open class func loadContact(fromUrn urn: String, completion: @escaping (_ contact: ISPushContact?) -> Void) {
-        let url = "\(ISPushSettings.url!)\(ISPushSettings.V1)/contacts.json?urns=\(urn)"
+        let url = "\(ISPushSettings.url!)\(ISPushSettings.V1)contacts.json?urns=\(urn)"
         let headers = [
             "Authorization": ISPushSettings.token!
         ]
@@ -179,26 +210,41 @@ open class ISPushManager: NSObject {
                 let firstResult = results.first!
                 let uuid = firstResult["uuid"] as! String
                 let name = firstResult["name"] as! String
-                let pushContact = ISPushContact(uuid: uuid, name:name, pushIdentity: "")
+                var pushContact = ISPushContact(urn: urn, name:name, pushIdentity: "")
+                pushContact.uuid = uuid
 
                 completion(pushContact)
             }
         }
     }
 
-    open class func registerFcmContact(channel: String, urn: String, fcmToken: String, contactUuid: String, completion: @escaping (_ contactUuid: String?) -> Void) {
-        let parameters = [
-            "urn": urn,
-            "fcm_token": fcmToken,
-            "contact_uuid": contactUuid
-        ]
-        Alamofire.request("\(ISPushSettings.handlerURL!)register/\(channel)", method: .post, parameters: parameters).responseJSON { (response: DataResponse<Any>) in
-            if let response = response.result.value as? [String: Any] {
-                let contactUuid = response["contact_uuid"] as! String
-                completion(contactUuid)
-                return
-            }
-            completion(nil)
+    open class func registerContact(_ contact: ISPushContact, completion: @escaping (_ uuid: String?) -> Void) {
+        
+        var params = ["urn": contact.urn!,
+                      "fcm_token": contact.pushIdentity!]
+        
+        if let name = contact.name {
+            params["name"] = name
         }
+        
+        Alamofire.request("\(ISPushSettings.handlerURL!)/register/\(ISPushSettings.channel!)", method: .post, parameters: params).responseJSON(completionHandler: {
+            (response) in
+            
+            switch response.result {
+                
+            case .failure(let error):
+                print("error \(String(describing: error.localizedDescription))")
+                completion(nil)
+                
+            case .success(let value):
+                if let response = value as? [String: String] {
+                    if let uuid = response["contact_uuid"] {
+                        completion(uuid)
+                    }
+                } else {
+                    completion(nil)
+                }
+            }
+        })
     }
 }

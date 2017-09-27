@@ -32,11 +32,6 @@ open class ISPushSettings: NSObject {
         self.channel = channel
         self.url = url
         self.handlerURL = handlerURL
-
-        self.init(token: token,
-                  channel: channel,
-                  url: url,
-                  handlerURL: handlerURL)
     }
 
     open class func savePreferedLanguage(_ language:String) {

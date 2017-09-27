@@ -49,12 +49,13 @@ class PushManager {
     static func createPushContact(completion: @escaping (_ success: Bool) -> ()) {
         if let key = User.current.key, let name = User.current.nickname, let pushIdentity = User.current.pushIdentity {
             
-            User.current.pushContact = ISPushContact(uuid: key, name: name, pushIdentity: pushIdentity)
+            User.current.pushContact = ISPushContact(urn: key, name: name, pushIdentity: pushIdentity)
             
             ISPushManager.registerContact(User.current.pushContact!) {
                 uuid in
                 
                 if let uuid = uuid {
+                    User.current.contact_uid = uuid
                     User.current.pushContact?.uuid = uuid
                     completion(true)
                 } else {
@@ -62,6 +63,14 @@ class PushManager {
                     completion(false)
                 }
             }
+        }
+    }
+    
+    static func loadPushContact(urn: String, completion: @escaping (ISPushContact?) -> ()) {
+        ISPushManager.loadContact(fromUrn: urn) {
+            (pushContact) in
+            
+            completion(pushContact)
         }
     }
     

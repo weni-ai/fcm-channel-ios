@@ -41,21 +41,26 @@ class LoginViewModel {
                 if let error = error {
                     completion(false, error)
                 } else {
-                    if let email = user?.email, let displayName = user?.displayName, let uid = user?.uid {
-                        User.current.email = email
-                        User.current.nickname = displayName
-                        User.current.key = uid
-                        User.current.pushIdentity = PushManager.getFCMToken()
-                        User.current.save() {
-                            success in
-                            
-                            completion(success, nil)
-                        }
-                        
-                    } else {
-                        completion(false, nil)
+                    if let uid = user?.uid {
+                        User.getUser(by: uid, completion: { (success) in
+                            if success {
+                                completion(success, nil)
+                            } else {
+                                if let email = user?.email, let displayName = user?.displayName {
+                                    User.current.email = email
+                                    User.current.nickname = displayName
+                                    User.current.key = uid
+                                    User.current.pushIdentity = PushManager.getFCMToken()
+                                    User.current.save() {
+                                        success in
+                                        completion(success, nil)
+                                    }
+                                } else {
+                                    completion(false, nil)
+                                }
+                            }
+                        })
                     }
-                    
                 }
             })
         }

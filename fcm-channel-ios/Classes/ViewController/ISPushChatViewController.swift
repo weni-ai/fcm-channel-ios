@@ -39,18 +39,18 @@ open class ISPushChatViewController: UIViewController, UITableViewDataSource, UI
     let flowTypeManager = ISPushFlowTypeManager()
     public var defaultViewSendHeight = CGFloat(0)
     
-    public init(contact:ISPushContact,
-                incomingBubleMsgColor:UIColor = UIColor(with: "#2F97F8"),
-                incomingLabelMsgColor:UIColor = UIColor.white,
-                botName:String!,
-                outgoingBubleMsgColor:UIColor = UIColor.groupTableViewBackground,
-                outgoingLabelMsgColor:UIColor = UIColor.gray,
-                choiceAnswerButtonColor: UIColor,
-                choiceAnswerBorderColor: CGColor,
-                bottonHeight: CGFloat,
-                nibName: String,
-                bundle: Bundle,
-                loadMessagesOnInit: Bool) {
+    public init( contact: ISPushContact,
+                 incomingBubleMsgColor: UIColor = UIColor(with: "#2F97F8"),
+                 incomingLabelMsgColor: UIColor = UIColor.white,
+                 botName: String,
+                 outgoingBubleMsgColor: UIColor = UIColor.groupTableViewBackground,
+                 outgoingLabelMsgColor: UIColor = UIColor.gray,
+                 choiceAnswerButtonColor: UIColor = UIColor.white,
+                 choiceAnswerBorderColor: CGColor = UIColor.clear.cgColor,
+                 bottonHeight: CGFloat = CGFloat(20),
+                 nibName: String = "ISPushChatViewController",
+                 bundle: Bundle = Bundle(for: ISPushChatViewController.self),
+                 loadMessagesOnInit: Bool = true) {
         
         self.contact = contact
         self.defaultFieldBottonHeight = bottonHeight
@@ -215,7 +215,7 @@ open class ISPushChatViewController: UIViewController, UITableViewDataSource, UI
                         
                         if answerDescription == "reply" || answerDescription == "All Responses" || answerDescription == "Other" {
                             continue
-                        }else {
+                        } else {
                             showOptions = true
                         }
                         
@@ -348,9 +348,8 @@ open class ISPushChatViewController: UIViewController, UITableViewDataSource, UI
                 }
                 
                 //self.tableViewScrollToBottom(false)
-                
-                let rulesetResponse = ISPushRulesetResponse(rule: nil, response: text)
-                ISPushManager.sendRulesetResponses(contact, responses: [rulesetResponse], completion: { })
+               
+                ISPushManager.sendMessage(contact, message: text, completion: {_ in})
                     
                 self.txtMessage.keyboardType = UIKeyboardType.alphabet
             }

@@ -12,13 +12,14 @@ import fcm_channel_ios
 
 class User: Serializable {
     
-    private let ref = Database.database().reference().child("users")
+    static let ref = Database.database().reference().child("users")
     static var current = User()
     
     var key: String!
     var nickname: String?
     var email: String?
     var pushIdentity:String?
+    var contact_uid: String?
     var pushContact: ISPushContact?
     
     override init() {
@@ -26,45 +27,57 @@ class User: Serializable {
     }
     
     func save(completion: @escaping (_ success: Bool) -> ()) {
-        let userRef = ref.child(User.current.key)
+        let userRef = User.ref.child(User.current.key)
         
-        userRef.setValue(["nickname": User.current.nickname, "email": User.current.email, "pushIdentity": User.current.pushIdentity]) {
-            error, _ in
+        PushManager.createPushContact() {
+            success in
             
-            if error != nil {
-                completion(false)
-            } else {
-                PushManager.createPushContact() {
-                    success in
+            if success {
+                userRef.setValue(["nickname": User.current.nickname, "email": User.current.email, "pushIdentity": User.current.pushIdentity, "contact_uid": User.current.contact_uid]) {
+                    error, _ in
                     
-                    completion(success)
+                    if error != nil {
+                        completion(false)
+                    } else {
+                        completion(true)
+                    }
                 }
             }
+            
+            completion(success)
         }
     }
     
-    func getUser(by key: String, completion: @escaping (User?) -> ()) {
-        let userRef = ref.child(key)
+    static func getUser(by key: String, completion: @escaping (_ success: Bool) -> ()) {
+        let userRef = User.ref.child(key)
         
-        userRef.observeSingleEvent(of: .value, with: {
-            (snapshot) in
-            
-            if let value = snapshot.value as? NSDictionary {
-                if let email = value["email"] as? String, let nickname = value["nickname"] as? String, let pushIdentity = value["pushIdentity"] as? String {
+        PushManager.loadPushContact(urn: key) { (pushContact) in
+            if let pushContact = pushContact {
+                userRef.observeSingleEvent(of: .value, with: {
+                    (snapshot) in
                     
-                    User.current.key = key
-                    User.current.email = email
-                    User.current.nickname = nickname
-                    User.current.pushIdentity = pushIdentity
-                    
-                    completion(User.current)
-                } else {
-                    completion(nil)
-                }
+                    if let value = snapshot.value as? NSDictionary {
+                        if let email = value["email"] as? String, let nickname = value["nickname"] as? String, let pushIdentity = value["pushIdentity"] as? String, let contact_uid = value["contact_uid"] as? String {
+                            
+                            User.current.key = key
+                            User.current.email = email
+                            User.current.nickname = nickname
+                            User.current.pushIdentity = pushIdentity
+                            User.current.contact_uid = contact_uid
+                            User.current.pushContact = pushContact
+                            
+                            completion(true)
+                        } else {
+                            completion(false)
+                        }
+                    } else {
+                        completion(false)
+                    }
+                })
             } else {
-                completion(nil)
+                completion(false)
             }
-        })
+        }
     }
     
     class func formatExtUserId(_ key: String) -> String {

@@ -12,6 +12,7 @@ import ObjectMapper
 open class ISPushContact: NSObject, Mappable {
    
     open var uuid:String?
+    open var urn: String?
     open var name:String?
     open var phoneNumber:String?
     open var email: String!
@@ -23,8 +24,8 @@ open class ISPushContact: NSObject, Mappable {
     open var pushIdentity:String!
     open var born:String!
     
-    public init(uuid:String,name:String,pushIdentity:String) {
-        self.uuid = uuid
+    public init(urn: String, name: String, pushIdentity: String) {
+        self.urn = urn
         self.name = name
         self.pushIdentity = pushIdentity
     }
@@ -32,6 +33,7 @@ open class ISPushContact: NSObject, Mappable {
     required public init?(map: Map){}
     
     open func mapping(map: Map) {
+        self.urn            <- map["urn"]
         self.uuid           <- map["uuid"]
         self.name           <- map["name"]
         self.phoneNumber    <- map["phoneNumber"]
