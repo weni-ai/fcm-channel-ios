@@ -11,11 +11,11 @@ import ObjectMapper
 
 open class ISPushFlowRule: NSObject, Mappable {
 
-    open var ruleCategory:[String : String] = [:]
-    open var test:ISPushFlowRuleTest?
-    open var destination:String?
-    open var uuid:NSString?
-    open var destinationType:NSString?
+    open var ruleCategory: [String : String] = [:]
+    open var test: ISPushFlowRuleTest?
+    open var destination: String?
+    open var uuid: NSString?
+    open var destinationType: NSString?
 
     required public init?(map: Map){}
 

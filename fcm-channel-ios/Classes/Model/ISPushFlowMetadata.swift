@@ -12,12 +12,12 @@ import ObjectMapper
 
 open class ISPushFlowMetadata: NSObject, Mappable {
 
-    open var uuid:String?
-    open var expires:Int?
-    open var name:String?
-    open var revision:Int?
-    open var id:Int?
-    open var savedOn:Date?
+    open var uuid: String?
+    open var expires: Int?
+    open var name: String?
+    open var revision: Int?
+    open var id: Int?
+    open var savedOn: Date?
 
     required public init?(map: Map){}
 

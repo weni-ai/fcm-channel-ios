@@ -12,7 +12,7 @@ import ObjectMapper
 open class ISPushFlowAction: NSObject, Mappable {
 
     open var message: [String : String] = [:]
-    open var type:String?
+    open var type: String?
 
     required public init?(map: Map){}
 
