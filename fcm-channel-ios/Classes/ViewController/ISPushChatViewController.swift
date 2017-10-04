@@ -11,20 +11,20 @@ import ISScrollViewPageSwift
 import MBProgressHUD
 
 open class ISPushChatViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, ISScrollViewPageDelegate {
-
+    
     public var messageList = [ISPushMessage]()
     public var contact:ISPushContact!
-
+    
     open var incomingBubleMsgColor:UIColor!
     open var incomingLabelMsgColor:UIColor!
     open var outgoingBubleMsgColor:UIColor!
     open var outgoingLabelMsgColor:UIColor!
     open var botName:String!
-
+    
     var defaultFieldBottonHeight: CGFloat!
     var choiceAnswerBorderColor: CGColor!
     var choiceAnswerButtonColor: UIColor!
-
+    
     @IBOutlet public var txtMessage:UITextField!
     @IBOutlet public var btSend:UIButton!
     @IBOutlet public var viewSendHeight:NSLayoutConstraint!
@@ -33,7 +33,7 @@ open class ISPushChatViewController: UIViewController, UITableViewDataSource, UI
     @IBOutlet open var scrollView:UIScrollView!
     @IBOutlet open var viewSend:UIView!
     @IBOutlet public var scrollViewPage:ISScrollViewPage!
-
+    
     var loadMessagesOnInit: Bool = false
     var currentMessageIsShowingOption = false
     let flowTypeManager = ISPushFlowTypeManager()
@@ -80,7 +80,7 @@ open class ISPushChatViewController: UIViewController, UITableViewDataSource, UI
         setupKeyBoardNotification()
         
         if loadMessagesOnInit { self.loadData() }
-
+        
         self.txtMessage.delegate = self
         defaultViewSendHeight = viewSendHeight.constant
         self.edgesForExtendedLayout = UIRectEdge();
@@ -100,10 +100,10 @@ open class ISPushChatViewController: UIViewController, UITableViewDataSource, UI
     open func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
-    }    
+    }
     
     //MARK: Class Methods
-
+    
     open func setupKeyBoardNotification() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: .UIKeyboardWillHide, object: nil)
@@ -172,9 +172,9 @@ open class ISPushChatViewController: UIViewController, UITableViewDataSource, UI
         
         UIView.animate(withDuration: 0.1, animations: {
             self.view.layoutIfNeeded()
-            }, completion: { (finish) in
-        self.tableView.scrollToRow(at: IndexPath(row: self.messageList.count - 1, section: 0), at: UITableViewScrollPosition.top, animated: false)
-        }) 
+        }, completion: { (finish) in
+            self.tableView.scrollToRow(at: IndexPath(row: self.messageList.count - 1, section: 0), at: UITableViewScrollPosition.top, animated: false)
+        })
     }
     
     fileprivate func tableViewScrollToBottom(_ animated: Bool) {
@@ -244,16 +244,16 @@ open class ISPushChatViewController: UIViewController, UITableViewDataSource, UI
                         views.append(button)
                         
                         switch typeValidation.type! {
-                            case ISPushFlowType.openField:
-                                break
-                            case ISPushFlowType.choice:
-                                break
-                            case ISPushFlowType.number:
-                                self.txtMessage.keyboardType = UIKeyboardType.numberPad
-                                break
-                            default: break
+                        case ISPushFlowType.openField:
+                            break
+                        case ISPushFlowType.choice:
+                            break
+                        case ISPushFlowType.number:
+                            self.txtMessage.keyboardType = UIKeyboardType.numberPad
+                            break
+                        default: break
                         }
-
+                        
                     }
                     self.scrollViewPage.setCustomViews(views)
                     
@@ -273,7 +273,7 @@ open class ISPushChatViewController: UIViewController, UITableViewDataSource, UI
                 self.messageList = self.messageList.reversed()
                 self.tableView.reloadData()
                 self.tableViewScrollToBottom(true)
-                self.checkIfMessageHasAnswerOptions()
+                //                self.checkIfMessageHasAnswerOptions()
             }
         }
     }
@@ -320,14 +320,13 @@ open class ISPushChatViewController: UIViewController, UITableViewDataSource, UI
         }
         
         cell!.setupCell(with: message)
-                
+        
         return cell!
     }
     
     open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)
         self.txtMessage.resignFirstResponder()
-        
     }
     
     //MARK: Button Events
@@ -341,20 +340,37 @@ open class ISPushChatViewController: UIViewController, UITableViewDataSource, UI
                 self.txtMessage.text = ""
                 
                 self.messageList.append(ISPushMessage(msg:text))
-                    
+                
                 OperationQueue.main.addOperation {
                     let indexPath = IndexPath(row: self.messageList.count - 1, section: 0)
                     self.insertRowInIndex(indexPath)
                 }
                 
                 //self.tableViewScrollToBottom(false)
-               
-                ISPushManager.sendMessage(contact, message: text, completion: {_ in})
-                    
+                
+                ISPushManager.sendMessage(contact, message: text, completion: {
+                    success in
+                    self.loadCurrentRulesetDelayed()
+                })
+                
                 self.txtMessage.keyboardType = UIKeyboardType.alphabet
             }
-        
         }
     }
     
+    func loadCurrentRulesetDelayed() {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime(uptimeNanoseconds: UInt64(500000000))) {
+            self.loadData()
+            ISPushManager.getFlowRuns(self.contact, completion: { (flowRuns: [ISPushFlowRun]?) -> Void in
+                if let flowRuns = flowRuns {
+                    print(flowRuns.first)
+                }
+            })
+        }
+    }
+    
+    func getLastRuleset(flowRun: ISPushFlowRun) {
+//        let flowSteps: [Any] = flowRun.
+    }
 }
+

@@ -15,41 +15,46 @@ protocol ISPushManagerDelegate {
 }
 
 open class ISPushManager: NSObject {
-
+    
     var delegate:ISPushManagerDelegate?
     static var sendingAnswers:Bool = false
-
+    
     static let headers = [
         "Authorization": ISPushSettings.token!
     ]
-
+    
     class func getFlowDefinition(_ flowUuid: String, completion:@escaping (ISPushFlowDefinition) -> Void) {
-
+        
         let url = "\(ISPushSettings.url!)\(ISPushSettings.V1)flow_definition.json?uuid=\(flowUuid)"
-
+        
         Alamofire.request(url, method: .get ,parameters: nil, encoding: JSONEncoding.default, headers: headers).responseObject { (response: DataResponse<ISPushFlowDefinition>) in
             if let flowDefinition = response.result.value , flowDefinition.entry != nil{
                 completion(flowDefinition)
-            }else{
+            } else {
                 print("Flow definition com estrutura incorreta")
             }
         }
     }
-
+    
     class func getFlowRuns(_ contact: ISPushContact, completion:@escaping ([ISPushFlowRun]?) -> Void) {
-
+        
         let afterDate = ISPushDateUtil.dateFormatterRapidPro(getMinimumDate())
-        let url = "\(ISPushSettings.url!)\(ISPushSettings.V1)runs.json?contact=\(contact.uuid!)&after=\(afterDate)"
-
-        Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers).responseObject { (response: DataResponse<ISPushFlowRunResponse>) in
-            if let response = response.result.value {
-                if !response.results.isEmpty {
-                    completion(response.results)
-                }else{
-                    completion(nil)
+        let url = "\(ISPushSettings.url!)\(ISPushSettings.V2)runs.json?contact=\(contact.uuid!)&after=\(afterDate)"
+        
+        Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers).responseObject {
+            
+            (response: DataResponse<ISPushFlowRunResponse>) in
+            
+            switch response.result {
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+                completion(nil)
+                
+            case .success(let value):
+                if value.results != nil && value.results.count > 0 {
+                    completion(value.results)
                 }
-            }else{
-                print(response.result.error)
             }
         }
     }
@@ -88,18 +93,18 @@ open class ISPushManager: NSObject {
             }
         }
     }
-
+    
     class func sendRulesetResponses(_ contact:ISPushContact, responses:[ISPushRulesetResponse], completion:@escaping () -> Void) {
         let token = ISPushSettings.token
         let channel = ISPushSettings.channel
-
+        
         let url = "\(ISPushSettings.handlerURL!)receive/\(ISPushSettings.channel!)"
-
+        
         let group = DispatchGroup();
         let queue = DispatchQueue(label: "in.ureport-poll-responses", attributes: []);
-
+        
         self.sendingAnswers = true
-
+        
         for response in responses {
             queue.async(group: group, execute: { () -> Void in
                 let request = NSMutableURLRequest(url: URL(string: url)!)
@@ -125,7 +130,7 @@ open class ISPushManager: NSObject {
             completion()
         }
     }
-
+    
     class func sendReceivedMessage(_ contactKey:String, text:String) {
         let url = ISPushSettings.url!
         let parameters = [
@@ -134,13 +139,13 @@ open class ISPushManager: NSObject {
         ]
         Alamofire.request(url, method: .post, parameters: parameters)
     }
-
+    
     class func getContactFields(_ completion:@escaping ([String]?) -> Void) {
         Alamofire.request("\(ISPushSettings.url!)\(ISPushSettings.V1)fields.json", method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers).responseJSON { (response: DataResponse<Any>) in
             if let response = response.result.value as? NSDictionary {
                 var arrayFields:[String] = []
                 if let results = response.object(forKey: "results") as? [NSDictionary] {
-
+                    
                     for dictionary in results {
                         arrayFields.append(dictionary.object(forKey: "key") as! String)
                     }
@@ -151,7 +156,7 @@ open class ISPushManager: NSObject {
             }
         }
     }
-
+    
     open class func getMessagesFromContact(_ contact: ISPushContact, completion: @escaping (_ messages:[ISPushMessage]?) -> Void ) {
         
         let url = "\(ISPushSettings.url!)\(ISPushSettings.V2)messages.json?contact=\(contact.uuid!)"
@@ -168,7 +173,7 @@ open class ISPushManager: NSObject {
             }
         }
     }
-
+    
     open class func getMessageByID(_ messageID: Int, completion: @escaping (_ message: ISPushMessage?) -> Void ) {
         
         let url = "\(ISPushSettings.url!)\(ISPushSettings.V2)messages.json?id=\(messageID)"
@@ -185,7 +190,7 @@ open class ISPushManager: NSObject {
             }
         }
     }
-
+    
     open class func saveContact(_ contact:ISPushContact,groups:[String],includeCustomFieldsAndValues:[[String:AnyObject]]?,completion:@escaping (_ response:NSDictionary) -> Void) {
         ISPushRapidProContactUtil.buildRapidProContactRootDictionary(contact, groups: groups, includeCustomFieldsAndValues: includeCustomFieldsAndValues) { (rootDicionary) in
             Alamofire.request("\(ISPushSettings.url!)\(ISPushSettings.V1)contacts.json", method: .post, parameters: rootDicionary.copy() as! [String : AnyObject] , encoding: JSONEncoding.default, headers: headers).responseJSON(completionHandler: { (response:DataResponse<Any>) in
@@ -195,7 +200,7 @@ open class ISPushManager: NSObject {
             })
         }
     }
-
+    
     open class func loadContact(fromUrn urn: String, completion: @escaping (_ contact: ISPushContact?) -> Void) {
         let url = "\(ISPushSettings.url!)\(ISPushSettings.V1)contacts.json?urns=\(urn)"
         let headers = [
@@ -212,12 +217,12 @@ open class ISPushManager: NSObject {
                 let name = firstResult["name"] as! String
                 var pushContact = ISPushContact(urn: urn, name:name, pushIdentity: "")
                 pushContact.uuid = uuid
-
+                
                 completion(pushContact)
             }
         }
     }
-
+    
     open class func registerContact(_ contact: ISPushContact, completion: @escaping (_ uuid: String?) -> Void) {
         
         var params = ["urn": contact.urn!,
@@ -248,3 +253,4 @@ open class ISPushManager: NSObject {
         })
     }
 }
+
