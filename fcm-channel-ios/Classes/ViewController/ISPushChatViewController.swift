@@ -363,14 +363,50 @@ open class ISPushChatViewController: UIViewController, UITableViewDataSource, UI
             self.loadData()
             ISPushManager.getFlowRuns(self.contact, completion: { (flowRuns: [ISPushFlowRun]?) -> Void in
                 if let flowRuns = flowRuns {
-                    print(flowRuns.first)
+                    self.getLastRuleset(from: flowRuns.first!)
                 }
             })
         }
     }
     
-    func getLastRuleset(flowRun: ISPushFlowRun) {
-//        let flowSteps: [Any] = flowRun.
+    private func getLastRuleset(from flowRun: ISPushFlowRun) {
+        if isValidRuleset(flowRun: flowRun) {
+            let latestFlowStep = flowRun.path.last
+            loadFlow(flowRun: flowRun, latestFlowStep: latestFlowStep!)
+        }
+    }
+    
+    private func isValidRuleset(flowRun: ISPushFlowRun) -> Bool {
+        return ISPushFlowManager.isFlowActive(flowRun) && flowRun.path != nil && flowRun.path.count > 0
+    }
+    
+    private func loadFlow(flowRun: ISPushFlowRun, latestFlowStep: ISPushFlowStep) {
+        if let uuid = flowRun.flow.uuid {
+            ISPushManager.getFlowDefinition(uuid) {
+                (flowDefinition) in
+                if let lastFlow = flowDefinition?.flows?.last {
+                    self.getRulesetFor(flow: lastFlow, flowStep: latestFlowStep)
+                }
+            }
+        }
+    }
+    
+    private func getRulesetFor(flow: ISPushFlow, flowStep: ISPushFlowStep) {
+        if let uuid = flowStep.node {
+            if let index = flow.ruleSets?.index(of: ISPushFlowRuleset(uuid: uuid)) {
+                if index >= 0 {
+                    if let ruleset = flow.ruleSets?[index] {
+                        setCurrentRulesets(rulesets: ruleset)
+                    }
+                }
+            }
+        }
+    }
+    
+    private func setCurrentRulesets(rulesets: ISPushFlowRuleset) {
+        if rulesets != nil && rulesets.rules != nil {
+            
+        }
     }
 }
 

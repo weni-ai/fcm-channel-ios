@@ -9,11 +9,13 @@ import Foundation
 import UIKit
 import ObjectMapper
 
-class ISPushFlow: NSObject, Mappable {
+open class ISPushFlow: NSObject, Mappable {
+    
+    open var uuid: String?
+    open var name: String?
     open var baseLanguage:String?
     open var actionSets:[ISPushFlowActionSet]?
     open var version:Int?
-    open var lastSaved:Date?
     open var type:String?
     open var entry:String?
     open var ruleSets:[ISPushFlowRuleset]?
@@ -22,10 +24,11 @@ class ISPushFlow: NSObject, Mappable {
     required public init?(map: Map){}
     
     open func mapping(map: Map) {
+        self.uuid            <- map["uuid"]
+        self.name            <- map["name"]
         self.baseLanguage    <- map["base_language"]
         self.actionSets      <- map["action_sets"]
         self.version         <- map["version"]
-        self.lastSaved       <- (map["last_saved"], ISPushRapidPRODateTransform())
         self.type            <- map["flow_type"]
         self.entry           <- map["entry"]
         self.ruleSets        <- map["rule_sets"]

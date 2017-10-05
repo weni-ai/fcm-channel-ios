@@ -7,7 +7,7 @@
 
 import Foundation
 
-class ISPushChannel {
-    var uuid: String?
-    var name: String?
+open class ISPushChannel {
+    open var uuid: String?
+    open var name: String?
 }

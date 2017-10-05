@@ -34,11 +34,13 @@ class ISPushFlowManager {
     }
     
     class func isFlowActive(_ flowRun:ISPushFlowRun) -> Bool {
-        return (flowRun.completed == false && !ISPushFlowManager.isFlowExpired(flowRun))
+        return true
+//        return (flowRun.completed == false && !ISPushFlowManager.isFlowExpired(flowRun))
     }
     
     class func isFlowExpired(_ flowRun:ISPushFlowRun) -> Bool {
-        return flowRun.expired_on != nil && (flowRun.expires_on.compare(Date()) == ComparisonResult.orderedDescending)
+        return false
+//        return flowRun.expired_on != nil && (flowRun.expires_on.compare(Date()) == ComparisonResult.orderedDescending)
     }
     
     class func isLastActionSet(_ actionSet:ISPushFlowActionSet?) -> Bool {
@@ -55,34 +57,34 @@ class ISPushFlowManager {
     }
     
     class func getFlowActionSetByUuid(_ flowDefinition: ISPushFlowDefinition, destination: String?, currentActionSet:ISPushFlowActionSet?) -> ISPushFlowActionSet? {
-        for actionSet in flowDefinition.actionSets! {
-            if destination != nil && destination == actionSet.uuid! {
-                return actionSet
-            }
-        }
+//        for actionSet in flowDefinition.actionSets! {
+//            if destination != nil && destination == actionSet.uuid! {
+//                return actionSet
+//            }
+//        }
         
-        if let currentActionSet = currentActionSet {
-            let i = flowDefinition.actionSets?.index(where: {$0.uuid == currentActionSet.uuid})
-            
-            if flowDefinition.actionSets?.count >= i!+1 {
-                return flowDefinition.actionSets?[i!+1]
-            }else {
-                return nil
-            }
-            
-        }else {
-            return nil
-        }
-        
+//        if let currentActionSet = currentActionSet {
+//            let i = flowDefinition.actionSets?.index(where: {$0.uuid == currentActionSet.uuid})
+//
+//            if flowDefinition.actionSets?.count >= i!+1 {
+//                return flowDefinition.actionSets?[i!+1]
+//            }else {
+//                return nil
+//            }
+//
+//        }else {
+//            return nil
+//        }
+        return nil
     }
     
     class func getRulesetForAction(_ flowDefinition: ISPushFlowDefinition, actionSet: ISPushFlowActionSet?) -> ISPushFlowRuleset? {
-        for ruleSet in flowDefinition.ruleSets! {
-            if actionSet != nil && actionSet?.destination != nil
-                && actionSet?.destination == ruleSet.uuid {
-                    return ruleSet
-            }
-        }
+//        for ruleSet in flowDefinition.ruleSets! {
+//            if actionSet != nil && actionSet?.destination != nil
+//                && actionSet?.destination == ruleSet.uuid {
+//                    return ruleSet
+//            }
+//        }
         return nil
     }
 

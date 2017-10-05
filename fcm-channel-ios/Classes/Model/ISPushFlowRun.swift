@@ -9,22 +9,25 @@
 import UIKit
 import ObjectMapper
 
-class ISPushFlowRun: NSObject, Mappable {
+open class ISPushFlowRun: NSObject, Mappable {
 
-    var flow: ISPushFlow!
-    var contact: ISPushContact!
-    var responded: Bool!
-    var createdOn: Date!
-    var modifiedOn: Date!
-    var exitType: String!
-//
-//    required init?(map: Map){}
-//
-//    func mapping(map: Map) {
-//        self.flow_uuid  <- map["flow_uuid"]
-//        self.flow       <- map["flow"]
-//        self.completed  <- map["completed"]
-//        self.expires_on <- (map["expires_on"], ISPushRapidPRODateTransform())
-//        self.expired_on <- (map["expired_on"], ISPushRapidPRODateTransform())
-//    }
+    open var flow: ISPushFlow!
+    open var contact: ISPushContact!
+    open var path: [ISPushFlowStep]!
+    open var responded: Bool!
+    open var createdOn: Date!
+    open var modifiedOn: Date!
+    open var exitType: String!
+
+    required public init?(map: Map){}
+
+    open func mapping(map: Map) {
+        self.flow       <- map["flow"]
+        self.contact    <- map["contact"]
+        self.path       <- map["path"]
+        self.responded  <- map["responded"]
+        self.createdOn  <- (map["created_on"], ISPushRapidPRODateTransform())
+        self.modifiedOn <- (map["modified_on"], ISPushRapidPRODateTransform())
+        self.exitType   <- map["exit_type"]
+    }
 }

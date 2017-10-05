@@ -7,7 +7,7 @@
 
 import Foundation
 
-class ISPushLabel {
-    var uuid: String!
-    var name: String!
+open class ISPushLabel {
+    open var uuid: String!
+    open var name: String!
 }

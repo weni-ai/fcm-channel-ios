@@ -212,27 +212,27 @@ open class ISPushCurrentPollView: UITableViewCell, ISPushChoiceResponseDelegate,
     }
     
     open func loadCurrentFlow() {
-        ISPushManager.getFlowRuns(contact, completion: { (flowRuns: [ISPushFlowRun]?) -> Void in
-            if let flowRuns = flowRuns {
-                if ((!flowRuns.isEmpty) && ISPushFlowManager.isFlowActive(flowRuns[0])) {
-                    ISPushManager.getFlowDefinition(flowRuns[0].flow_uuid, completion: {
-                        (flowDefinition: ISPushFlowDefinition) -> Void in
-                        self.currentFlow = flowDefinition
-                        self.btNext.addTarget(self, action: #selector(self.moveToNextStep), for: UIControlEvents.touchUpInside)
-                        self.setupNextStep(self.currentFlow!.entry)
-                        self.flowIsLoaded = true
-                        
-                        if let delegates = self.delegates {
-                            for delegate in delegates where delegate.didFinishLoadFlow != nil {
-                                delegate.didFinishLoadFlow!(self)
-                            }
-                        }
-                        
-                        self.reloadCurrentFlowSection()
-                    })
-                }
-            }
-        })
+//        ISPushManager.getFlowRuns(contact, completion: { (flowRuns: [ISPushFlowRun]?) -> Void in
+//            if let flowRuns = flowRuns {
+//                if ((!flowRuns.isEmpty) && ISPushFlowManager.isFlowActive(flowRuns[0])) {
+//                    ISPushManager.getFlowDefinition(flowRuns[0].flow_uuid, completion: {
+//                        (flowDefinition: ISPushFlowDefinition) -> Void in
+//                        self.currentFlow = flowDefinition
+//                        self.btNext.addTarget(self, action: #selector(self.moveToNextStep), for: UIControlEvents.touchUpInside)
+//                        self.setupNextStep(self.currentFlow!.entry)
+//                        self.flowIsLoaded = true
+//
+//                        if let delegates = self.delegates {
+//                            for delegate in delegates where delegate.didFinishLoadFlow != nil {
+//                                delegate.didFinishLoadFlow!(self)
+//                            }
+//                        }
+//
+//                        self.reloadCurrentFlowSection()
+//                    })
+//                }
+//            }
+//        })
     }
     
     func updateTopViewHeight(_ newHeight:CGFloat) {
@@ -276,7 +276,7 @@ open class ISPushCurrentPollView: UITableViewCell, ISPushChoiceResponseDelegate,
         var response = rule.test?.base
         if response == nil && rule.test?.test != nil
             && rule.test?.test.values.count > 0 {
-            response = rule.test?.test[(flowDefinition?.baseLanguage)!]
+//            response = rule.test?.test[(flowDefinition?.baseLanguage)!]
         }
         return response!
     }
@@ -289,7 +289,7 @@ open class ISPushCurrentPollView: UITableViewCell, ISPushChoiceResponseDelegate,
         self.flowDefinition = flowDefinition
         self.flowRuleset = flowRuleset
         self.flowActionSet = flowActionSet
-        self.lbFlowName.text = flowDefinition.metadata?.name
+//        self.lbFlowName.text = flowDefinition.metadata?.name
         
         self.btNext.isHidden = false
         
@@ -304,7 +304,7 @@ open class ISPushCurrentPollView: UITableViewCell, ISPushChoiceResponseDelegate,
         self.flowDefinition = flowDefinition
         self.flowRuleset = flowRuleset
         self.flowActionSet = flowActionSet
-        self.lbFlowName.text = flowDefinition?.metadata?.name
+//        self.lbFlowName.text = flowDefinition?.metadata?.name
         
         removeAnswersViewOfLastQuestion()
         setupLanguages()
@@ -419,6 +419,7 @@ open class ISPushCurrentPollView: UITableViewCell, ISPushChoiceResponseDelegate,
     }
     
     fileprivate func getSelectedLanguage() -> String {
-        return (selectedLanguage != nil && (flowActionSet?.actions?[0].message.keys.contains(selectedLanguage!))! ? selectedLanguage : flowDefinition.baseLanguage)!
+        return ""
+//        return (selectedLanguage != nil && (flowActionSet?.actions?[0].message.keys.contains(selectedLanguage!))! ? selectedLanguage : flowDefinition.baseLanguage)!
     }
 }

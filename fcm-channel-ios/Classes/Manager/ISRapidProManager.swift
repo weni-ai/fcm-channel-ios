@@ -23,16 +23,23 @@ open class ISPushManager: NSObject {
         "Authorization": ISPushSettings.token!
     ]
     
-    class func getFlowDefinition(_ flowUuid: String, completion:@escaping (ISPushFlowDefinition) -> Void) {
+    class func getFlowDefinition(_ flowUuid: String, completion:@escaping (ISPushFlowDefinition?) -> Void) {
         
-        let url = "\(ISPushSettings.url!)\(ISPushSettings.V1)flow_definition.json?uuid=\(flowUuid)"
+        let url = "\(ISPushSettings.url!)\(ISPushSettings.V2)definitions.json?uuid=\(flowUuid)"
         
-        Alamofire.request(url, method: .get ,parameters: nil, encoding: JSONEncoding.default, headers: headers).responseObject { (response: DataResponse<ISPushFlowDefinition>) in
-            if let flowDefinition = response.result.value , flowDefinition.entry != nil{
-                completion(flowDefinition)
-            } else {
-                print("Flow definition com estrutura incorreta")
+        Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers).responseObject {
+            (response: DataResponse<ISPushFlowDefinition>) in
+            
+            switch response.result {
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+                completion(nil)
+                
+            case .success(let value):
+                completion(value)
             }
+            
         }
     }
     
@@ -94,7 +101,7 @@ open class ISPushManager: NSObject {
         }
     }
     
-    class func sendRulesetResponses(_ contact:ISPushContact, responses:[ISPushRulesetResponse], completion:@escaping () -> Void) {
+    class func sendRulesetResponses(_ contact: ISPushContact, responses: [ISPushRulesetResponse], completion: @escaping () -> Void) {
         let token = ISPushSettings.token
         let channel = ISPushSettings.channel
         

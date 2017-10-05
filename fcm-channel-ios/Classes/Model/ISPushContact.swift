@@ -15,14 +15,14 @@ open class ISPushContact: NSObject, Mappable {
     open var urn: String?
     open var name:String?
     open var phoneNumber:String?
-    open var email: String!
-    open var state: String!
-    open var birthday: NSNumber!
-    open var country: String!
-    open var picture: String!
-    open var gender: String!
-    open var pushIdentity:String!
-    open var born:String!
+    open var email: String?
+    open var state: String?
+    open var birthday: NSNumber?
+    open var country: String?
+    open var picture: String?
+    open var gender: String?
+    open var pushIdentity:String?
+    open var born:String?
     
     public init(urn: String, name: String, pushIdentity: String) {
         self.urn = urn

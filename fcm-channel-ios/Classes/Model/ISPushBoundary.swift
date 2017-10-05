@@ -7,12 +7,12 @@
 
 import Foundation
 
-class ISPushBoundary {
+open class ISPushBoundary {
     
-    var boundary: String?
-    var name: String?
-    var level: Int?
-    var parent: String?
-    var aliases: [String]?
+    open var boundary: String?
+    open var name: String?
+    open var level: Int?
+    open var parent: String?
+    open var aliases: [String]?
 
 }

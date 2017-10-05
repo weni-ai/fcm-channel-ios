@@ -56,6 +56,8 @@ open class ISPushChoiceResponseView: ISPushResponseView {
     //MARK: Class methods
     
     func getLanguage() -> String {
-        return selectedLanguage != nil && flowRule.ruleCategory.keys.contains(selectedLanguage!) ? selectedLanguage! : flowDefinition.baseLanguage!
+        return ""
+//        return selectedLanguage != nil && flowRule.ruleCategory.keys.contains(selectedLanguage!) ? selectedLanguage! : flowDefinition.baseLanguage!
     }
 }
+

@@ -39,11 +39,11 @@ class ISPushRapidProContactUtil: NSObject {
                 var age = 0
                 
                 if contact.birthday != nil {
-                    age = (Calendar.current as NSCalendar).components(.year, from: Date(timeIntervalSince1970: NSNumber(value: contact.birthday.doubleValue/1000 as Double) as TimeInterval), to: Date(), options: []).year!
+                    age = (Calendar.current as NSCalendar).components(.year, from: Date(timeIntervalSince1970: NSNumber(value: (contact.birthday?.doubleValue)!/1000 as Double) as TimeInterval), to: Date(), options: []).year!
                     
-                    ISPushRapidProContactUtil.putValueIfExists(ISPushDateUtil.birthDayFormatterRapidPro(Date(timeIntervalSince1970: NSNumber(value: contact.birthday.doubleValue/1000 as Double) as TimeInterval),brFormat: false), countryProgramContactFields: contactFields, possibleFields: ["birthday","birthdate","birth_day","date_of_birth"])
+                    ISPushRapidProContactUtil.putValueIfExists(ISPushDateUtil.birthDayFormatterRapidPro(Date(timeIntervalSince1970: NSNumber(value: (contact.birthday?.doubleValue)!/1000 as Double) as TimeInterval),brFormat: false), countryProgramContactFields: contactFields, possibleFields: ["birthday","birthdate","birth_day","date_of_birth"])
                     ISPushRapidProContactUtil.putValueIfExists(String(age), countryProgramContactFields: contactFields, possibleFields: ["age"])
-                    ISPushRapidProContactUtil.putValueIfExists(String(ISPushDateUtil.getYear(Date(timeIntervalSince1970: NSNumber(value: contact.birthday.doubleValue/1000 as Double) as TimeInterval))), countryProgramContactFields: contactFields, possibleFields: ["year_of_birth","born"])
+                    ISPushRapidProContactUtil.putValueIfExists(String(ISPushDateUtil.getYear(Date(timeIntervalSince1970: NSNumber(value: (contact.birthday?.doubleValue)!/1000 as Double) as TimeInterval))), countryProgramContactFields: contactFields, possibleFields: ["year_of_birth","born"])
                 }
                 
                 ISPushRapidProContactUtil.putValueIfExists(contact.email, countryProgramContactFields: contactFields, possibleFields: ["email","e_mail"])

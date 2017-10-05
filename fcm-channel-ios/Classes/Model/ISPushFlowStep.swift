@@ -8,9 +8,18 @@
 import Foundation
 import ObjectMapper
 
-class ISPushFlowStep: NSObject, Mappable {
-    var node: String!
-    var arrivedOn: Date!
-    var time: Date!
-    var actions: [ISPushFlowAction]!
+open class ISPushFlowStep: NSObject, Mappable {
+
+    open var node: String?
+    open var arrivedOn: Date?
+    open var time: Date?
+    open var actions: [ISPushFlowAction]?
+    
+    public required init?(map: Map) {}
+    
+    open func mapping(map: Map) {
+        self.node           <- map["node"]
+        self.time           <- map["time"]
+    }
 }
+

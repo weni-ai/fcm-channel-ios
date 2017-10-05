@@ -8,13 +8,14 @@
 
 import UIKit
 
-class ISPushRulesetResponse: NSObject {
+open class ISPushRulesetResponse: NSObject {
 
-    var rule:ISPushFlowRule!
-    var response:String!
+    open var rule: ISPushFlowRule!
+    open var response:String!
 
-    public init (rule:ISPushFlowRule?, response:String) {
+    public init (rule: ISPushFlowRule?, response:String) {
         self.rule = rule
         self.response = response
     }
 }
+
