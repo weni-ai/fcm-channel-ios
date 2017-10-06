@@ -25,7 +25,7 @@ open class ISPushManager: NSObject {
     
     class func getFlowDefinition(_ flowUuid: String, completion:@escaping (ISPushFlowDefinition?) -> Void) {
         
-        let url = "\(ISPushSettings.url!)\(ISPushSettings.V2)definitions.json?uuid=\(flowUuid)"
+        let url = "\(ISPushSettings.url!)\(ISPushSettings.V2)definitions.json?flow=\(flowUuid)"
         
         Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers).responseObject {
             (response: DataResponse<ISPushFlowDefinition>) in
@@ -157,7 +157,7 @@ open class ISPushManager: NSObject {
                         arrayFields.append(dictionary.object(forKey: "key") as! String)
                     }
                     completion(arrayFields)
-                }else {
+                } else {
                     completion(arrayFields)
                 }
             }
@@ -169,14 +169,20 @@ open class ISPushManager: NSObject {
         let url = "\(ISPushSettings.url!)\(ISPushSettings.V2)messages.json?contact=\(contact.uuid!)"
         
         Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers).responseObject { (response: DataResponse<ISPushMessagesResponse>) in
-            if let response = response.result.value {
-                if response.results != nil && !response.results.isEmpty {
-                    completion(response.results)
-                }else{
+            
+            switch response.result {
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+                completion(nil)
+                
+            case .success(let value):
+                if value.results != nil && !value.results.isEmpty {
+                    completion(value.results)
+                } else {
                     completion(nil)
                 }
-            } else {
-                print(response.result.error)
+                
             }
         }
     }
@@ -186,14 +192,20 @@ open class ISPushManager: NSObject {
         let url = "\(ISPushSettings.url!)\(ISPushSettings.V2)messages.json?id=\(messageID)"
         
         Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers).responseObject { (response: DataResponse<ISPushMessagesResponse>) in
-            if let response = response.result.value {
-                if !response.results.isEmpty {
-                    completion(response.results[0])
+            
+            switch response.result {
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+                completion(nil)
+                
+            case .success(let value):
+                if !value.results.isEmpty {
+                    completion(value.results.first)
                 } else {
                     completion(nil)
                 }
-            }else{
-                print(response.result.error)
+                
             }
         }
     }

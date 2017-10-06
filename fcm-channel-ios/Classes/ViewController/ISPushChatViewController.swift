@@ -79,8 +79,11 @@ open class ISPushChatViewController: UIViewController, UITableViewDataSource, UI
         setupTableView()
         setupKeyBoardNotification()
         
-        if loadMessagesOnInit { self.loadData() }
+        if loadMessagesOnInit {
+            self.loadData()    
+        }
         
+        self.loadCurrentRulesetDelayed()
         self.txtMessage.delegate = self
         defaultViewSendHeight = viewSendHeight.constant
         self.edgesForExtendedLayout = UIRectEdge();
@@ -273,7 +276,7 @@ open class ISPushChatViewController: UIViewController, UITableViewDataSource, UI
                 self.messageList = self.messageList.reversed()
                 self.tableView.reloadData()
                 self.tableViewScrollToBottom(true)
-                //                self.checkIfMessageHasAnswerOptions()
+//                self.checkIfMessageHasAnswerOptions()
             }
         }
     }
@@ -350,7 +353,11 @@ open class ISPushChatViewController: UIViewController, UITableViewDataSource, UI
                 
                 ISPushManager.sendMessage(contact, message: text, completion: {
                     success in
-                    self.loadCurrentRulesetDelayed()
+                    
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime(uptimeNanoseconds: UInt64(500000000))) {
+                        self.loadData()
+                    }
+//                    self.loadCurrentRulesetDelayed()
                 })
                 
                 self.txtMessage.keyboardType = UIKeyboardType.alphabet
@@ -403,10 +410,68 @@ open class ISPushChatViewController: UIViewController, UITableViewDataSource, UI
         }
     }
     
+    private func getIndexForStepUuid(uuid: Int, flow: ISPushFlow) {
+        
+    }
+    
     private func setCurrentRulesets(rulesets: ISPushFlowRuleset) {
-        if rulesets != nil && rulesets.rules != nil {
-            
+        var showOptions = false
+        var views = [UIView]()
+
+        if rulesets.rules != nil {
+            if let flowRule = rulesets.rules?.first {
+
+                let typeValidation = self.flowTypeManager.getTypeValidationForRule(flowRule)
+                
+                let answerDescription = flowRule.ruleCategory.values.first
+                
+                if answerDescription == "reply" || answerDescription == "All Responses" || answerDescription == "Other" {
+                    // Do nothing
+                } else {
+                    showOptions = true
+                    
+                    let button = UIButton()
+                    button.setTitle(answerDescription, for: UIControlState.normal)
+                    
+                    var stringSize = button.titleLabel!.text!.size(attributes: [NSFontAttributeName : button.titleLabel!.font])
+                    var width = stringSize.width
+                    
+                    if width < 40 {
+                        width = 50
+                    }
+                    
+                    var frame = CGRect(x: 0, y: 0, width: width + 20, height: 40)
+                    button.frame = frame
+                    
+                    button.contentEdgeInsets = UIEdgeInsets(top: 7, left: 7, bottom: 7, right: 7)
+                    button.layer.cornerRadius = 20
+                    button.layer.borderWidth = 2
+                    button.layer.borderColor = self.choiceAnswerBorderColor//UIColor.white.cgColor
+                    button.backgroundColor = self.choiceAnswerButtonColor
+                    button.setTitleColor(self.incomingLabelMsgColor, for: UIControlState.normal)
+                    button.addTarget(self, action: #selector(self.answerTapped), for: UIControlEvents.touchUpInside)
+                    
+                    self.txtMessage.keyboardType = UIKeyboardType.alphabet
+                    views.append(button)
+                    
+                    switch typeValidation.type! {
+                    case ISPushFlowType.openField:
+                        break
+                    case ISPushFlowType.choice:
+                        break
+                    case ISPushFlowType.number:
+                        self.txtMessage.keyboardType = UIKeyboardType.numberPad
+                        break
+                    default:
+                        break
+                    }
+                }
+            }
         }
+        
+        self.scrollViewPage.setCustomViews(views)
+        self.showAnswerOptionWithAnimation(showOptions)
+        self.currentMessageIsShowingOption = showOptions
     }
 }
 

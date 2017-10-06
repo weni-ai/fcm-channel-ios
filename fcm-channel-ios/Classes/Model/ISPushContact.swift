@@ -43,7 +43,7 @@ open class ISPushContact: NSObject, Mappable {
         self.country        <- map["country"]
         self.picture        <- map["picture"]
         self.gender         <- map["gender"]
-        self.pushIdentity        <- map["pushIdentity"]
+        self.pushIdentity   <- map["pushIdentity"]
         self.born           <- map["born"]
     }
     

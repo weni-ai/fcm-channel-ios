@@ -6,8 +6,16 @@
 //
 
 import Foundation
+import ObjectMapper
 
-open class ISPushChannel {
+open class ISPushChannel: NSObject, Mappable {
     open var uuid: String?
     open var name: String?
+    
+    required public init?(map: Map){}
+    
+    open func mapping(map: Map) {
+        self.uuid              <- map["uuid"]
+        self.name              <- map["name"]
+    }
 }

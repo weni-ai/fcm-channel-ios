@@ -23,7 +23,7 @@ open class ISPushFlowRuleset: NSObject, Mappable {
     open var positionX:Int?
     open var positionY:Int?
 
-    open init(uuid: String) {
+    public init(uuid: String) {
         self.uuid = uuid
     }
     required public init?(map: Map){}

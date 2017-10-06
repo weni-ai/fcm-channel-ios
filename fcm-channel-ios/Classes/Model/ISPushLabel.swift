@@ -6,8 +6,16 @@
 //
 
 import Foundation
+import ObjectMapper
 
-open class ISPushLabel {
+open class ISPushLabel: NSObject, Mappable {
     open var uuid: String!
     open var name: String!
+    
+    required public init?(map: Map){}
+    
+    open func mapping(map: Map) {
+        self.uuid              <- map["uuid"]
+        self.name              <- map["name"]
+    }
 }
