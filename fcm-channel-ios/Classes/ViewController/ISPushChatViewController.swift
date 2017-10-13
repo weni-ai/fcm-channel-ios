@@ -15,11 +15,11 @@ open class ISPushChatViewController: UIViewController, UITableViewDataSource, UI
     public var messageList = [ISPushMessage]()
     public var contact:ISPushContact!
     
-    open var incomingBubleMsgColor:UIColor!
-    open var incomingLabelMsgColor:UIColor!
-    open var outgoingBubleMsgColor:UIColor!
-    open var outgoingLabelMsgColor:UIColor!
-    open var botName:String!
+    open var incomingBubleMsgColor: UIColor!
+    open var incomingLabelMsgColor: UIColor!
+    open var outgoingBubleMsgColor: UIColor!
+    open var outgoingLabelMsgColor: UIColor!
+    open var botName: String!
     
     var defaultFieldBottonHeight: CGFloat!
     var choiceAnswerBorderColor: CGColor!
@@ -32,7 +32,7 @@ open class ISPushChatViewController: UIViewController, UITableViewDataSource, UI
     @IBOutlet public var tableView:UITableView!
     @IBOutlet open var scrollView:UIScrollView!
     @IBOutlet open var viewSend:UIView!
-    @IBOutlet public var scrollViewPage:ISScrollViewPage!
+    @IBOutlet public var scrollViewPage: ISScrollViewPage!
     
     var loadMessagesOnInit: Bool = false
     var currentMessageIsShowingOption = false
@@ -41,7 +41,7 @@ open class ISPushChatViewController: UIViewController, UITableViewDataSource, UI
     
     public init( contact: ISPushContact,
                  incomingBubleMsgColor: UIColor = UIColor(with: "#2F97F8"),
-                 incomingLabelMsgColor: UIColor = UIColor.white,
+                 incomingLabelMsgColor: UIColor = UIColor.black,
                  botName: String,
                  outgoingBubleMsgColor: UIColor = UIColor.groupTableViewBackground,
                  outgoingLabelMsgColor: UIColor = UIColor.gray,
@@ -50,7 +50,7 @@ open class ISPushChatViewController: UIViewController, UITableViewDataSource, UI
                  bottonHeight: CGFloat = CGFloat(20),
                  nibName: String = "ISPushChatViewController",
                  bundle: Bundle = Bundle(for: ISPushChatViewController.self),
-                 loadMessagesOnInit: Bool = true) {
+                 loadMessagesOnInit: Bool = true ) {
         
         self.contact = contact
         self.defaultFieldBottonHeight = bottonHeight
@@ -83,7 +83,6 @@ open class ISPushChatViewController: UIViewController, UITableViewDataSource, UI
             self.loadData()    
         }
         
-        self.loadCurrentRulesetDelayed()
         self.txtMessage.delegate = self
         defaultViewSendHeight = viewSendHeight.constant
         self.edgesForExtendedLayout = UIRectEdge();
@@ -276,7 +275,7 @@ open class ISPushChatViewController: UIViewController, UITableViewDataSource, UI
                 self.messageList = self.messageList.reversed()
                 self.tableView.reloadData()
                 self.tableViewScrollToBottom(true)
-//                self.checkIfMessageHasAnswerOptions()
+                self.loadCurrentRulesetDelayed()
             }
         }
     }
@@ -340,24 +339,25 @@ open class ISPushChatViewController: UIViewController, UITableViewDataSource, UI
             
             if text.characters.count > 0 {
                 
-                self.txtMessage.text = ""
-                
-                self.messageList.append(ISPushMessage(msg:text))
-                
-                OperationQueue.main.addOperation {
-                    let indexPath = IndexPath(row: self.messageList.count - 1, section: 0)
-                    self.insertRowInIndex(indexPath)
-                }
-                
-                //self.tableViewScrollToBottom(false)
-                
                 ISPushManager.sendMessage(contact, message: text, completion: {
                     success in
                     
-                    DispatchQueue.main.asyncAfter(deadline: DispatchTime(uptimeNanoseconds: UInt64(500000000))) {
+                    if success {
+                        
+                        self.txtMessage.text = ""
+                        
+                        self.messageList.append(ISPushMessage(msg:text))
+                        
+                        OperationQueue.main.addOperation {
+                            let indexPath = IndexPath(row: self.messageList.count - 1, section: 0)
+                            self.insertRowInIndex(indexPath)
+                        }
+                        
+                        self.tableViewScrollToBottom(false)
+                        
                         self.loadData()
                     }
-//                    self.loadCurrentRulesetDelayed()
+                    
                 })
                 
                 self.txtMessage.keyboardType = UIKeyboardType.alphabet
@@ -366,8 +366,7 @@ open class ISPushChatViewController: UIViewController, UITableViewDataSource, UI
     }
     
     func loadCurrentRulesetDelayed() {
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime(uptimeNanoseconds: UInt64(500000000))) {
-            self.loadData()
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime(uptimeNanoseconds: UInt64(5000000000))) {
             ISPushManager.getFlowRuns(self.contact, completion: { (flowRuns: [ISPushFlowRun]?) -> Void in
                 if let flowRuns = flowRuns {
                     self.getLastRuleset(from: flowRuns.first!)
@@ -400,7 +399,7 @@ open class ISPushChatViewController: UIViewController, UITableViewDataSource, UI
     
     private func getRulesetFor(flow: ISPushFlow, flowStep: ISPushFlowStep) {
         if let uuid = flowStep.node {
-            if let index = flow.ruleSets?.index(of: ISPushFlowRuleset(uuid: uuid)) {
+            if let index = getIndexForStepUuid(uuid: uuid, flow: flow) {
                 if index >= 0 {
                     if let ruleset = flow.ruleSets?[index] {
                         setCurrentRulesets(rulesets: ruleset)
@@ -410,16 +409,26 @@ open class ISPushChatViewController: UIViewController, UITableViewDataSource, UI
         }
     }
     
-    private func getIndexForStepUuid(uuid: Int, flow: ISPushFlow) {
+    private func getIndexForStepUuid(uuid: String, flow: ISPushFlow) -> Int? {
+        if let rulesets = flow.ruleSets {
+            for (i, ruleset) in rulesets.enumerated() {
+                if ruleset.uuid == uuid {
+                    return i
+                }
+            }
+        }
         
+        return nil
     }
     
     private func setCurrentRulesets(rulesets: ISPushFlowRuleset) {
+        self.scrollViewPage.views = []
+        let message = self.messageList.last
         var showOptions = false
         var views = [UIView]()
 
-        if rulesets.rules != nil {
-            if let flowRule = rulesets.rules?.first {
+        if let flowRules = rulesets.rules {
+            for flowRule in flowRules {
 
                 let typeValidation = self.flowTypeManager.getTypeValidationForRule(flowRule)
                 
@@ -467,11 +476,12 @@ open class ISPushChatViewController: UIViewController, UITableViewDataSource, UI
                     }
                 }
             }
+            
+            
+            self.scrollViewPage.setCustomViews(views)
+            self.showAnswerOptionWithAnimation(showOptions)
+            self.currentMessageIsShowingOption = showOptions
         }
-        
-        self.scrollViewPage.setCustomViews(views)
-        self.showAnswerOptionWithAnimation(showOptions)
-        self.currentMessageIsShowingOption = showOptions
     }
 }
 

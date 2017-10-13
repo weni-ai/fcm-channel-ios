@@ -247,9 +247,9 @@ open class ISPushManager: NSObject {
         var params = ["urn": contact.urn!,
                       "fcm_token": contact.pushIdentity!]
         
-        if let name = contact.name {
-            params["name"] = name
-        }
+//        if let name = contact.name {
+//            params["name"] = name
+//        }
         
         Alamofire.request("\(ISPushSettings.handlerURL!)/register/\(ISPushSettings.channel!)", method: .post, parameters: params).responseJSON(completionHandler: {
             (response) in
