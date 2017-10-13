@@ -50,7 +50,7 @@ class LoginViewModel {
                                     User.current.email = email
                                     User.current.nickname = displayName
                                     User.current.key = uid
-                                    User.current.pushIdentity = PushManager.getFCMToken()
+                                    User.current.fcmToken = FCMChannelManager.getFCMToken()
                                     User.current.save() {
                                         success in
                                         completion(success, nil)

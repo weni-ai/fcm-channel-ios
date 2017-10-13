@@ -24,7 +24,7 @@ class LoginViewController: UIViewController {
             (success, error) in
             
             if success {
-                let chatVC = ISPushChatViewController(contact: User.current.pushContact!, botName: "SANDBOX", loadMessagesOnInit: true)
+                let chatVC = FCMChannelChatViewController(contact: User.current.contact!, botName: "SANDBOX", loadMessagesOnInit: true)
                 self.present(UINavigationController(rootViewController: chatVC), animated: true, completion: nil)
             } else {
                 if let error = error {

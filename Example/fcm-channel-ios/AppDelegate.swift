@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         FirebaseApp.configure()
         Messaging.messaging().delegate = self
         requestPermissionForPushNotification(application)
-        PushManager.setupPush()
+        FCMChannelManager.setup()
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
         self.window!.backgroundColor = UIColor.white
@@ -82,15 +82,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         var debugMode = true
         
         Messaging.messaging().apnsToken = deviceToken
-
-//        if let fcmToken = PushManager.getFCMToken() {
-//
-//            URUserManager.updatePushIdentity(user, completion: { success in
-//                guard success else { return }
-//                URGCMManager.onFCMRegistered(user: user)
-//            })
-//        }
-        
     }
     
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
@@ -166,7 +157,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 extension AppDelegate: MessagingDelegate {
     func messaging(_ messaging: Messaging, didRefreshRegistrationToken fcmToken: String) {
         print("Firebase registration token was refreshed: \(fcmToken)")
-        PushManager.saveFCMToken(fcmToken: fcmToken)
+        FCMChannelManager.saveFCMToken(fcmToken: fcmToken)
     }
 }
 

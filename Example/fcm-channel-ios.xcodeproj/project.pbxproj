@@ -13,7 +13,7 @@
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		7AD275F64119E9C663589A0D /* Pods_fcm_channel_ios_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A3C23865CDF5A2C7C02981A /* Pods_fcm_channel_ios_Tests.framework */; };
-		EA650D0F1F7994EA004905DD /* PushManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA650D0A1F7994EA004905DD /* PushManager.swift */; };
+		EA650D0F1F7994EA004905DD /* FCMChannelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA650D0A1F7994EA004905DD /* FCMChannelManager.swift */; };
 		EA650D101F7994EA004905DD /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA650D0C1F7994EA004905DD /* User.swift */; };
 		EA650D111F7994EA004905DD /* Serializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA650D0E1F7994EA004905DD /* Serializable.swift */; };
 		EA650D151F79A405004905DD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA650D131F79A405004905DD /* GoogleService-Info.plist */; };
@@ -51,7 +51,7 @@
 		9A3C23865CDF5A2C7C02981A /* Pods_fcm_channel_ios_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_fcm_channel_ios_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF41517B27DA1D77E7D607C6 /* fcm-channel-ios.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = "fcm-channel-ios.podspec"; path = "../fcm-channel-ios.podspec"; sourceTree = "<group>"; };
 		C5A614BBEA6A83C212905DC9 /* Pods_fcm_channel_ios_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_fcm_channel_ios_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		EA650D0A1F7994EA004905DD /* PushManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushManager.swift; sourceTree = "<group>"; };
+		EA650D0A1F7994EA004905DD /* FCMChannelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FCMChannelManager.swift; sourceTree = "<group>"; };
 		EA650D0C1F7994EA004905DD /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		EA650D0E1F7994EA004905DD /* Serializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Serializable.swift; sourceTree = "<group>"; };
 		EA650D131F79A405004905DD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Supporting Files/GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -188,7 +188,7 @@
 		EA650D091F7994EA004905DD /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				EA650D0A1F7994EA004905DD /* PushManager.swift */,
+				EA650D0A1F7994EA004905DD /* FCMChannelManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -469,7 +469,7 @@
 			files = (
 				EA650D101F7994EA004905DD /* User.swift in Sources */,
 				EA650D111F7994EA004905DD /* Serializable.swift in Sources */,
-				EA650D0F1F7994EA004905DD /* PushManager.swift in Sources */,
+				EA650D0F1F7994EA004905DD /* FCMChannelManager.swift in Sources */,
 				EA650D1A1F79B254004905DD /* LoginViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				EA88724F1F7AD4700017335B /* LoginViewModel.swift in Sources */,

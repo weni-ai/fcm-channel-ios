@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
   s.name             = 'fcm-channel-ios'
   s.version          = '0.1.3'
-  s.summary          = 'FCM Channel iOS is a client library for Push platform.'
+  s.summary          = 'FCM Channel iOS is a client library for Rapid Pro platform.'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-FCM Channel iOS is a client library for Push platform that can be used inside iOS apps to enable users receive and send messages through Firebase Cloud Messaging channel.
+FCM Channel iOS is a client library for Rapid Pro platform that can be used inside iOS apps to enable users receive and send messages through Firebase Cloud Messaging channel.
                        DESC
 
   s.homepage         = 'https://github.com/push-flow/fcm-channel-ios'

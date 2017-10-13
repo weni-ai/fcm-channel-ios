@@ -18,9 +18,9 @@ class User: Serializable {
     var key: String!
     var nickname: String?
     var email: String?
-    var pushIdentity:String?
+    var fcmToken:String?
     var contact_uid: String?
-    var pushContact: ISPushContact?
+    var contact: FCMChannelContact?
     
     override init() {
         super.init()
@@ -29,11 +29,11 @@ class User: Serializable {
     func save(completion: @escaping (_ success: Bool) -> ()) {
         let userRef = User.ref.child(User.current.key)
         
-        PushManager.createPushContact() {
+        FCMChannelManager.createContact() {
             success in
             
             if success {
-                userRef.setValue(["nickname": User.current.nickname, "email": User.current.email, "pushIdentity": User.current.pushIdentity, "contact_uid": User.current.contact_uid]) {
+                userRef.setValue(["nickname": User.current.nickname, "email": User.current.email, "fcmToken": User.current.fcmToken, "contact_uid": User.current.contact_uid]) {
                     error, _ in
                     
                     if error != nil {
@@ -51,20 +51,20 @@ class User: Serializable {
     static func getUser(by key: String, completion: @escaping (_ success: Bool) -> ()) {
         let userRef = User.ref.child(key)
         
-        PushManager.loadPushContact(urn: key) { (pushContact) in
-            if let pushContact = pushContact {
+        FCMChannelManager.loadContact(urn: key) { (contact) in
+            if let contact = contact {
                 userRef.observeSingleEvent(of: .value, with: {
                     (snapshot) in
                     
                     if let value = snapshot.value as? NSDictionary {
-                        if let email = value["email"] as? String, let nickname = value["nickname"] as? String, let pushIdentity = value["pushIdentity"] as? String, let contact_uid = value["contact_uid"] as? String {
+                        if let email = value["email"] as? String, let nickname = value["nickname"] as? String, let fcmToken = value["fcmToken"] as? String, let contact_uid = value["contact_uid"] as? String {
                             
                             User.current.key = key
                             User.current.email = email
                             User.current.nickname = nickname
-                            User.current.pushIdentity = pushIdentity
+                            User.current.fcmToken = fcmToken
                             User.current.contact_uid = contact_uid
-                            User.current.pushContact = pushContact
+                            User.current.contact = contact
                             
                             completion(true)
                         } else {
