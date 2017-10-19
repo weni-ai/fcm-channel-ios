@@ -401,7 +401,7 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
     }
     
     private func isValidRuleset(flowRun: FCMChannelFlowRun) -> Bool {
-        return FCMChannelFlowManager.isFlowActive(flowRun) && flowRun.path != nil && flowRun.path.count > 0
+        return !flowRun.responded && flowRun.path != nil && flowRun.path.count > 0
     }
     
     private func loadFlow(flowRun: FCMChannelFlowRun, latestFlowStep: FCMChannelFlowStep) {
