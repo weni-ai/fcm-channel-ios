@@ -82,7 +82,7 @@ open class RapidProAPI: NSObject {
                 "fcm_token": token
             ]
             
-            let url = "\(handlerUrl)receive/\(channel)"
+            let url = "\(handlerUrl)/receive/\(channel)"
             
             Alamofire.request(url, method: .post, parameters: params).responseString {
                 (response) in
