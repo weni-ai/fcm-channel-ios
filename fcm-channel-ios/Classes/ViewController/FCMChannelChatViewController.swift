@@ -36,6 +36,8 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
     @IBOutlet open var viewSend:UIView!
     @IBOutlet public var scrollViewPage: ISScrollViewPage!
     
+    fileprivate var isSendingAnswer = false
+    
     var loadMessagesOnInit: Bool = false
     var currentMessageIsShowingOption = false
     let flowTypeManager = FCMChannelFlowTypeManager()
@@ -106,6 +108,10 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
     open func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+    
+    open func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        return true 
     }
     
     //MARK: Class Methods
@@ -180,7 +186,6 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
     }
     
     fileprivate func showAnswerOptionWithAnimation(_ show:Bool) {
-        
         if show && currentMessageIsShowingOption{
             return
         }
@@ -348,18 +353,16 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
     //MARK: Button Events
     
     @IBAction public func btSendTapped(_ button:UIButton) {
-        
+        guard !isSendingAnswer else { return }
         if let text = self.txtMessage.text {
             
-            if text.characters.count > 0 {
-                
+            if text.count > 0 {
+                isSendingAnswer = true
                 RapidProAPI.sendMessage(contact, message: text, completion: {
                     success in
-                    
+                    self.isSendingAnswer = false
                     if success {
-                        
                         self.txtMessage.text = ""
-                        
                         self.messageList.append(FCMChannelMessage(msg:text))
                         
                         OperationQueue.main.addOperation {
@@ -368,12 +371,7 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
                         }
                         
                         self.tableViewScrollToBottom(false)
-                        
                         self.loadCurrentRulesetDelayed()
-                        
-                        DispatchQueue.main.asyncAfter(deadline: DispatchTime(uptimeNanoseconds: UInt64(500000000))) {
-                            self.loadData()
-                        }
                     }
                     
                 })
