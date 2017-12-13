@@ -231,10 +231,8 @@ open class RapidProAPI: NSObject {
                 completion(nil)
                 
             case .success(let value):
-                if let response = value as? [String: String] {
-                    if let uuid = response["contact_uuid"] {
-                        completion(uuid)
-                    }
+                if let response = value as? [String: String], let uuid = response["contact_uuid"]  {
+                    completion(uuid)
                 } else {
                     completion(nil)
                 }

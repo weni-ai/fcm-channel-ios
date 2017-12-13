@@ -160,6 +160,9 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
         message.text = text
         message.id = Int(object["message_id"] as! String)
         
+        //TODO: temporary workaround for duplicated push notifications. Remove as soon as RapidPro fixes this.
+        guard !messageList.contains(where: {$0.id == message.id}) else { return }
+        
         self.messageList.append(message)
         print(message)
         let indexPath = IndexPath(row: self.messageList.count - 1, section: 0)
