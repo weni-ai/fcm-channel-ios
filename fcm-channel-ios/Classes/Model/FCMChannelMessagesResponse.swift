@@ -11,7 +11,7 @@ import ObjectMapper
 
 class FCMChannelMessagesResponse: NSObject, Mappable {
 
-    var results:[FCMChannelMessage]!
+    var results:[FCMChannelMessage]?
 
     required init?(map: Map){}
 

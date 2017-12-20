@@ -140,7 +140,7 @@ open class RapidProAPI: NSObject {
                 completion(nil)
                 
             case .success(let value):
-                if value.results != nil && !value.results.isEmpty {
+                if value.results != nil && !value.results!.isEmpty {
                     completion(value.results)
                 } else {
                     completion(nil)
@@ -163,8 +163,8 @@ open class RapidProAPI: NSObject {
                 completion(nil)
                 
             case .success(let value):
-                if !value.results.isEmpty {
-                    completion(value.results.first)
+                if !(value.results?.isEmpty ?? true) {
+                    completion(value.results!.first)
                 } else {
                     completion(nil)
                 }
