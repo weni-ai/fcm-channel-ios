@@ -82,7 +82,7 @@ open class RapidProAPI: NSObject {
                 "fcm_token": token
             ]
             
-            let url = "\(handlerUrl)/receive/\(channel)"
+            let url = "\(handlerUrl)/receive/\(channel)/"
             
             Alamofire.request(url, method: .post, parameters: params).responseString {
                 (response) in
@@ -216,12 +216,13 @@ open class RapidProAPI: NSObject {
     }
     
     open class func registerContact(_ contact: FCMChannelContact, completion: @escaping (_ uuid: String?) -> Void) {
+        
         let name = contact.name ?? ""
         var params = ["urn": contact.urn!,
                       "name": name,
                       "fcm_token": contact.fcmToken!]
         
-        Alamofire.request("\(FCMChannelSettings.handlerURL!)/register/\(FCMChannelSettings.channel!)", method: .post, parameters: params).responseJSON( completionHandler: {
+        Alamofire.request("\(FCMChannelSettings.handlerURL!)/register/\(FCMChannelSettings.channel!)/", method: .post, parameters: params).responseJSON( completionHandler: {
             (response) in
             
             switch response.result {
