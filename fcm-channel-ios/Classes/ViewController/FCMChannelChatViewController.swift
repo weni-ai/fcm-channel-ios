@@ -374,7 +374,7 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
                         }
                         
                         self.tableViewScrollToBottom(false)
-                        self.loadCurrentRulesetDelayed()
+                        self.loadCurrentRulesetDelayed(delay: 3)
                     }
                     
                 })
@@ -384,25 +384,36 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
         }
     }
     
-    func loadCurrentRulesetDelayed() {
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime(uptimeNanoseconds: UInt64(500000000))) {
+    func loadCurrentRulesetDelayed(delay:Int? = 2) {
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + Double(delay!)) {
             RapidProAPI.getFlowRuns(self.contact, completion: { (flowRuns: [FCMChannelFlowRun]?) -> Void in
                 if let flowRuns = flowRuns {
                     self.getLastRuleset(from: flowRuns.first!)
                 }
             })
         }
+        
     }
     
     private func getLastRuleset(from flowRun: FCMChannelFlowRun) {
-        if isValidRuleset(flowRun: flowRun) {
+        if isFlowActive(flowRun: flowRun) {
             let latestFlowStep = flowRun.path.last
             loadFlow(flowRun: flowRun, latestFlowStep: latestFlowStep!)
         }
     }
     
-    private func isValidRuleset(flowRun: FCMChannelFlowRun) -> Bool {
-        return flowRun.responded && flowRun.path != nil && flowRun.path.count > 0
+    private func isFlowActive(flowRun:FCMChannelFlowRun) -> Bool {
+        guard let exit_type = flowRun.exitType else {
+            return true
+        }
+        
+        let exitType = !(exit_type == "completed" || exit_type == "expired")
+        
+        if exitType && flowRun.path != nil && !flowRun.path.isEmpty {
+            return true
+        }
+        return false
     }
     
     private func loadFlow(flowRun: FCMChannelFlowRun, latestFlowStep: FCMChannelFlowStep) {
