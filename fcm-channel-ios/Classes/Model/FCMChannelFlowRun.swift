@@ -26,8 +26,8 @@ open class FCMChannelFlowRun: NSObject, Mappable {
         self.contact    <- map["contact"]
         self.path       <- map["path"]
         self.responded  <- map["responded"]
-        self.createdOn  <- (map["created_on"], FCMChannelRapidPRODateTransform())
-        self.modifiedOn <- (map["modified_on"], FCMChannelRapidPRODateTransform())
+        self.createdOn  <- (map["created_on"], FCMChannelDateTransform())
+        self.modifiedOn <- (map["modified_on"], FCMChannelDateTransform())
         self.exitType   <- map["exit_type"]
     }
 }

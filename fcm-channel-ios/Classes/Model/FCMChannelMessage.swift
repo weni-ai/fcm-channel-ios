@@ -22,7 +22,7 @@ public enum FCMChannelMessageType:String {
 open class FCMChannelMessage: NSObject, Mappable {
 
     open var id: Int?
-    open var channel: FCMChannel?
+    open var channel: FCMChannelModel?
     open var broadcast: Int?
     open var contact: FCMChannelContact?
     open var urn: String?
@@ -60,8 +60,8 @@ open class FCMChannelMessage: NSObject, Mappable {
         self.archived        <- map["archived"]
         self.visibility      <- map["visibility"]
         self.labels          <- map["labels"]
-        self.createdOn       <- (map["created_on"], FCMChannelRapidPRODateTransform())
-        self.sentOn          <- (map["sent_on"], FCMChannelRapidPRODateTransform())
+        self.createdOn       <- (map["created_on"], FCMChannelDateTransform())
+        self.sentOn          <- (map["sent_on"], FCMChannelDateTransform())
         self.text            <- map["text"]
         self.ruleset         <- map["ruleset"]
     }

@@ -8,7 +8,7 @@
 import Foundation
 import ObjectMapper
 
-open class FCMChannel: NSObject, Mappable {
+open class FCMChannelModel: NSObject, Mappable {
     
     open var uuid: String?
     open var name: String?

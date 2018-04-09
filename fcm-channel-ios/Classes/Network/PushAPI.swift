@@ -1,5 +1,5 @@
 //
-//  URRapidProManager.swift
+//  PushAPI.swift
 //  ureport
 //
 //  Created by Daniel Amaral on 10/09/15.
@@ -10,13 +10,13 @@ import UIKit
 import Alamofire
 import AlamofireObjectMapper
 
-protocol RapidProAPIDelegate {
+protocol PushAPIDelegate {
     func newMessageReceived(_ message:String)
 }
 
-open class RapidProAPI: NSObject {
+open class PushAPI: NSObject {
     
-    var delegate: RapidProAPIDelegate?
+    var delegate: PushAPIDelegate?
     static var sendingAnswers:Bool = false
     
     static let headers = [
@@ -45,7 +45,7 @@ open class RapidProAPI: NSObject {
     
     class func getFlowRuns(_ contact: FCMChannelContact, completion: @escaping ([FCMChannelFlowRun]?) -> Void) {
         
-        let afterDate = FCMChannelDateUtil.dateFormatterRapidPro(getMinimumDate())
+        let afterDate = FCMChannelDateUtil.dateFormatter(getMinimumDate())
         let url = "\(FCMChannelSettings.url!)\(FCMChannelSettings.V2)runs.json?contact=\(contact.uuid!)&after=\(afterDate)"
         
         Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers).responseObject {
@@ -101,32 +101,6 @@ open class RapidProAPI: NSObject {
         }
     }
     
-    class func sendReceivedMessage(_ contactKey:String, text:String) {
-        let url = FCMChannelSettings.url!
-        let parameters = [
-            "from": contactKey,
-            "text": text
-        ]
-        Alamofire.request(url, method: .post, parameters: parameters)
-    }
-    
-    class func getContactFields(_ completion: @escaping ([String]?) -> Void) {
-        Alamofire.request("\(FCMChannelSettings.url!)\(FCMChannelSettings.V1)fields.json", method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers).responseJSON { (response: DataResponse<Any>) in
-            if let response = response.result.value as? NSDictionary {
-                var arrayFields:[String] = []
-                if let results = response.object(forKey: "results") as? [NSDictionary] {
-                    
-                    for dictionary in results {
-                        arrayFields.append(dictionary.object(forKey: "key") as! String)
-                    }
-                    completion(arrayFields)
-                } else {
-                    completion(arrayFields)
-                }
-            }
-        }
-    }
-    
     open class func getMessagesFromContact(_ contact: FCMChannelContact, completion: @escaping (_ messages:[FCMChannelMessage]?) -> Void ) {
         
         let url = "\(FCMChannelSettings.url!)\(FCMChannelSettings.V2)messages.json?contact=\(contact.uuid!)"
@@ -173,54 +147,15 @@ open class RapidProAPI: NSObject {
         }
     }
     
-    open class func saveContact(_ contact: FCMChannelContact, groups:[String], includeCustomFieldsAndValues:[[String:AnyObject]]?, completion: @escaping (_ response: NSDictionary) -> Void) {
-        
-        FCMChannelRapidProContactUtil.buildRapidProContactRootDictionary(contact, groups: groups, includeCustomFieldsAndValues: includeCustomFieldsAndValues) {
-            (rootDicionary) in
-            
-            Alamofire.request("\(FCMChannelSettings.url!)\(FCMChannelSettings.V1)contacts.json", method: .post, parameters: rootDicionary.copy() as! [String : AnyObject] , encoding: JSONEncoding.default, headers: headers).responseJSON(completionHandler: {
-                (response:DataResponse<Any>) in
-                
-                if let response = response.result.value {
-                    completion(response as! NSDictionary)
-                }
-            })
-        }
-    }
-    
-    open class func loadContact(fromUrn urn: String, completion: @escaping (_ contact: FCMChannelContact?) -> Void) {
-        let url = "\(FCMChannelSettings.url!)\(FCMChannelSettings.V1)contacts.json?urns=\(urn)"
-        
-        let headers = [
-            "Authorization": FCMChannelSettings.token!
-        ]
-        
-        Alamofire.request(url, method: .get, headers: headers).responseJSON {
-            (response: DataResponse<Any>) in
-            
-            if let response = response.result.value as? [String: Any] {
-                guard let results = response["results"] as? [[String: Any]], results.count > 0 else {
-                    completion(nil)
-                    return
-                }
-                
-                let firstResult = results.first!
-                let uuid = firstResult["uuid"] as! String
-                let name = firstResult["name"] as! String
-                var contact = FCMChannelContact(urn: urn, name: name, fcmToken: "")
-                contact.uuid = uuid
-                
-                completion(contact)
-            }
-        }
-    }
-    
     open class func registerContact(_ contact: FCMChannelContact, completion: @escaping (_ uuid: String?) -> Void) {
         
         let name = contact.name ?? ""
-        var params = ["urn": contact.urn!,
+        let params = ["urn": contact.urn!,
                       "name": name,
                       "fcm_token": contact.fcmToken!]
+        
+        print(FCMChannelSettings.handlerURL!)
+        print(FCMChannelSettings.channel!)
         
         Alamofire.request("\(FCMChannelSettings.handlerURL!)/register/\(FCMChannelSettings.channel!)/", method: .post, parameters: params).responseJSON( completionHandler: {
             (response) in

@@ -14,20 +14,20 @@ open class FCMChannelDateUtil: NSObject {
         return DateFormatter.localizedString(from: date, dateStyle: DateFormatter.Style.medium, timeStyle: DateFormatter.Style.none)
     }
     
-    open class func birthDayFormatterRapidPro(_ date:Date,brFormat:Bool) -> String{
+    open class func birthDayFormatter(_ date:Date,brFormat:Bool) -> String{
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = brFormat == true ? "dd-MM-yyyy HH:mm" : "MM-dd-yyyy HH:mm" //format style. Browse online to get a format that fits your needs.
         return dateFormatter.string(from: date)
     }
     
-    open class func dateFormatterRapidPro(_ date:Date) -> String{
+    open class func dateFormatter(_ date:Date) -> String{
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SS'Z'"
         dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
         return dateFormatter.string(from: date)
     }
     
-    open class func dateParserRapidPro(_ date:String) -> Date {
+    open class func dateParser(_ date:String) -> Date {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SS'Z'"
         dateFormatter.timeZone = TimeZone(abbreviation: "UTC")

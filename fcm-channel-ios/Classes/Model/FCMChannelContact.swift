@@ -50,4 +50,42 @@ open class FCMChannelContact: NSObject, Mappable {
     open class func formatExtContactId(_ key:String) -> String {
         return key.replacingOccurrences(of: "+", with: "%2B")
     }
+    
+    public static func current() -> FCMChannelContact? {
+        let defaults: UserDefaults = UserDefaults.standard
+        
+        var contact: FCMChannelContact?
+        if let encodedData = defaults.object(forKey: "fcmchannelcontact") as? Data,
+            let jsonString =  NSKeyedUnarchiver.unarchiveObject(with: encodedData) as? String {
+            contact = FCMChannelContact(JSONString: jsonString)
+        }
+        return contact
+    }
+    
+    public static func deactivateChannelContact() {
+        let defaults: UserDefaults = UserDefaults.standard
+        defaults.removeObject(forKey: "fcmchannelcontact")
+        defaults.synchronize()
+    }
+    
+    static func createContactAndSave(fcmToken:String, completion: @escaping (_ contact: FCMChannelContact?) -> ()) {
+        
+        let contact = FCMChannelContact(urn: fcmToken, name: "", fcmToken: fcmToken)
+        PushAPI.registerContact(contact) {
+            uuid in
+            if let uuid = uuid {
+                contact.uuid = uuid
+                let defaults: UserDefaults = UserDefaults.standard
+                let encodedObject: Data = NSKeyedArchiver.archivedData(withRootObject: contact.toJSONString() as Any)
+                defaults.set(encodedObject, forKey: "fcmchannelcontact")
+                defaults.synchronize()
+                
+                completion(contact)
+            } else {
+                print("Error: User couldn't register to channel.")
+                completion(nil)
+            }
+        }
+    }
+    
 }

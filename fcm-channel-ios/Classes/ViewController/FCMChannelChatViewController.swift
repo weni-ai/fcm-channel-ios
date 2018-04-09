@@ -132,7 +132,7 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: .UIKeyboardWillHide, object: nil)
     }
     
-    func keyboardWillShow(notification: NSNotification) {
+    @objc func keyboardWillShow(notification: NSNotification) {
         self.viewSendBottom.constant = (notification.userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue.height
         
         UIView.animate(withDuration: 0.5, animations: {
@@ -142,7 +142,7 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
         self.tableViewScrollToBottom(false)
     }
     
-    func keyboardWillHide(notification: NSNotification) {
+    @objc func keyboardWillHide(notification: NSNotification) {
         self.viewSendBottom.constant = defaultFieldBottonHeight
         
         UIView.animate(withDuration: 0.5, animations: {
@@ -150,7 +150,7 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
         })
     }
     
-    open func newMessageReceived(_ notification:Notification) {
+    @objc open func newMessageReceived(_ notification:Notification) {
         
         let message = FCMChannelMessage()
         
@@ -160,7 +160,7 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
         message.text = text
         message.id = Int(object["message_id"] as! String)
         
-        //TODO: temporary workaround for duplicated push notifications. Remove as soon as RapidPro fixes this.
+        //TODO: temporary workaround for duplicated push notifications. Remove as soon as Push fixes this.
         guard !messageList.contains(where: {$0.id == message.id}) else { return }
         
         self.messageList.append(message)
@@ -226,7 +226,7 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
         var showOptions = false
         var views = [UIView]()
         
-        RapidProAPI.getMessageByID(message!.id!) { (message) in
+        PushAPI.getMessageByID(message!.id!) { (message) in
             
             if let message = message {
                 
@@ -247,14 +247,14 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
                         let button = UIButton()
                         button.setTitle(answerDescription, for: UIControlState.normal)
                         
-                        var stringSize = button.titleLabel!.text!.size(attributes: [NSFontAttributeName : button.titleLabel!.font])
+                        let stringSize = button.titleLabel!.text!.size(withAttributes: [NSAttributedStringKey.font : button.titleLabel!.font])
                         var width = stringSize.width
                         
                         if width < 40 {
                             width = 50
                         }
                         
-                        var frame = CGRect(x: 0, y: 0, width: width + 20, height: 40)
+                        let frame = CGRect(x: 0, y: 0, width: width + 20, height: 40)
                         button.frame = frame
                         
                         //button.contentEdgeInsets = UIEdgeInsets(top: 7, left: 7, bottom: 7, right: 7)
@@ -291,7 +291,7 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
     
     open func loadData() {
         MBProgressHUD.showAdded(to: self.view, animated: true)
-        RapidProAPI.getMessagesFromContact(contact) { (messages) in
+        PushAPI.getMessagesFromContact(contact) { (messages) in
             MBProgressHUD.hide(for: self.view, animated: true)
             if let messages = messages {
                 self.messageList = messages
@@ -349,7 +349,6 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
     }
     
     open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath)
         self.txtMessage.resignFirstResponder()
     }
     
@@ -361,7 +360,7 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
             
             if text.count > 0 {
                 isSendingAnswer = true
-                RapidProAPI.sendMessage(contact, message: text, completion: {
+                PushAPI.sendMessage(contact, message: text, completion: {
                     success in
                     self.isSendingAnswer = false
                     if success {
@@ -387,7 +386,7 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
     func loadCurrentRulesetDelayed(delay:Int? = 2) {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + Double(delay!)) {
-            RapidProAPI.getFlowRuns(self.contact, completion: { (flowRuns: [FCMChannelFlowRun]?) -> Void in
+            PushAPI.getFlowRuns(self.contact, completion: { (flowRuns: [FCMChannelFlowRun]?) -> Void in
                 if let flowRuns = flowRuns {
                     self.getLastRuleset(from: flowRuns.first!)
                 }
@@ -410,7 +409,7 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
         
         let exitType = !(exit_type == "completed" || exit_type == "expired")
         
-        if exitType && flowRun.path != nil && !flowRun.path.isEmpty {
+        if flowRun.path != nil && !flowRun.path.isEmpty {
             return true
         }
         return false
@@ -418,7 +417,7 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
     
     private func loadFlow(flowRun: FCMChannelFlowRun, latestFlowStep: FCMChannelFlowStep) {
         if let uuid = flowRun.flow.uuid {
-            RapidProAPI.getFlowDefinition(uuid) {
+            PushAPI.getFlowDefinition(uuid) {
                 (flowDefinition) in
                 if let lastFlow = flowDefinition?.flows?.last {
                     self.getRulesetFor(flow: lastFlow, flowStep: latestFlowStep)
@@ -453,7 +452,6 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
     
     private func setCurrentRulesets(rulesets: FCMChannelFlowRuleset) {
         self.scrollViewPage.views = []
-        let message = self.messageList.last
         var showOptions = false
         var views = [UIView]()
 
@@ -472,14 +470,14 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
                     let button = UIButton()
                     button.setTitle(answerDescription, for: UIControlState.normal)
                     
-                    var stringSize = button.titleLabel!.text!.size(attributes: [NSFontAttributeName : button.titleLabel!.font])
+                    let stringSize = button.titleLabel!.text!.size(withAttributes: [NSAttributedStringKey.font : button.titleLabel!.font])
                     var width = stringSize.width
                     
                     if width < 40 {
                         width = 50
                     }
                     
-                    var frame = CGRect(x: 0, y: 0, width: width + 20, height: 40)
+                    let frame = CGRect(x: 0, y: 0, width: width + 20, height: 40)
                     button.frame = frame
                     
                     button.contentEdgeInsets = UIEdgeInsets(top: 7, left: 7, bottom: 7, right: 7)

@@ -27,6 +27,6 @@ open class FCMChannelFlowMetadata: NSObject, Mappable {
         self.name           <- map["name"]
         self.revision       <- map["revision"]
         self.id             <- map["id"]
-        self.savedOn        <- (map["save_on"], FCMChannelRapidPRODateTransform())
+        self.savedOn        <- (map["save_on"], FCMChannelDateTransform())
     }
 }
