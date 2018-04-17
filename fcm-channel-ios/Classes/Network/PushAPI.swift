@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import AlamofireObjectMapper
+import ObjectMapper
 
 protocol PushAPIDelegate {
     func newMessageReceived(_ message:String)
@@ -147,15 +148,40 @@ open class PushAPI: NSObject {
         }
     }
     
+    open class func fetchContact(completion: @escaping (_ success:Bool, _ error:Error?) -> Void) {
+        guard let contact = FCMChannelContact.current() else {
+            completion(false, nil)
+            return
+        }
+        
+        let url = "\(FCMChannelSettings.url!)\(FCMChannelSettings.V2)contacts.json?urns=\(contact.urn!)"
+        
+        Alamofire.request(url, method: .get, headers: headers).responseJSON {
+            (response: DataResponse<Any>) in
+            
+            if let response = response.result.value as? [String: Any] {
+                guard let results = response["results"] as? [[String: Any]], results.count > 0 else {
+                    completion(false,nil)
+                    return
+                }
+                
+                let data = results.first!
+                
+                let contact = Mapper<FCMChannelContact>().map(JSONObject: data)!
+                FCMChannelContact.setActive(contact: contact)
+                completion(true,nil)
+            }else if let error = response.result.error {
+                completion(false,error)
+            }
+        }
+    }
+    
     open class func registerContact(_ contact: FCMChannelContact, completion: @escaping (_ uuid: String?) -> Void) {
         
         let name = contact.name ?? ""
         let params = ["urn": contact.urn!,
                       "name": name,
-                      "fcm_token": contact.fcmToken!]
-        
-        print(FCMChannelSettings.handlerURL!)
-        print(FCMChannelSettings.channel!)
+                      "fcm_token": contact.fcmToken!] as [String:Any]
         
         Alamofire.request("\(FCMChannelSettings.handlerURL!)/register/\(FCMChannelSettings.channel!)/", method: .post, parameters: params).responseJSON( completionHandler: {
             (response) in

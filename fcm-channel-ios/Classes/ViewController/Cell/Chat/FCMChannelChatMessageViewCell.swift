@@ -26,7 +26,7 @@ open class FCMChannelChatMessageViewCell: UITableViewCell, MDHTMLLabelDelegate {
     override open func awakeFromNib() {
         super.awakeFromNib()
         self.selectionStyle = .none
-        baloonView.layer.cornerRadius = 6.0
+        baloonView.layer.cornerRadius = 20
         self.contentMediaView.layer.borderColor = self.baloonView.backgroundColor?.cgColor
         self.contentMediaView.layer.borderWidth = 3
     }

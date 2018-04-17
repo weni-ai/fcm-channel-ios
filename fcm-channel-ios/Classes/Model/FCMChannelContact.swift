@@ -23,6 +23,7 @@ open class FCMChannelContact: NSObject, Mappable {
     open var gender: String?
     open var fcmToken: String?
     open var born: String?
+    open var fields: [String:Any]?
     
     public init(urn: String, name: String, fcmToken: String) {
         self.urn = urn
@@ -45,6 +46,7 @@ open class FCMChannelContact: NSObject, Mappable {
         self.gender         <- map["gender"]
         self.fcmToken   <- map["fcmToken"]
         self.born           <- map["born"]
+        self.fields           <- map["fields"]
     }
     
     open class func formatExtContactId(_ key:String) -> String {
@@ -68,6 +70,13 @@ open class FCMChannelContact: NSObject, Mappable {
         defaults.synchronize()
     }
     
+    static func setActive(contact:FCMChannelContact) {
+        let defaults: UserDefaults = UserDefaults.standard
+        let encodedObject: Data = NSKeyedArchiver.archivedData(withRootObject: contact.toJSONString() as Any)
+        defaults.set(encodedObject, forKey: "fcmchannelcontact")
+        defaults.synchronize()
+    }
+    
     static func createContactAndSave(fcmToken:String, completion: @escaping (_ contact: FCMChannelContact?) -> ()) {
         
         let contact = FCMChannelContact(urn: fcmToken, name: "", fcmToken: fcmToken)
@@ -75,11 +84,7 @@ open class FCMChannelContact: NSObject, Mappable {
             uuid in
             if let uuid = uuid {
                 contact.uuid = uuid
-                let defaults: UserDefaults = UserDefaults.standard
-                let encodedObject: Data = NSKeyedArchiver.archivedData(withRootObject: contact.toJSONString() as Any)
-                defaults.set(encodedObject, forKey: "fcmchannelcontact")
-                defaults.synchronize()
-                
+                setActive(contact: contact)
                 completion(contact)
             } else {
                 print("Error: User couldn't register to channel.")

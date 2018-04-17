@@ -32,7 +32,6 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
     @IBOutlet public var viewSendHeight:NSLayoutConstraint!
     @IBOutlet var viewSendBottom:NSLayoutConstraint!
     @IBOutlet public var tableView:UITableView!
-    @IBOutlet open var scrollView:UIScrollView!
     @IBOutlet open var viewSend:UIView!
     @IBOutlet public var scrollViewPage: ISScrollViewPage!
     
@@ -168,7 +167,7 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
         let indexPath = IndexPath(row: self.messageList.count - 1, section: 0)
         insertRowInIndex(indexPath)
         
-        checkIfMessageHasAnswerOptions()
+        self.loadCurrentRulesetDelayed(delay: 1)
     }
     
     open func setupScrollViewPage() {
@@ -177,7 +176,7 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
         self.scrollViewPage.scrollViewPageDelegate = self
     }
     
-    @objc fileprivate func answerTapped(_ button:UIButton) {
+    @objc open func answerTapped(_ button:UIButton) {
         currentMessageIsShowingOption = false
         showAnswerOptionWithAnimation(false)
         self.txtMessage.text = button.titleLabel?.text
@@ -198,6 +197,9 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
         UIView.animate(withDuration: 0.1, animations: {
             self.view.layoutIfNeeded()
         }, completion: { (finish) in
+            guard !self.messageList.isEmpty else {
+                return
+            }
             self.tableView.scrollToRow(at: IndexPath(row: self.messageList.count - 1, section: 0), at: UITableViewScrollPosition.top, animated: false)
         })
     }
@@ -218,75 +220,6 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
             }
             
         })
-    }
-    
-    fileprivate func checkIfMessageHasAnswerOptions() {
-        self.scrollViewPage.views = []
-        let message = self.messageList.last
-        var showOptions = false
-        var views = [UIView]()
-        
-        PushAPI.getMessageByID(message!.id!) { (message) in
-            
-            if let message = message {
-                
-                if let ruleset = message.ruleset {
-                    
-                    for flowRule in (ruleset.rules)! {
-                        
-                        let typeValidation = self.flowTypeManager.getTypeValidationForRule(flowRule)
-                        
-                        let answerDescription = flowRule.ruleCategory.values.first
-                        
-                        if answerDescription == "reply" || answerDescription == "All Responses" || answerDescription == "Other" {
-                            continue
-                        } else {
-                            showOptions = true
-                        }
-                        
-                        let button = UIButton()
-                        button.setTitle(answerDescription, for: UIControlState.normal)
-                        
-                        let stringSize = button.titleLabel!.text!.size(withAttributes: [NSAttributedStringKey.font : button.titleLabel!.font])
-                        var width = stringSize.width
-                        
-                        if width < 40 {
-                            width = 50
-                        }
-                        
-                        let frame = CGRect(x: 0, y: 0, width: width + 20, height: 40)
-                        button.frame = frame
-                        
-                        //button.contentEdgeInsets = UIEdgeInsets(top: 7, left: 7, bottom: 7, right: 7)
-                        button.layer.cornerRadius = 20
-                        button.layer.borderWidth = 2
-                        button.layer.borderColor = self.choiceAnswerBorderColor//UIColor.white.cgColor
-                        button.backgroundColor = self.choiceAnswerButtonColor
-                        button.setTitleColor(self.incomingLabelMsgColor, for: UIControlState.normal)
-                        button.addTarget(self, action: #selector(self.answerTapped), for: UIControlEvents.touchUpInside)
-                        
-                        self.txtMessage.keyboardType = UIKeyboardType.alphabet
-                        views.append(button)
-                        
-                        switch typeValidation.type! {
-                        case FCMChannelFlowType.openField:
-                            break
-                        case FCMChannelFlowType.choice:
-                            break
-                        case FCMChannelFlowType.number:
-                            self.txtMessage.keyboardType = UIKeyboardType.numberPad
-                            break
-                        default: break
-                        }
-                        
-                    }
-                    self.scrollViewPage.setCustomViews(views)
-                    
-                    self.showAnswerOptionWithAnimation(showOptions)
-                    self.currentMessageIsShowingOption = showOptions
-                }
-            }
-        }
     }
     
     open func loadData() {
@@ -485,10 +418,13 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
                     button.layer.borderWidth = 2
                     button.layer.borderColor = self.choiceAnswerBorderColor//UIColor.white.cgColor
                     button.backgroundColor = self.choiceAnswerButtonColor
-                    button.setTitleColor(self.incomingLabelMsgColor, for: UIControlState.normal)
+                    button.setTitleColor(self.outgoingLabelMsgColor, for: UIControlState.normal)
                     button.addTarget(self, action: #selector(self.answerTapped), for: UIControlEvents.touchUpInside)
                     
                     self.txtMessage.keyboardType = UIKeyboardType.alphabet
+                    let viewSpace = UIView(frame: CGRect(x: 0, y: 0, width: 8, height: 40))
+                    viewSpace.backgroundColor = UIColor.clear
+                    views.append(viewSpace)
                     views.append(button)
                     
                     switch typeValidation.type! {
