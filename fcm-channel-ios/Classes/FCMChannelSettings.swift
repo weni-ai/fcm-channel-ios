@@ -10,28 +10,25 @@ import UIKit
 
 open class FCMChannelSettings: NSObject {
 
-    open static var token:String!
-    open static var channel:String!
-    open static var url:String!
-    open static var handlerURL:String!
+    open var token:String!
+    open var channel:String!
+    open var url:String!
+    open var handlerURL:String!
 
     static let preferedLanguageKey = "language"
     static let defaultLanguage = "en"
     static let V1 = "v1/"
     static let V2 = "v2/"
 
-//    open static var sharedInstance:FCMChannelSettings!
-
-//    required public init(token:String,channel:String,url:String,handlerURL:String) {
-//        super.init()
-//        FCMChannelSettings.sharedInstance = self
-//    }
-
-    open class func setConfiguration(_ token:String, channel:String) {
+    static var shared:FCMChannelSettings!
+    
+    init(_ token:String, channel:String) {
+        super.init()
         self.token = token
         self.channel = channel
         self.url = "https://push.ilhasoft.mobi/api/"
         self.handlerURL = "https://push.ilhasoft.mobi/handlers/fcm/"
+        FCMChannelSettings.shared = self
     }
 
     open class func savePreferedLanguage(_ language:String) {

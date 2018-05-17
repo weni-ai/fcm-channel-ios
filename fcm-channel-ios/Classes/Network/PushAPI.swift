@@ -21,12 +21,12 @@ open class PushAPI: NSObject {
     static var sendingAnswers:Bool = false
     
     static let headers = [
-        "Authorization": FCMChannelSettings.token!
+        "Authorization": FCMChannelSettings.shared.token!
     ]
     
     class func getFlowDefinition(_ flowUuid: String, completion:@escaping (FCMChannelFlowDefinition?) -> Void) {
         
-        let url = "\(FCMChannelSettings.url!)\(FCMChannelSettings.V2)definitions.json?flow=\(flowUuid)"
+        let url = "\(FCMChannelSettings.shared.url!)\(FCMChannelSettings.V2)definitions.json?flow=\(flowUuid)"
         
         Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers).responseObject {
             (response: DataResponse<FCMChannelFlowDefinition>) in
@@ -47,7 +47,7 @@ open class PushAPI: NSObject {
     class func getFlowRuns(_ contact: FCMChannelContact, completion: @escaping ([FCMChannelFlowRun]?) -> Void) {
         
         let afterDate = FCMChannelDateUtil.dateFormatter(getMinimumDate())
-        let url = "\(FCMChannelSettings.url!)\(FCMChannelSettings.V2)runs.json?contact=\(contact.uuid!)&after=\(afterDate)"
+        let url = "\(FCMChannelSettings.shared.url!)\(FCMChannelSettings.V2)runs.json?contact=\(contact.uuid!)&after=\(afterDate)"
         
         Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers).responseObject {
             
@@ -76,7 +76,7 @@ open class PushAPI: NSObject {
     }
     
     class func sendMessage(_ contact: FCMChannelContact, message: String, completion:@escaping (_ success: Bool) -> Void) {
-        if let token = contact.fcmToken/* FCMChannelSettings.token*/, let channel = FCMChannelSettings.channel, let urn = contact.urn, let handlerUrl = FCMChannelSettings.handlerURL {
+        if let token = contact.fcmToken, let channel = FCMChannelSettings.shared.channel, let urn = contact.urn, let handlerUrl = FCMChannelSettings.shared.handlerURL {
             let params = [
                 "from": urn,
                 "msg": message,
@@ -104,7 +104,7 @@ open class PushAPI: NSObject {
     
     open class func getMessagesFromContact(_ contact: FCMChannelContact, completion: @escaping (_ messages:[FCMChannelMessage]?) -> Void ) {
         
-        let url = "\(FCMChannelSettings.url!)\(FCMChannelSettings.V2)messages.json?contact=\(contact.uuid!)"
+        let url = "\(FCMChannelSettings.shared.url!)\(FCMChannelSettings.V2)messages.json?contact=\(contact.uuid!)"
         
         Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers).responseObject { (response: DataResponse<FCMChannelMessagesResponse>) in
             
@@ -127,7 +127,7 @@ open class PushAPI: NSObject {
     
     open class func getMessageByID(_ messageID: Int, completion: @escaping (_ message: FCMChannelMessage?) -> Void ) {
         
-        let url = "\(FCMChannelSettings.url!)\(FCMChannelSettings.V2)messages.json?id=\(messageID)"
+        let url = "\(FCMChannelSettings.shared.url!)\(FCMChannelSettings.V2)messages.json?id=\(messageID)"
         
         Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers).responseObject { (response: DataResponse<FCMChannelMessagesResponse>) in
             
@@ -154,7 +154,7 @@ open class PushAPI: NSObject {
             return
         }
         
-        let url = "\(FCMChannelSettings.url!)\(FCMChannelSettings.V2)contacts.json?urns=\(contact.urn!)"
+        let url = "\(FCMChannelSettings.shared.url!)\(FCMChannelSettings.V2)contacts.json?urns=\(contact.urn!)"
         
         Alamofire.request(url, method: .get, headers: headers).responseJSON {
             (response: DataResponse<Any>) in
@@ -166,8 +166,19 @@ open class PushAPI: NSObject {
                 }
                 
                 let data = results.first!
+                var fcmToken = ""
+                
+                if let urns = data["urns"] as? [String] {
+                    let filtered = urns.filter {($0.contains("fcm"))}
+                    if !filtered.isEmpty {
+                        fcmToken = String(filtered.first!.dropFirst(4))
+                    }
+                }
                 
                 let contact = Mapper<FCMChannelContact>().map(JSONObject: data)!
+                contact.fcmToken = fcmToken
+                contact.urn = fcmToken
+                
                 FCMChannelContact.setActive(contact: contact)
                 completion(true,nil)
             }else if let error = response.result.error {
@@ -183,7 +194,7 @@ open class PushAPI: NSObject {
                       "name": name,
                       "fcm_token": contact.fcmToken!] as [String:Any]
         
-        Alamofire.request("\(FCMChannelSettings.handlerURL!)/register/\(FCMChannelSettings.channel!)/", method: .post, parameters: params).responseJSON( completionHandler: {
+        Alamofire.request("\(FCMChannelSettings.shared.handlerURL!)/register/\(FCMChannelSettings.shared.channel!)/", method: .post, parameters: params).responseJSON( completionHandler: {
             (response) in
             
             switch response.result {

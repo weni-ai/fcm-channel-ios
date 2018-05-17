@@ -35,7 +35,7 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
     @IBOutlet open var viewSend:UIView!
     @IBOutlet public var scrollViewPage: ISScrollViewPage!
     
-    fileprivate var isSendingAnswer = false
+//    fileprivate var isSendingAnswer = false
     
     var loadMessagesOnInit: Bool = false
     var currentMessageIsShowingOption = false
@@ -236,7 +236,7 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
     }
     
     func insertRowInIndex(_ indexPath:IndexPath) {
-        self.tableView.insertRows(at: [indexPath], with: UITableViewRowAnimation.bottom)
+        self.tableView.insertRows(at: [indexPath], with: UITableViewRowAnimation.fade)
         self.tableView.scrollToRow(at: indexPath, at: UITableViewScrollPosition.bottom, animated: false)
     }
     
@@ -288,27 +288,24 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
     //MARK: Button Events
     
     @IBAction public func btSendTapped(_ button:UIButton) {
-        guard !isSendingAnswer else { return }
         if let text = self.txtMessage.text {
             
             if text.count > 0 {
-                isSendingAnswer = true
+                
+                self.txtMessage.text = ""
+                self.messageList.append(FCMChannelMessage(msg:text))
+                
+                OperationQueue.main.addOperation {
+                    let indexPath = IndexPath(row: self.messageList.count - 1, section: 0)
+                    self.insertRowInIndex(indexPath)
+                }
+                
+                self.tableViewScrollToBottom(false)
+                self.loadCurrentRulesetDelayed(delay: 3)
+                
                 PushAPI.sendMessage(contact, message: text, completion: {
                     success in
-                    self.isSendingAnswer = false
-                    if success {
-                        self.txtMessage.text = ""
-                        self.messageList.append(FCMChannelMessage(msg:text))
-                        
-                        OperationQueue.main.addOperation {
-                            let indexPath = IndexPath(row: self.messageList.count - 1, section: 0)
-                            self.insertRowInIndex(indexPath)
-                        }
-                        
-                        self.tableViewScrollToBottom(false)
-                        self.loadCurrentRulesetDelayed(delay: 3)
-                    }
-                    
+                    if success {}
                 })
                 
                 self.txtMessage.keyboardType = UIKeyboardType.alphabet
