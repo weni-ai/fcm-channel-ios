@@ -154,7 +154,7 @@ open class PushAPI: NSObject {
             return
         }
         
-        let url = "\(FCMChannelSettings.shared.url!)\(FCMChannelSettings.V2)contacts.json?urns=\(contact.urn!)"
+        let url = "\(FCMChannelSettings.shared.url!)\(FCMChannelSettings.V2)contacts.json?urn=fcm:\(contact.urn!)"
         
         Alamofire.request(url, method: .get, headers: headers).responseJSON {
             (response: DataResponse<Any>) in
@@ -176,7 +176,6 @@ open class PushAPI: NSObject {
                 }
                 
                 let contact = Mapper<FCMChannelContact>().map(JSONObject: data)!
-                contact.fcmToken = fcmToken
                 contact.urn = fcmToken
                 
                 FCMChannelContact.setActive(contact: contact)
@@ -190,7 +189,8 @@ open class PushAPI: NSObject {
     open class func registerContact(_ contact: FCMChannelContact, completion: @escaping (_ uuid: String?) -> Void) {
         
         let name = contact.name ?? ""
-        let params = ["urn": contact.urn!,
+        let params = ["contact_uuid": contact.uuid!,
+                      "urn": contact.urn!,
                       "name": name,
                       "fcm_token": contact.fcmToken!] as [String:Any]
         

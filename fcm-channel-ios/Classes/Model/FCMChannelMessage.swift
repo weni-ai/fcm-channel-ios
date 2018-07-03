@@ -33,6 +33,7 @@ open class FCMChannelMessage: NSObject, Mappable {
     open var visibility: String?
     open var text: String?
     open var labels: [FCMChannelLabel]?
+    open var quickReplies: [FCMChannelQuickReply]?
     open var createdOn: Date?
     open var sentOn: Date?
     open var ruleset: FCMChannelFlowRuleset?
@@ -51,6 +52,7 @@ open class FCMChannelMessage: NSObject, Mappable {
     open func mapping(map: Map) {
         self.id              <- map["id"]
         self.broadcast       <- map["broadcast"]
+        self.quickReplies    <- map["quick_replies"]
         self.contact         <- map["contact"]
         self.urn             <- map["urn"]
         self.channel         <- map["channel"]
@@ -64,5 +66,30 @@ open class FCMChannelMessage: NSObject, Mappable {
         self.sentOn          <- (map["sent_on"], FCMChannelDateTransform())
         self.text            <- map["text"]
         self.ruleset         <- map["ruleset"]
+    }
+    
+    public static func lastMessage() -> FCMChannelMessage? {
+        let defaults: UserDefaults = UserDefaults.standard
+        
+        var message: FCMChannelMessage?
+        if let encodedData = defaults.object(forKey: "fcmchannelmessage") as? Data,
+            let jsonString =  NSKeyedUnarchiver.unarchiveObject(with: encodedData) as? String {
+            message = FCMChannelMessage(JSONString: jsonString)
+        }
+        return message
+    }
+    
+    static func removeLastMessage() {
+        let defaults: UserDefaults = UserDefaults.standard
+        defaults.removeObject(forKey: "fcmchannelmessage")
+        defaults.synchronize()
+    }
+    
+    static func addLastMessage(message:FCMChannelMessage) {
+        removeLastMessage()
+        let defaults: UserDefaults = UserDefaults.standard
+        let encodedObject: Data = NSKeyedArchiver.archivedData(withRootObject: message.toJSONString() as Any)
+        defaults.set(encodedObject, forKey: "fcmchannelmessage")
+        defaults.synchronize()
     }
 }

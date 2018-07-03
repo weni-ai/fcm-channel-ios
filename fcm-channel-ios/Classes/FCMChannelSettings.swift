@@ -22,7 +22,7 @@ open class FCMChannelSettings: NSObject {
 
     static var shared:FCMChannelSettings!
     
-    init(_ token:String, channel:String) {
+    public init(_ token:String, channel:String) {
         super.init()
         self.token = token
         self.channel = channel

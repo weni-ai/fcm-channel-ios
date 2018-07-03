@@ -9,6 +9,7 @@
 import UIKit
 import ISScrollViewPageSwift
 import MBProgressHUD
+import ObjectMapper
 
 open class FCMChannelChatViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, ISScrollViewPageDelegate {
     
@@ -149,6 +150,20 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
         })
     }
     
+    func convertStringToDictionary(json: String) -> [String: AnyObject]? {
+        if let data = json.data(using: String.Encoding.utf8) {
+            
+            do {
+                let json = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
+                return json as? [String : AnyObject]
+            } catch let error {
+                print(error.localizedDescription)
+                return nil
+            }
+        }
+        return nil
+    }
+    
     @objc open func newMessageReceived(_ notification:Notification) {
         
         let message = FCMChannelMessage()
@@ -159,14 +174,21 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
         message.text = text
         message.id = Int(object["message_id"] as! String)
         
+        if let metadata = object["metadata"], let json = convertStringToDictionary(json: metadata as! String) {
+            if let quick_replies = json["quick_replies"] {
+                message.quickReplies =  Mapper<FCMChannelQuickReply>().mapArray(JSONObject: quick_replies)!
+            }
+        }
+        
         //TODO: temporary workaround for duplicated push notifications. Remove as soon as Push fixes this.
         guard !messageList.contains(where: {$0.id == message.id}) else { return }
         
         self.messageList.append(message)
-        print(message)
+        
         let indexPath = IndexPath(row: self.messageList.count - 1, section: 0)
         insertRowInIndex(indexPath)
         
+        FCMChannelMessage.addLastMessage(message: message)
         self.loadCurrentRulesetDelayed(delay: 1)
     }
     
@@ -177,6 +199,7 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
     }
     
     @objc open func answerTapped(_ button:UIButton) {
+        FCMChannelMessage.removeLastMessage()
         currentMessageIsShowingOption = false
         showAnswerOptionWithAnimation(false)
         self.txtMessage.text = button.titleLabel?.text
@@ -315,14 +338,20 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
     
     func loadCurrentRulesetDelayed(delay:Int? = 2) {
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + Double(delay!)) {
-            PushAPI.getFlowRuns(self.contact, completion: { (flowRuns: [FCMChannelFlowRun]?) -> Void in
-                if let flowRuns = flowRuns {
-                    self.getLastRuleset(from: flowRuns.first!)
-                }
-            })
-        }
-        
+        if let message = FCMChannelMessage.lastMessage() {
+            DispatchQueue.main.asyncAfter(deadline: .now() + Double(delay!)) {
+                self.addQuickRepliesOptions(message: message)
+            }
+        }else {
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + Double(delay!)) {
+                PushAPI.getFlowRuns(self.contact, completion: { (flowRuns: [FCMChannelFlowRun]?) -> Void in
+                    if let flowRuns = flowRuns {
+                        self.getLastRuleset(from: flowRuns.first!)
+                    }
+                })
+            }
+        }        
     }
     
     private func getLastRuleset(from flowRun: FCMChannelFlowRun) {
@@ -337,7 +366,7 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
             return true
         }
         
-        let exitType = !(exit_type == "completed" || exit_type == "expired")
+//        let exitType = !(exit_type == "completed" || exit_type == "expired")
         
         if flowRun.path != nil && !flowRun.path.isEmpty {
             return true
@@ -380,6 +409,67 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
         return nil
     }
     
+    private func checkButtonsValidity(flowRule:FCMChannelFlowRule) -> Bool {
+        let typeValidation = self.flowTypeManager.getTypeValidationForRule(flowRule)
+        let answerDescription = flowRule.ruleCategory.values.first
+        
+        if (answerDescription == "reply" ||
+            answerDescription == "All Responses" ||
+            answerDescription == "Other") {
+            return false
+        }else if typeValidation.validation == "regex" {
+            return false
+        }
+        return true
+    }
+    
+    private func buildButton(name:String) -> UIButton {
+        let button = UIButton()
+        button.setTitle(name, for: UIControlState.normal)
+        
+        let stringSize = button.titleLabel!.text!.size(withAttributes: [NSAttributedStringKey.font : button.titleLabel!.font])
+        var width = stringSize.width
+        
+        if width < 40 {
+            width = 50
+        }
+        
+        let frame = CGRect(x: 0, y: 0, width: width + 20, height: 40)
+        button.frame = frame
+        
+        button.contentEdgeInsets = UIEdgeInsets(top: 7, left: 7, bottom: 7, right: 7)
+        button.layer.cornerRadius = 20
+        button.layer.borderWidth = 2
+        button.layer.borderColor = self.choiceAnswerBorderColor//UIColor.white.cgColor
+        button.backgroundColor = self.choiceAnswerButtonColor
+        button.setTitleColor(self.outgoingLabelMsgColor, for: UIControlState.normal)
+        button.addTarget(self, action: #selector(self.answerTapped), for: UIControlEvents.touchUpInside)
+
+        return button
+    }
+    
+    private func addQuickRepliesOptions(message:FCMChannelMessage) {
+        self.scrollViewPage.views = []
+        var views = [UIView]()
+        var showOptions = false
+        if let quickReplies = message.quickReplies {
+            for quickReply in quickReplies {
+                showOptions = true
+                let button = buildButton(name: quickReply.title)
+                
+                self.txtMessage.keyboardType = UIKeyboardType.alphabet
+                let viewSpace = UIView(frame: CGRect(x: 0, y: 0, width: 8, height: 40))
+                viewSpace.backgroundColor = UIColor.clear
+                views.append(viewSpace)
+                views.append(button)
+            }
+        }
+        
+        self.scrollViewPage.setCustomViews(views)
+        self.showAnswerOptionWithAnimation(showOptions)
+        self.currentMessageIsShowingOption = showOptions
+    }
+    
     private func setCurrentRulesets(rulesets: FCMChannelFlowRuleset) {
         self.scrollViewPage.views = []
         var showOptions = false
@@ -389,34 +479,14 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
             for flowRule in flowRules {
 
                 let typeValidation = self.flowTypeManager.getTypeValidationForRule(flowRule)
-                
                 let answerDescription = flowRule.ruleCategory.values.first
                 
-                if answerDescription == "reply" || answerDescription == "All Responses" || answerDescription == "Other" {
+                if !checkButtonsValidity(flowRule: flowRule) {
                     // Do nothing
                 } else {
                     showOptions = true
                     
-                    let button = UIButton()
-                    button.setTitle(answerDescription, for: UIControlState.normal)
-                    
-                    let stringSize = button.titleLabel!.text!.size(withAttributes: [NSAttributedStringKey.font : button.titleLabel!.font])
-                    var width = stringSize.width
-                    
-                    if width < 40 {
-                        width = 50
-                    }
-                    
-                    let frame = CGRect(x: 0, y: 0, width: width + 20, height: 40)
-                    button.frame = frame
-                    
-                    button.contentEdgeInsets = UIEdgeInsets(top: 7, left: 7, bottom: 7, right: 7)
-                    button.layer.cornerRadius = 20
-                    button.layer.borderWidth = 2
-                    button.layer.borderColor = self.choiceAnswerBorderColor//UIColor.white.cgColor
-                    button.backgroundColor = self.choiceAnswerButtonColor
-                    button.setTitleColor(self.outgoingLabelMsgColor, for: UIControlState.normal)
-                    button.addTarget(self, action: #selector(self.answerTapped), for: UIControlEvents.touchUpInside)
+                    let button = buildButton(name: answerDescription!)
                     
                     self.txtMessage.keyboardType = UIKeyboardType.alphabet
                     let viewSpace = UIView(frame: CGRect(x: 0, y: 0, width: 8, height: 40))

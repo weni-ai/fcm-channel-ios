@@ -25,7 +25,8 @@ open class FCMChannelContact: NSObject, Mappable {
     open var born: String?
     open var fields: [String:Any]?
     
-    public init(urn: String, name: String, fcmToken: String) {
+    public init(uuid:String?, urn: String, name: String, fcmToken: String) {
+        self.uuid = uuid
         self.urn = urn
         self.name = name
         self.fcmToken = fcmToken
@@ -44,9 +45,9 @@ open class FCMChannelContact: NSObject, Mappable {
         self.country        <- map["country"]
         self.picture        <- map["picture"]
         self.gender         <- map["gender"]
-        self.fcmToken   <- map["fcmToken"]
+        self.fcmToken       <- map["fcmToken"]
         self.born           <- map["born"]
-        self.fields           <- map["fields"]
+        self.fields         <- map["fields"]
     }
     
     open class func formatExtContactId(_ key:String) -> String {
@@ -70,16 +71,16 @@ open class FCMChannelContact: NSObject, Mappable {
         defaults.synchronize()
     }
     
-    static func setActive(contact:FCMChannelContact) {
+    public static func setActive(contact:FCMChannelContact) {
         let defaults: UserDefaults = UserDefaults.standard
         let encodedObject: Data = NSKeyedArchiver.archivedData(withRootObject: contact.toJSONString() as Any)
         defaults.set(encodedObject, forKey: "fcmchannelcontact")
         defaults.synchronize()
     }
     
-    static func createContactAndSave(fcmToken:String, completion: @escaping (_ contact: FCMChannelContact?) -> ()) {
+    public static func createContactAndSave(name:String, uuid:String?, urn:String, fcmToken:String, completion: @escaping (_ contact: FCMChannelContact?) -> ()) {
         
-        let contact = FCMChannelContact(urn: fcmToken, name: "", fcmToken: fcmToken)
+        let contact = FCMChannelContact(uuid:uuid, urn: urn, name: name, fcmToken: fcmToken)
         PushAPI.registerContact(contact) {
             uuid in
             if let uuid = uuid {
