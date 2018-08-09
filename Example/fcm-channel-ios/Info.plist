@@ -18,39 +18,39 @@
 	<string>1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
-    <key>CFBundleVersion</key>
+	<key>CFBundleVersion</key>
 	<string>1</string>
-    <key>CFBundleURLTypes</key>
-    <array>
-        <dict>
-            <key>CFBundleURLSchemes</key>
-            <array>
-                <string>fb126067288050387</string>
-            </array>
-        </dict>
-    </array>
-    <key>FacebookAppID</key>
-    <string>126067288050387</string>
-    <key>FacebookDisplayName</key>
-    <string>fcm-channel-ios</string>
-    <key>LSApplicationCategoryType</key>
-    <string></string>
-    <key>LSApplicationQueriesSchemes</key>
-    <array>
-        <string>fbapi</string>
-        <string>fb-messenger-api</string>
-        <string>fbauth2</string>
-        <string>fb</string>
-        <string>fbauth</string>
-        <string>fbshareextension</string>
-    </array>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb225814851460929</string>
+			</array>
+		</dict>
+	</array>
+	<key>FacebookAppID</key>
+	<string>225814851460929</string>
+	<key>FacebookDisplayName</key>
+	<string>Push Construtora</string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>fbapi</string>
+		<string>fb-messenger-api</string>
+		<string>fbauth2</string>
+		<string>fb</string>
+		<string>fbauth</string>
+		<string>fbshareextension</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-    <key>NSAppTransportSecurity</key>
-    <dict>
-        <key>NSAllowsArbitraryLoads</key>
-        <true/>
-    </dict>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -62,22 +62,22 @@
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 	</array>
-    <key>NSAppleMusicUsageDescription</key>
-    <string>You need grant permission to access your gallery</string>
-    <key>NSCalendarsUsageDescription</key>
-    <string>You need grant permission to access your calendar</string>
-    <key>NSCameraUsageDescription</key>
-    <string>You need grant permission to access your camera</string>
-    <key>NSContactsUsageDescription</key>
-    <string>You need grant permission to access your contacts</string>
-    <key>NSMicrophoneUsageDescription</key>
-    <string>You need grant permission to access your microphone</string>
-    <key>NSPhotoLibraryUsageDescription</key>
-    <string>You need grant permission to access your gallery</string>
-    <key>UIBackgroundModes</key>
-    <array>
-        <string>fetch</string>
-        <string>remote-notification</string>
-    </array>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>You need grant permission to access your gallery</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>You need grant permission to access your calendar</string>
+	<key>NSCameraUsageDescription</key>
+	<string>You need grant permission to access your camera</string>
+	<key>NSContactsUsageDescription</key>
+	<string>You need grant permission to access your contacts</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>You need grant permission to access your microphone</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>You need grant permission to access your gallery</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
 </dict>
 </plist>

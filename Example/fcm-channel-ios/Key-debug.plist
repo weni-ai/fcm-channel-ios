@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>COUNTRY_PROGRAM_CHANNEL_GLOBAL</key>
+	<string>bf1a1e63-e60f-4614-b639-25dc457da0bd</string>
+	<key>COUNTRY_PROGRAM_TOKEN_GLOBAL</key>
+	<string>Token 8cbcf1080cac0455311f5fce636ab4cf7cc75eb9</string>
+	<key>FACEBOOK_APP_ID</key>
+	<string>225814851460929</string>
+	<key>URL_STORAGE_CHAT</key>
+	<string>https://s3.amazonaws.com/ureport-app/chat_group</string>
+	<key>URL_STORAGE_STORIES</key>
+	<string>https://s3.amazonaws.com/ureport-app/story</string>
+	<key>UREPORT_API_TOKEN</key>
+	<string>65395e80-b6db-4778-b10f-6ffb246744d4</string>
+	<key>COGNITO_IDENTITY_POLL_ID</key>
+	<string>us-east-1:938eb41c-68e0-4196-b542-988fdf02e10e</string>
+</dict>
+</plist>

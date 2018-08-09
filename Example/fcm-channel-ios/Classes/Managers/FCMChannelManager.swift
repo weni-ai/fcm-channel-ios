@@ -13,10 +13,10 @@ class FCMChannelManager {
     
     static let keyFCMToken = "KEY_FCM_TOKEN"
     
-    static var apiPrefix = ""
-    static var token = ""
-    static var channel = ""
-    static var handlerUrl = ""
+    static var apiPrefix = "http://push-dev.ilhasoft.mobi/api/v2/"
+    static var token = "Token c62651e07199807ca75ae1a618273578b0e3869d"
+    static var channel = "59860023-b1d5-4d79-99e9-bcfc54ba3de9"
+    static var handlerUrl = "http://push.ilhasoft.mobi/handlers/fcm/"
     
     static func setup() {
         var rootDictionary: NSDictionary?
