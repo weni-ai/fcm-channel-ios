@@ -92,8 +92,8 @@ class User: Serializable {
         
         encodedData = defaults.object(forKey: "user") as? Data
         
-        if encodedData != nil {
-            let user: User = User(jsonDict: NSKeyedUnarchiver.unarchiveObject(with: encodedData!) as? NSDictionary)
+        if let encodedData = encodedData {
+            let user: User = User(jsonDict: NSKeyedUnarchiver.unarchiveObject(with: encodedData) as? NSDictionary)
             return user
         } else {
             return nil

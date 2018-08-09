@@ -24,10 +24,11 @@ open class Serializable: NSObject {
         
         if let jsonDict = jsonDict {
             for (key, value) in jsonDict {
+                guard let key = key as? String else { continue }
                 for c in Mirror(reflecting: self).children {
                     if let name = c.label{
-                        if name == key as! String {
-                            self.setValue(value, forKey:key as! String)
+                        if name == key {
+                            self.setValue(value, forKey: key)
                             break
                         }
                     }
@@ -88,30 +89,30 @@ open class Serializable: NSObject {
                     propertiesDictionary.setValue(propValue, forKey: propName)
                 }
             }
-            else if let propValue:Int8 = propValue as? Int8 {
-                propertiesDictionary.setValue(NSNumber(value: propValue as Int8), forKey: propName!)
-            }
-            else if let propValue:Int16 = propValue as? Int16 {
-                propertiesDictionary.setValue(NSNumber(value: propValue as Int16), forKey: propName!)
-            }
-            else if let propValue:Int32 = propValue as? Int32 {
-                propertiesDictionary.setValue(NSNumber(value: propValue as Int32), forKey: propName!)
-            }
-            else if let propValue:Int64 = propValue as? Int64 {
-                propertiesDictionary.setValue(NSNumber(value: propValue as Int64), forKey: propName!)
-            }
-            else if let propValue:UInt8 = propValue as? UInt8 {
-                propertiesDictionary.setValue(NSNumber(value: propValue as UInt8), forKey: propName!)
-            }
-            else if let propValue:UInt16 = propValue as? UInt16 {
-                propertiesDictionary.setValue(NSNumber(value: propValue as UInt16), forKey: propName!)
-            }
-            else if let propValue:UInt32 = propValue as? UInt32 {
-                propertiesDictionary.setValue(NSNumber(value: propValue as UInt32), forKey: propName!)
-            }
-            else if let propValue:UInt64 = propValue as? UInt64 {
-                propertiesDictionary.setValue(NSNumber(value: propValue as UInt64), forKey: propName!)
-            }
+//            else if let propValue:Int8 = propValue as? Int8 {
+//                propertiesDictionary.setValue(NSNumber(value: propValue as Int8), forKey: propName)
+//            }
+//            else if let propValue:Int16 = propValue as? Int16 {
+//                propertiesDictionary.setValue(NSNumber(value: propValue as Int16), forKey: propName)
+//            }
+//            else if let propValue:Int32 = propValue as? Int32 {
+//                propertiesDictionary.setValue(NSNumber(value: propValue as Int32), forKey: propName)
+//            }
+//            else if let propValue:Int64 = propValue as? Int64 {
+//                propertiesDictionary.setValue(NSNumber(value: propValue as Int64), forKey: propName)
+//            }
+//            else if let propValue:UInt8 = propValue as? UInt8 {
+//                propertiesDictionary.setValue(NSNumber(value: propValue as UInt8), forKey: propName)
+//            }
+//            else if let propValue:UInt16 = propValue as? UInt16 {
+//                propertiesDictionary.setValue(NSNumber(value: propValue as UInt16), forKey: propName)
+//            }
+//            else if let propValue:UInt32 = propValue as? UInt32 {
+//                propertiesDictionary.setValue(NSNumber(value: propValue as UInt32), forKey: propName)
+//            }
+//            else if let propValue:UInt64 = propValue as? UInt64 {
+//                propertiesDictionary.setValue(NSNumber(value: propValue as UInt64), forKey: propName)
+//            }
         }
         
     }
@@ -162,9 +163,17 @@ extension Serializable {
         if mi.displayStyle != .optional {
             return any
         }
-        
-        if mi.children.count == 0 { return NSNull() }
-        let (_, some) = mi.children.first!
-        return some
+
+        // TODO: check
+        if let first = mi.children.first {
+            let (_, some) = first
+            return some
+        } else {
+            return NSNull()
+        }
+
+//        if mi.children.count == 0 { return NSNull() }
+//        let (_, some) = mi.children.first ?? NSNull
+//        return some
     }
 }

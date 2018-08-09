@@ -175,8 +175,8 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
         message.id = Int(object["message_id"] as! String)
         
         if let metadata = object["metadata"], let json = convertStringToDictionary(json: metadata as! String) {
-            if let quick_replies = json["quick_replies"] {
-                message.quickReplies =  Mapper<FCMChannelQuickReply>().mapArray(JSONObject: quick_replies)!
+            if let quick_replies = json["quick_replies"] as? [String] {
+                message.quickReplies = quick_replies.map { FCMChannelQuickReply($0) } 
             }
         }
         
@@ -426,7 +426,7 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
     private func buildButton(name:String) -> UIButton {
         let button = UIButton()
         button.setTitle(name, for: UIControlState.normal)
-        
+
         let stringSize = button.titleLabel!.text!.size(withAttributes: [NSAttributedStringKey.font : button.titleLabel!.font])
         var width = stringSize.width
         

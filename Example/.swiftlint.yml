@@ -13,6 +13,8 @@ excluded:
   - Pods
 line_length: 110
 # they can set both implicitly with an array
+force_unwrapping:
+    severity: error
 type_body_length:
 - 300 # warning
 - 1200 # error

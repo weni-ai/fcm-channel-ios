@@ -27,7 +27,7 @@ open class FCMChannelSettings: NSObject {
         self.token = token
         self.channel = channel
         self.url = "https://push.ilhasoft.mobi/api/"
-        self.handlerURL = "https://push.ilhasoft.mobi/handlers/fcm/"
+        self.handlerURL = "https://push.ilhasoft.mobi/handlers/fcm"
         FCMChannelSettings.shared = self
     }
 

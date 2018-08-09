@@ -1,8 +1,8 @@
 PODS:
   - Alamofire (4.5.0)
-  - AlamofireObjectMapper (4.1.0):
+  - AlamofireObjectMapper (5.0.0):
     - Alamofire (~> 4.1)
-    - ObjectMapper (~> 2.0)
+    - ObjectMapper (~> 3.0)
   - Bolts (1.8.4):
     - Bolts/AppLinks (= 1.8.4)
     - Bolts/Tasks (= 1.8.4)
@@ -15,7 +15,7 @@ PODS:
     - FBSDKCoreKit
   - fcm-channel-ios (0.2.2):
     - Alamofire
-    - AlamofireObjectMapper
+    - AlamofireObjectMapper (= 5.0.0)
     - ISScrollViewPageSwift (= 1.0.0)
     - MBProgressHUD (= 1.0.0)
     - MDHTMLLabel (= 1.0.2)
@@ -74,14 +74,14 @@ PODS:
     - nanopb/encode (= 0.3.8)
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
-  - ObjectMapper (2.2.8)
+  - ObjectMapper (3.3.0)
   - Protobuf (3.4.0)
   - SwiftLint (0.27.0)
   - TPKeyboardAvoiding (1.3)
 
 DEPENDENCIES:
   - Alamofire (= 4.5.0)
-  - AlamofireObjectMapper (= 4.1.0)
+  - AlamofireObjectMapper (= 5.0.0)
   - FBSDKCoreKit (= 4.23.0)
   - FBSDKLoginKit (= 4.23.0)
   - fcm-channel-ios (from `../`)
@@ -126,11 +126,11 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Alamofire: f28cdffd29de33a7bfa022cbd63ae95a27fae140
-  AlamofireObjectMapper: 435adc82f5b367679bd9e71c4974a54efd0b2521
+  AlamofireObjectMapper: 5fafc816351cbbc0d486611aaeba7461c0cbad49
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   FBSDKCoreKit: d7829f5a69901cd7296105328e4c3c3fc7da6518
   FBSDKLoginKit: 6b92bd65f319d669d2b0730e49db495ef1660566
-  fcm-channel-ios: 3e406e46bd339249c8524df8fcc973317ea9fca8
+  fcm-channel-ios: b4524c8bacd3a2fbe9b8cf81dfb8f003328c8e80
   Firebase: 1492bf04e1b73a7353b4fb2cf5a20bac9692f341
   FirebaseAnalytics: ad41720e3e67fc63fbe3d2948d3e26932a8de311
   FirebaseAuth: ebb6abcbabae00fc47446d690c19ce68d8484fde
@@ -144,11 +144,11 @@ SPEC CHECKSUMS:
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   MDHTMLLabel: 18bf09ec7d6c1ae396497345c005857c0493ee0a
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
-  ObjectMapper: 3d571bb5af471c779e1160828cd9ad5c4ef90958
+  ObjectMapper: b612bf8c8e99c4dc0bb6013a51f7c27966ed5da9
   Protobuf: 03eef2ee0b674770735cf79d9c4d3659cf6908e8
   SwiftLint: 3207c1faa2240bf8973b191820a116113cd11073
   TPKeyboardAvoiding: a5138f318c06fb3e151f886e18ce4a72695d9cbe
 
-PODFILE CHECKSUM: c8634293c28dd2fc7f7240c1406d0e833cbe7afc
+PODFILE CHECKSUM: 4998cafc7de887f45ac14bdc191d1df6a533164f
 
 COCOAPODS: 1.5.3

@@ -20,11 +20,13 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func loginBtnPressed(_ sender: Any) {
+        guard let contact = User.current.contact else { return }
+
         LoginViewModel.shared.facebookLogin(from: self) {
             (success, error) in
             
             if success {
-                let chatVC = FCMChannelChatViewController(contact: User.current.contact!, botName: "SANDBOX", loadMessagesOnInit: true)
+                let chatVC = FCMChannelChatViewController(contact: contact, botName: "SANDBOX", loadMessagesOnInit: true)
                 self.present(UINavigationController(rootViewController: chatVC), animated: true, completion: nil)
             } else {
                 if let error = error {
