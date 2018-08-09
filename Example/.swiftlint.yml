@@ -1,0 +1,18 @@
+disabled_rules: # rule identifiers to exclude from running
+  - identifier_name
+  - function_parameter_count
+  - function_body_length
+  - trailing_whitespace
+  - line_length
+  - file_length
+  - cyclomatic_complexity
+  - todo
+opt_in_rules:
+  - force_unwrapping
+excluded:
+  - Pods
+line_length: 110
+# they can set both implicitly with an array
+type_body_length:
+- 300 # warning
+- 1200 # error

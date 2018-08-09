@@ -12,12 +12,11 @@
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
+		7242A950211B317300DC686E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7242A94F211B317300DC686E /* GoogleService-Info.plist */; };
 		7AD275F64119E9C663589A0D /* Pods_fcm_channel_ios_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A3C23865CDF5A2C7C02981A /* Pods_fcm_channel_ios_Tests.framework */; };
 		EA650D0F1F7994EA004905DD /* FCMChannelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA650D0A1F7994EA004905DD /* FCMChannelManager.swift */; };
 		EA650D101F7994EA004905DD /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA650D0C1F7994EA004905DD /* User.swift */; };
 		EA650D111F7994EA004905DD /* Serializable.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA650D0E1F7994EA004905DD /* Serializable.swift */; };
-		EA650D151F79A405004905DD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA650D131F79A405004905DD /* GoogleService-Info.plist */; };
-		EA650D161F79A405004905DD /* Key-debug.plist in Resources */ = {isa = PBXBuildFile; fileRef = EA650D141F79A405004905DD /* Key-debug.plist */; };
 		EA650D1A1F79B254004905DD /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA650D181F79B254004905DD /* LoginViewController.swift */; };
 		EA650D1B1F79B254004905DD /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA650D191F79B254004905DD /* LoginViewController.xib */; };
 		EA88724F1F7AD4700017335B /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA88724E1F7AD4700017335B /* LoginViewModel.swift */; };
@@ -47,15 +46,14 @@
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		7034A434DC99863A34DBD0AD /* Pods-fcm-channel-ios_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fcm-channel-ios_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-fcm-channel-ios_Example/Pods-fcm-channel-ios_Example.release.xcconfig"; sourceTree = "<group>"; };
+		7242A94F211B317300DC686E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		98D4E138E1DAD20FED8EB081 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		9A3C23865CDF5A2C7C02981A /* Pods_fcm_channel_ios_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_fcm_channel_ios_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		AF41517B27DA1D77E7D607C6 /* fcm-channel-ios.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = "fcm-channel-ios.podspec"; path = "../fcm-channel-ios.podspec"; sourceTree = "<group>"; };
+		AF41517B27DA1D77E7D607C6 /* fcm-channel-ios.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = "fcm-channel-ios.podspec"; path = "../fcm-channel-ios.podspec"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		C5A614BBEA6A83C212905DC9 /* Pods_fcm_channel_ios_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_fcm_channel_ios_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA650D0A1F7994EA004905DD /* FCMChannelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FCMChannelManager.swift; sourceTree = "<group>"; };
 		EA650D0C1F7994EA004905DD /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		EA650D0E1F7994EA004905DD /* Serializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Serializable.swift; sourceTree = "<group>"; };
-		EA650D131F79A405004905DD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Supporting Files/GoogleService-Info.plist"; sourceTree = "<group>"; };
-		EA650D141F79A405004905DD /* Key-debug.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Key-debug.plist"; path = "Supporting Files/Key-debug.plist"; sourceTree = "<group>"; };
 		EA650D181F79B254004905DD /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = Login/LoginViewController.swift; sourceTree = "<group>"; };
 		EA650D191F79B254004905DD /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LoginViewController.xib; path = Login/LoginViewController.xib; sourceTree = "<group>"; };
 		EA88724B1F7AC9A10017335B /* fcm-channel-ios_Example.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "fcm-channel-ios_Example.entitlements"; sourceTree = "<group>"; };
@@ -126,8 +124,7 @@
 		607FACD31AFB9204008FA782 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				EA650D131F79A405004905DD /* GoogleService-Info.plist */,
-				EA650D141F79A405004905DD /* Key-debug.plist */,
+				7242A94F211B317300DC686E /* GoogleService-Info.plist */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD41AFB9204008FA782 /* Info.plist */,
@@ -227,11 +224,11 @@
 			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "fcm-channel-ios_Example" */;
 			buildPhases = (
 				E240FAF768857E8ED706B192 /* [CP] Check Pods Manifest.lock */,
+				72519B5E211CB46B003D5D3C /* ShellScript */,
 				607FACCC1AFB9204008FA782 /* Sources */,
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
 				C11AA808EDFEF67F924B6A71 /* [CP] Embed Pods Frameworks */,
-				6644401F7A116A828EF669AD /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -250,8 +247,6 @@
 				607FACE11AFB9204008FA782 /* Sources */,
 				607FACE21AFB9204008FA782 /* Frameworks */,
 				607FACE31AFB9204008FA782 /* Resources */,
-				847FC390947A09FB0A57CD8C /* [CP] Embed Pods Frameworks */,
-				AD8DB46ED41B20F7BE136EAC /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -317,9 +312,8 @@
 			files = (
 				EA650D1B1F79B254004905DD /* LoginViewController.xib in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
-				EA650D161F79A405004905DD /* Key-debug.plist in Resources */,
-				EA650D151F79A405004905DD /* GoogleService-Info.plist in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
+				7242A950211B317300DC686E /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -333,35 +327,18 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		6644401F7A116A828EF669AD /* [CP] Copy Pods Resources */ = {
+		72519B5E211CB46B003D5D3C /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-fcm-channel-ios_Example/Pods-fcm-channel-ios_Example-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		847FC390947A09FB0A57CD8C /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-fcm-channel-ios_Tests/Pods-fcm-channel-ios_Tests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
 		};
 		8EA1EC33E1C8B2A09620A417 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -379,21 +356,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		AD8DB46ED41B20F7BE136EAC /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-fcm-channel-ios_Tests/Pods-fcm-channel-ios_Tests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C11AA808EDFEF67F924B6A71 /* [CP] Embed Pods Frameworks */ = {
