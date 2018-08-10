@@ -186,7 +186,7 @@ open class PushAPI: NSObject {
         }
     }
     
-    open class func registerContact(_ contact: FCMChannelContact, completion: @escaping (_ uuid: String?) -> Void) {
+    open class func registerContact(_ contact: FCMChannelContact, completion: @escaping (_ uuid: String?, _ error: Error?) -> Void) {
         
         let name = contact.name ?? ""
         let params = ["contact_uuid": contact.uuid!,
@@ -194,20 +194,19 @@ open class PushAPI: NSObject {
                       "name": name,
                       "fcm_token": contact.fcmToken!] as [String:Any]
         
-        Alamofire.request("\(FCMChannelSettings.shared.handlerURL!)/register/\(FCMChannelSettings.shared.channel!)/", method: .post, parameters: params).responseJSON( completionHandler: {
-            (response) in
+        Alamofire.request("\(FCMChannelSettings.shared.handlerURL!)/register/\(FCMChannelSettings.shared.channel!)/", method: .post, parameters: params).responseJSON( completionHandler: { response in
             
             switch response.result {
                 
             case .failure(let error):
                 print("error \(String(describing: error.localizedDescription))")
-                completion(nil)
+                completion(nil, error)
                 
             case .success(let value):
                 if let response = value as? [String: String], let uuid = response["contact_uuid"]  {
-                    completion(uuid)
+                    completion(uuid, nil)
                 } else {
-                    completion(nil)
+                    completion(nil, nil)
                 }
             }
         })

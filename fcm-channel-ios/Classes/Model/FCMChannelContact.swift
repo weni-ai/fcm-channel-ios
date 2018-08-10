@@ -78,19 +78,20 @@ open class FCMChannelContact: NSObject, Mappable {
         defaults.synchronize()
     }
     
-    public static func createContactAndSave(name:String, uuid:String?, urn:String, fcmToken:String, completion: @escaping (_ contact: FCMChannelContact?) -> ()) {
+    public static func createContactAndSave(name:String,
+                                            uuid:String?,
+                                            urn:String,
+                                            fcmToken:String,
+                                            completion: @escaping (_ contact: FCMChannelContact?, _ error: Error?) -> Void) {
         
         let contact = FCMChannelContact(uuid:uuid, urn: urn, name: name, fcmToken: fcmToken)
-        PushAPI.registerContact(contact) {
-            uuid in
+        PushAPI.registerContact(contact) { uuid, error in
             if let uuid = uuid {
                 contact.uuid = uuid
                 setActive(contact: contact)
-                completion(contact)
-            } else {
-                print("Error: User couldn't register to channel.")
-                completion(nil)
             }
+
+            completion(contact, error)
         }
     }
     
