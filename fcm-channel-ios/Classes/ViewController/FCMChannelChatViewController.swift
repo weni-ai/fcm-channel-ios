@@ -208,6 +208,7 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
         NotificationCenter.default.post(name: Notification.Name(rawValue: "ISAnsweredPollMessageSent"), object: nil, userInfo: ["answerTapped": (button.titleLabel?.text)!])
         
         self.view.endEditing(true)
+        scrollViewPage.setCustomViews([])
     }
     
     fileprivate func showAnswerOptionWithAnimation(_ show:Bool) {
@@ -339,12 +340,12 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
     func loadCurrentRulesetDelayed(delay:Int? = 2) {
         
         if let message = FCMChannelMessage.lastMessage() {
-            DispatchQueue.main.asyncAfter(deadline: .now() + Double(delay!)) {
+            DispatchQueue.main.async { //asyncAfter(deadline: .now() + Double(delay!)) {
                 self.addQuickRepliesOptions(message: message)
             }
         }else {
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + Double(delay!)) {
+            DispatchQueue.main.async { //After(deadline: .now() + Double(delay!)) {
                 PushAPI.getFlowRuns(self.contact, completion: { (flowRuns: [FCMChannelFlowRun]?) -> Void in
                     if let flowRuns = flowRuns {
                         self.getLastRuleset(from: flowRuns.first!)
