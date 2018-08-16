@@ -18,7 +18,6 @@ target 'fcm-channel-ios_Example' do
   pod 'MDHTMLLabel', '1.0.2'
   pod 'MBProgressHUD', '1.0.0'
   pod 'TPKeyboardAvoiding', '1.3'
-  
   pod 'ISScrollViewPageSwift', '1.0.0'
   
   target 'fcm-channel-ios_Tests' do

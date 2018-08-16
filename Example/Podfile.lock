@@ -16,9 +16,11 @@ PODS:
   - fcm-channel-ios (0.2.2):
     - Alamofire
     - AlamofireObjectMapper (= 5.0.0)
+    - IGListKit
     - ISScrollViewPageSwift (= 1.0.0)
     - MBProgressHUD (= 1.0.0)
     - MDHTMLLabel (= 1.0.2)
+    - Reusable
     - TPKeyboardAvoiding
   - Firebase/Auth (4.0.4):
     - Firebase/Core
@@ -66,6 +68,11 @@ PODS:
     - "GoogleToolboxForMac/NSString+URLArguments (= 2.1.1)"
   - "GoogleToolboxForMac/NSString+URLArguments (2.1.1)"
   - GTMSessionFetcher/Core (1.1.11)
+  - IGListKit (3.4.0):
+    - IGListKit/Default (= 3.4.0)
+  - IGListKit/Default (3.4.0):
+    - IGListKit/Diffing
+  - IGListKit/Diffing (3.4.0)
   - ISScrollViewPageSwift (1.0.0)
   - MBProgressHUD (1.0.0)
   - MDHTMLLabel (1.0.2)
@@ -76,6 +83,11 @@ PODS:
   - nanopb/encode (0.3.8)
   - ObjectMapper (3.3.0)
   - Protobuf (3.4.0)
+  - Reusable (4.0.2):
+    - Reusable/Storyboard (= 4.0.2)
+    - Reusable/View (= 4.0.2)
+  - Reusable/Storyboard (4.0.2)
+  - Reusable/View (4.0.2)
   - SwiftLint (0.27.0)
   - TPKeyboardAvoiding (1.3)
 
@@ -111,12 +123,14 @@ SPEC REPOS:
     - FirebaseMessaging
     - GoogleToolboxForMac
     - GTMSessionFetcher
+    - IGListKit
     - ISScrollViewPageSwift
     - MBProgressHUD
     - MDHTMLLabel
     - nanopb
     - ObjectMapper
     - Protobuf
+    - Reusable
     - SwiftLint
     - TPKeyboardAvoiding
 
@@ -130,7 +144,7 @@ SPEC CHECKSUMS:
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   FBSDKCoreKit: d7829f5a69901cd7296105328e4c3c3fc7da6518
   FBSDKLoginKit: 6b92bd65f319d669d2b0730e49db495ef1660566
-  fcm-channel-ios: b4524c8bacd3a2fbe9b8cf81dfb8f003328c8e80
+  fcm-channel-ios: f2c4cd605ae5dbf7aa36a04f86f8945afd35b2f6
   Firebase: 1492bf04e1b73a7353b4fb2cf5a20bac9692f341
   FirebaseAnalytics: ad41720e3e67fc63fbe3d2948d3e26932a8de311
   FirebaseAuth: ebb6abcbabae00fc47446d690c19ce68d8484fde
@@ -140,15 +154,17 @@ SPEC CHECKSUMS:
   FirebaseMessaging: 227406c05b0dc9290702d2e9f18ab5528f0c2cf2
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   GTMSessionFetcher: 5ad62e8200fa00ed011fe5e08d27fef72c5b1429
+  IGListKit: 7a5d788e9fb746bcd402baa8e8b24bc3bd2a5a07
   ISScrollViewPageSwift: 0f4b7957b3e0f52a37ac8d05d0c2f14da221093c
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   MDHTMLLabel: 18bf09ec7d6c1ae396497345c005857c0493ee0a
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   ObjectMapper: b612bf8c8e99c4dc0bb6013a51f7c27966ed5da9
   Protobuf: 03eef2ee0b674770735cf79d9c4d3659cf6908e8
+  Reusable: 584a5629747c52e0f6a77841b400dc2643f6fa0f
   SwiftLint: 3207c1faa2240bf8973b191820a116113cd11073
   TPKeyboardAvoiding: a5138f318c06fb3e151f886e18ce4a72695d9cbe
 
-PODFILE CHECKSUM: 4998cafc7de887f45ac14bdc191d1df6a533164f
+PODFILE CHECKSUM: f565a52b0461d7d4f11607398ab8e592470c47d8
 
 COCOAPODS: 1.5.3
