@@ -43,7 +43,7 @@ class FCMChannelManager {
             }
         }
         
-        FCMChannelSettings.setConfiguration(token, channel: channel, url: apiPrefix, handlerURL: handlerUrl)
+//        FCMChannelSettings.setConfiguration(token, channel: channel, url: apiPrefix, handlerURL: handlerUrl)
     }
     
     static func createContact(completion: @escaping (_ success: Bool) -> Void) {
