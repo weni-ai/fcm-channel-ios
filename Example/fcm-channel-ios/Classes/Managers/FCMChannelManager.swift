@@ -43,7 +43,7 @@ class FCMChannelManager {
             }
         }
         
-//        FCMChannelSettings.setConfiguration(token, channel: channel, url: apiPrefix, handlerURL: handlerUrl)
+//        _ = FCMChannelSettings(token, channel: channel, url: apiPrefix, handlerURL: handlerUrl)
     }
     
     static func createContact(completion: @escaping (_ success: Bool) -> Void) {
@@ -69,9 +69,9 @@ class FCMChannelManager {
     }
     
     static func loadContact(urn: String, completion: @escaping (FCMChannelContact?) -> Void) {
-//        PushAPI.loadContact(fromUrn: urn) { contact in
-//            completion(contact)
-//        }
+        PushAPI.loadContact(fromUrn: urn) { contact in
+            completion(contact)
+        }
     }
     
     static func saveFCMToken(fcmToken: String) {

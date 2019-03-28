@@ -128,12 +128,12 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
     }
     
     open func setupKeyBoardNotification() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: .UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
-        self.viewSendBottom.constant = (notification.userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue.height
+        self.viewSendBottom.constant = (notification.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue.height
         
         UIView.animate(withDuration: 0.5, animations: {
             self.view.layoutIfNeeded()
@@ -224,7 +224,7 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
             guard !self.messageList.isEmpty else {
                 return
             }
-            self.tableView.scrollToRow(at: IndexPath(row: self.messageList.count - 1, section: 0), at: UITableViewScrollPosition.top, animated: false)
+            self.tableView.scrollToRow(at: IndexPath(row: self.messageList.count - 1, section: 0), at: .top, animated: false)
         })
     }
     
@@ -240,7 +240,7 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
             
             if numberOfRows > 0 {
                 let indexPath = IndexPath(row: numberOfRows-1, section: (numberOfSections-1))
-                self.tableView.scrollToRow(at: indexPath, at: UITableViewScrollPosition.bottom, animated: animated)
+                self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: animated)
             }
             
         })
@@ -260,16 +260,16 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
     }
     
     func insertRowInIndex(_ indexPath:IndexPath) {
-        self.tableView.insertRows(at: [indexPath], with: UITableViewRowAnimation.fade)
-        self.tableView.scrollToRow(at: indexPath, at: UITableViewScrollPosition.bottom, animated: false)
+        self.tableView.insertRows(at: [indexPath], with: .fade)
+        self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
     }
     
     open func setupTableView() {
-        self.tableView.separatorStyle = UITableViewCellSeparatorStyle.none
+        self.tableView.separatorStyle = .none
         self.tableView.delegate = self
         self.tableView.backgroundColor = UIColor.white
         self.tableView.estimatedRowHeight = 75
-        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.register(UINib(nibName: "FCMChannelIncomingChatMessageViewCell", bundle: Bundle(for: FCMChannelChatViewController.self)), forCellReuseIdentifier: NSStringFromClass(FCMChannelIncomingChatMessageViewCell.self))
         self.tableView.register(UINib(nibName: "FCMChannelOutgoingChatMessageViewCell", bundle: Bundle(for: FCMChannelChatViewController.self)), forCellReuseIdentifier: NSStringFromClass(FCMChannelOutgoingChatMessageViewCell.self))
         self.tableView.separatorColor = UIColor.clear
@@ -283,7 +283,7 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
     
     open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        return UITableViewAutomaticDimension
+        return UITableView.automaticDimension
     }
     
     open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -426,9 +426,9 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
     
     private func buildButton(name:String) -> UIButton {
         let button = UIButton()
-        button.setTitle(name, for: UIControlState.normal)
+        button.setTitle(name, for: .normal)
 
-        let stringSize = button.titleLabel!.text!.size(withAttributes: [NSAttributedStringKey.font : button.titleLabel!.font])
+        let stringSize = button.titleLabel!.text!.size(withAttributes: [NSAttributedString.Key.font : button.titleLabel!.font])
         var width = stringSize.width
         
         if width < 40 {
@@ -443,8 +443,8 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
         button.layer.borderWidth = 2
         button.layer.borderColor = self.choiceAnswerBorderColor//UIColor.white.cgColor
         button.backgroundColor = self.choiceAnswerButtonColor
-        button.setTitleColor(self.outgoingLabelMsgColor, for: UIControlState.normal)
-        button.addTarget(self, action: #selector(self.answerTapped), for: UIControlEvents.touchUpInside)
+        button.setTitleColor(self.outgoingLabelMsgColor, for: .normal)
+        button.addTarget(self, action: #selector(self.answerTapped), for: .touchUpInside)
 
         return button
     }

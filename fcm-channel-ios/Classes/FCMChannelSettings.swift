@@ -8,7 +8,7 @@
 
 import UIKit
 
-open class FCMChannelSettings: NSObject {
+@objc open class FCMChannelSettings: NSObject {
 
     open var token:String!
     open var channel:String!
@@ -20,14 +20,19 @@ open class FCMChannelSettings: NSObject {
     static let V1 = "v1/"
     static let V2 = "v2/"
 
-    static var shared:FCMChannelSettings!
+    static weak var shared: FCMChannelSettings!
+
+    private override init() {}
     
-    public init(_ token:String, channel:String) {
+    @objc public init(_ token:String,
+                channel:String,
+                url: String = "https://push.ilhasoft.mobi/api/",
+                handlerURL: String = "https://push.ilhasoft.mobi/handlers/fcm") {
         super.init()
         self.token = token
         self.channel = channel
-        self.url = "https://push.ilhasoft.mobi/api/"
-        self.handlerURL = "https://push.ilhasoft.mobi/handlers/fcm"
+        self.url = url
+        self.handlerURL = handlerURL
         FCMChannelSettings.shared = self
     }
 
