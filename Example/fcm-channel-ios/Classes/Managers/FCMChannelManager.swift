@@ -54,9 +54,9 @@ class FCMChannelManager {
 
         User.current.contact = FCMChannelContact(urn: key, name: name, fcmToken: fcmToken)
 
-        RapidProAPI.registerContact(contact) { uuid in
+        PushAPI.registerContact(contact) { uuid, error  in
 
-            if let uuid = uuid {
+            if let uuid = uuid, error == nil {
                 User.current.contact_uid = uuid
                 User.current.contact?.uuid = uuid
                 completion(true)
@@ -69,9 +69,9 @@ class FCMChannelManager {
     }
     
     static func loadContact(urn: String, completion: @escaping (FCMChannelContact?) -> Void) {
-        RapidProAPI.loadContact(fromUrn: urn) { contact in
-            completion(contact)
-        }
+//        PushAPI.loadContact(fromUrn: urn) { contact in
+//            completion(contact)
+//        }
     }
     
     static func saveFCMToken(fcmToken: String) {

@@ -1,26 +1,26 @@
 PODS:
-  - Alamofire (4.5.0)
-  - AlamofireObjectMapper (5.0.0):
-    - Alamofire (~> 4.1)
-    - ObjectMapper (~> 3.0)
-  - Bolts (1.8.4):
-    - Bolts/AppLinks (= 1.8.4)
-    - Bolts/Tasks (= 1.8.4)
-  - Bolts/AppLinks (1.8.4):
+  - Alamofire (5.0.0-beta.2)
+  - AlamofireObjectMapper (6.0.0):
+    - Alamofire (~> 5.0.0-beta.2)
+    - ObjectMapper (~> 3.4)
+  - Bolts (1.9.0):
+    - Bolts/AppLinks (= 1.9.0)
+    - Bolts/Tasks (= 1.9.0)
+  - Bolts/AppLinks (1.9.0):
     - Bolts/Tasks
-  - Bolts/Tasks (1.8.4)
+  - Bolts/Tasks (1.9.0)
   - FBSDKCoreKit (4.23.0):
     - Bolts (~> 1.7)
   - FBSDKLoginKit (4.23.0):
     - FBSDKCoreKit
   - fcm-channel-ios (0.2.2):
     - Alamofire
-    - AlamofireObjectMapper (= 5.0.0)
-    - IGListKit
+    - AlamofireObjectMapper (= 6.0.0)
+    - IGListKit (= 3.4.0)
     - ISScrollViewPageSwift (= 1.0.0)
     - MBProgressHUD (= 1.0.0)
     - MDHTMLLabel (= 1.0.2)
-    - Reusable
+    - Reusable (= 4.0.5)
     - TPKeyboardAvoiding
   - Firebase/Auth (4.0.4):
     - Firebase/Core
@@ -47,7 +47,7 @@ PODS:
     - nanopb (~> 0.3)
   - FirebaseDatabase (4.0.0):
     - FirebaseAnalytics (~> 4.0)
-  - FirebaseInstanceID (2.0.2):
+  - FirebaseInstanceID (2.0.10):
     - FirebaseCore (~> 4.0)
   - FirebaseMessaging (2.0.0):
     - FirebaseAnalytics (~> 4.0)
@@ -55,19 +55,19 @@ PODS:
     - FirebaseInstanceID (~> 2.0)
     - GoogleToolboxForMac/Logger (~> 2.1)
     - Protobuf (~> 3.1)
-  - GoogleToolboxForMac/DebugUtils (2.1.1):
-    - GoogleToolboxForMac/Defines (= 2.1.1)
-  - GoogleToolboxForMac/Defines (2.1.1)
-  - GoogleToolboxForMac/Logger (2.1.1):
-    - GoogleToolboxForMac/Defines (= 2.1.1)
-  - "GoogleToolboxForMac/NSData+zlib (2.1.1)":
-    - GoogleToolboxForMac/Defines (= 2.1.1)
-  - "GoogleToolboxForMac/NSDictionary+URLArguments (2.1.1)":
-    - GoogleToolboxForMac/DebugUtils (= 2.1.1)
-    - GoogleToolboxForMac/Defines (= 2.1.1)
-    - "GoogleToolboxForMac/NSString+URLArguments (= 2.1.1)"
-  - "GoogleToolboxForMac/NSString+URLArguments (2.1.1)"
-  - GTMSessionFetcher/Core (1.1.11)
+  - GoogleToolboxForMac/DebugUtils (2.2.0):
+    - GoogleToolboxForMac/Defines (= 2.2.0)
+  - GoogleToolboxForMac/Defines (2.2.0)
+  - GoogleToolboxForMac/Logger (2.2.0):
+    - GoogleToolboxForMac/Defines (= 2.2.0)
+  - "GoogleToolboxForMac/NSData+zlib (2.2.0)":
+    - GoogleToolboxForMac/Defines (= 2.2.0)
+  - "GoogleToolboxForMac/NSDictionary+URLArguments (2.2.0)":
+    - GoogleToolboxForMac/DebugUtils (= 2.2.0)
+    - GoogleToolboxForMac/Defines (= 2.2.0)
+    - "GoogleToolboxForMac/NSString+URLArguments (= 2.2.0)"
+  - "GoogleToolboxForMac/NSString+URLArguments (2.2.0)"
+  - GTMSessionFetcher/Core (1.2.1)
   - IGListKit (3.4.0):
     - IGListKit/Default (= 3.4.0)
   - IGListKit/Default (3.4.0):
@@ -76,24 +76,24 @@ PODS:
   - ISScrollViewPageSwift (1.0.0)
   - MBProgressHUD (1.0.0)
   - MDHTMLLabel (1.0.2)
-  - nanopb (0.3.8):
-    - nanopb/decode (= 0.3.8)
-    - nanopb/encode (= 0.3.8)
-  - nanopb/decode (0.3.8)
-  - nanopb/encode (0.3.8)
-  - ObjectMapper (3.3.0)
-  - Protobuf (3.4.0)
-  - Reusable (4.0.2):
-    - Reusable/Storyboard (= 4.0.2)
-    - Reusable/View (= 4.0.2)
-  - Reusable/Storyboard (4.0.2)
-  - Reusable/View (4.0.2)
-  - SwiftLint (0.27.0)
+  - nanopb (0.3.901):
+    - nanopb/decode (= 0.3.901)
+    - nanopb/encode (= 0.3.901)
+  - nanopb/decode (0.3.901)
+  - nanopb/encode (0.3.901)
+  - ObjectMapper (3.4.2)
+  - Protobuf (3.7.0)
+  - Reusable (4.0.5):
+    - Reusable/Storyboard (= 4.0.5)
+    - Reusable/View (= 4.0.5)
+  - Reusable/Storyboard (4.0.5)
+  - Reusable/View (4.0.5)
+  - SwiftLint (0.31.0)
   - TPKeyboardAvoiding (1.3)
 
 DEPENDENCIES:
-  - Alamofire (= 4.5.0)
-  - AlamofireObjectMapper (= 5.0.0)
+  - Alamofire (= 5.0.0-beta.2)
+  - AlamofireObjectMapper (= 6.0.0)
   - FBSDKCoreKit (= 4.23.0)
   - FBSDKLoginKit (= 4.23.0)
   - fcm-channel-ios (from `../`)
@@ -139,32 +139,32 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Alamofire: f28cdffd29de33a7bfa022cbd63ae95a27fae140
-  AlamofireObjectMapper: 5fafc816351cbbc0d486611aaeba7461c0cbad49
-  Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
+  Alamofire: d1e5493588babe3e7b56ae29e8032942f4de09fe
+  AlamofireObjectMapper: 8cf0e01a1b36b485877033f8f6aa733977488da3
+  Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   FBSDKCoreKit: d7829f5a69901cd7296105328e4c3c3fc7da6518
   FBSDKLoginKit: 6b92bd65f319d669d2b0730e49db495ef1660566
-  fcm-channel-ios: f2c4cd605ae5dbf7aa36a04f86f8945afd35b2f6
+  fcm-channel-ios: a6c61d79dc73497e065b8680ecf677bbdb90e312
   Firebase: 1492bf04e1b73a7353b4fb2cf5a20bac9692f341
   FirebaseAnalytics: ad41720e3e67fc63fbe3d2948d3e26932a8de311
   FirebaseAuth: ebb6abcbabae00fc47446d690c19ce68d8484fde
   FirebaseCore: cfc042628ef9f20debe09c0eb683135fcd404cb4
   FirebaseDatabase: d829b3a8c3e2ac7a16773c5df226966b0805dfc2
-  FirebaseInstanceID: c4c7fca62c7b7330caee5da04f19a37ea37bb1c1
+  FirebaseInstanceID: 8d20d890d65c917f9f7d9950b6e10a760ad34321
   FirebaseMessaging: 227406c05b0dc9290702d2e9f18ab5528f0c2cf2
-  GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
-  GTMSessionFetcher: 5ad62e8200fa00ed011fe5e08d27fef72c5b1429
+  GoogleToolboxForMac: ff31605b7d66400dcec09bed5861689aebadda4d
+  GTMSessionFetcher: 32aeca0aa144acea523e1c8e053089dec2cb98ca
   IGListKit: 7a5d788e9fb746bcd402baa8e8b24bc3bd2a5a07
   ISScrollViewPageSwift: 0f4b7957b3e0f52a37ac8d05d0c2f14da221093c
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   MDHTMLLabel: 18bf09ec7d6c1ae396497345c005857c0493ee0a
-  nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
-  ObjectMapper: b612bf8c8e99c4dc0bb6013a51f7c27966ed5da9
-  Protobuf: 03eef2ee0b674770735cf79d9c4d3659cf6908e8
-  Reusable: 584a5629747c52e0f6a77841b400dc2643f6fa0f
-  SwiftLint: 3207c1faa2240bf8973b191820a116113cd11073
+  nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
+  ObjectMapper: 0d4402610f4e468903ae64629eec4784531e5c51
+  Protobuf: 7a877b7f3e5964e3fce995e2eb323dbc6831bb5a
+  Reusable: 188be1a54ac0691bc66e5bb24ec6eb91971b315b
+  SwiftLint: 7a0227733d786395817373b2d0ca799fd0093ff3
   TPKeyboardAvoiding: a5138f318c06fb3e151f886e18ce4a72695d9cbe
 
-PODFILE CHECKSUM: f565a52b0461d7d4f11607398ab8e592470c47d8
+PODFILE CHECKSUM: b576a14615dc0e95269d95ab8ac149ab044d43db
 
 COCOAPODS: 1.5.3
