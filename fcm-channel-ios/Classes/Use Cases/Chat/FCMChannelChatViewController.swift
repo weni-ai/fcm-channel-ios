@@ -13,20 +13,7 @@ import ObjectMapper
 
 open class FCMChannelChatViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, ISScrollViewPageDelegate {
     
-    public var messageList = [FCMChannelMessage]()
-    public var contact:FCMChannelContact!
-    
     private var refreshControl: UIRefreshControl!
-    
-    open var incomingBubleMsgColor: UIColor!
-    open var incomingLabelMsgColor: UIColor!
-    open var outgoingBubleMsgColor: UIColor!
-    open var outgoingLabelMsgColor: UIColor!
-    open var botName: String!
-    
-    var defaultFieldBottonHeight: CGFloat!
-    var choiceAnswerBorderColor: CGColor!
-    var choiceAnswerButtonColor: UIColor!
     
     @IBOutlet public var txtMessage:UITextField!
     @IBOutlet public var btSend:UIButton!
@@ -37,11 +24,18 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
     @IBOutlet public var scrollViewPage: ISScrollViewPage!
     
 //    fileprivate var isSendingAnswer = false
-    
-    var loadMessagesOnInit: Bool = false
+
+    var defaultFieldBottonHeight: CGFloat
+    var choiceAnswerBorderColor: CGColor
+    var choiceAnswerButtonColor: UIColor
+    var buttonTitleColor: UIColor
+
     var currentMessageIsShowingOption = false
     let flowTypeManager = FCMChannelFlowTypeManager()
     public var defaultViewSendHeight = CGFloat(0)
+
+    private var presenter: ChatPresenter?
+    private var messages: [ChatCellViewModel] = []
     
     public init( contact: FCMChannelContact,
                  incomingBubleMsgColor: UIColor = UIColor(with: "#2F97F8"),
@@ -51,22 +45,27 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
                  outgoingLabelMsgColor: UIColor = UIColor.gray,
                  choiceAnswerButtonColor: UIColor = UIColor.white,
                  choiceAnswerBorderColor: CGColor = UIColor.clear.cgColor,
-                 bottonHeight: CGFloat = CGFloat(20),
+                 buttonHeight: CGFloat = CGFloat(20),
                  nibName: String = "FCMChannelChatViewController",
                  bundle: Bundle = Bundle(for: FCMChannelChatViewController.self),
                  loadMessagesOnInit: Bool = true ) {
-        
-        self.contact = contact
-        self.defaultFieldBottonHeight = bottonHeight
+
+        defaultFieldBottonHeight = buttonHeight
+        buttonTitleColor = outgoingLabelMsgColor
         self.choiceAnswerBorderColor = choiceAnswerBorderColor
         self.choiceAnswerButtonColor = choiceAnswerButtonColor
-        self.incomingBubleMsgColor = incomingBubleMsgColor
-        self.incomingLabelMsgColor = incomingLabelMsgColor
-        self.botName = botName
-        self.outgoingBubleMsgColor = outgoingBubleMsgColor
-        self.outgoingLabelMsgColor = outgoingLabelMsgColor
-        self.loadMessagesOnInit = loadMessagesOnInit
+
         super.init(nibName: nibName, bundle: bundle)
+
+        presenter = ChatPresenter(view: self,
+                                  dataSource: nil,
+                                  contact: contact,
+                                  incomingBubleMsgColor: incomingBubleMsgColor,
+                                  incomingLabelMsgColor: incomingLabelMsgColor,
+                                  botName: botName,
+                                  outgoingBubleMsgColor: outgoingBubleMsgColor,
+                                  outgoingLabelMsgColor: outgoingLabelMsgColor,
+                                  loadMessagesOnInit: loadMessagesOnInit)
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -76,7 +75,7 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
     override open func viewDidLoad() {
         super.viewDidLoad()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(newMessageReceived), name:NSNotification.Name(rawValue: "newMessageReceived"), object: nil)
+
         
         automaticallyAdjustsScrollViewInsets = false
         setupScrollViewPage()
@@ -84,14 +83,11 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
         setupKeyBoardNotification()
         setupPullToRefresh()
         
-        if loadMessagesOnInit {
-            self.loadData()
-            self.loadCurrentRulesetDelayed()
-        }
-        
         self.txtMessage.delegate = self
         defaultViewSendHeight = viewSendHeight.constant
         self.edgesForExtendedLayout = UIRectEdge();
+
+        presenter?.onViewDidLoad()
     }
     
     open override func viewDidAppear(_ animated: Bool) {
@@ -123,8 +119,7 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
     }
     
     @objc private func reloadTableView(sender: AnyObject) {
-        self.loadData()
-        self.loadCurrentRulesetDelayed()
+        presenter?.onReload()
     }
     
     open func setupKeyBoardNotification() {
@@ -149,49 +144,7 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
             self.view.layoutIfNeeded()
         })
     }
-    
-    func convertStringToDictionary(json: String) -> [String: AnyObject]? {
-        if let data = json.data(using: String.Encoding.utf8) {
-            
-            do {
-                let json = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
-                return json as? [String : AnyObject]
-            } catch let error {
-                print(error.localizedDescription)
-                return nil
-            }
-        }
-        return nil
-    }
-    
-    @objc open func newMessageReceived(_ notification:Notification) {
-        
-        let message = FCMChannelMessage()
-        
-        let object = notification.object as! [String: AnyObject]
-        
-        let text = object["message"] as! String
-        message.text = text
-        message.id = Int(object["message_id"] as! String)
-        
-        if let metadata = object["metadata"], let json = convertStringToDictionary(json: metadata as! String) {
-            if let quick_replies = json["quick_replies"] as? [String] {
-                message.quickReplies = quick_replies.map { FCMChannelQuickReply($0) } 
-            }
-        }
-        
-        //TODO: temporary workaround for duplicated push notifications. Remove as soon as Push fixes this.
-        guard !messageList.contains(where: {$0.id == message.id}) else { return }
-        
-        self.messageList.append(message)
-        
-        let indexPath = IndexPath(row: self.messageList.count - 1, section: 0)
-        insertRowInIndex(indexPath)
-        
-        FCMChannelMessage.addLastMessage(message: message)
-        self.loadCurrentRulesetDelayed(delay: 1)
-    }
-    
+
     open func setupScrollViewPage() {
         self.scrollViewPage.scrollViewPageType = ISScrollViewPageType.horizontally
         self.scrollViewPage.setPaging(false)
@@ -221,10 +174,8 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
         UIView.animate(withDuration: 0.1, animations: {
             self.view.layoutIfNeeded()
         }, completion: { (finish) in
-            guard !self.messageList.isEmpty else {
-                return
-            }
-            self.tableView.scrollToRow(at: IndexPath(row: self.messageList.count - 1, section: 0), at: .top, animated: false)
+            guard !self.messages.isEmpty else { return }
+            self.tableView.scrollToRow(at: IndexPath(row: self.messages.count - 1, section: 0), at: .top, animated: false)
         })
     }
     
@@ -246,19 +197,6 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
         })
     }
     
-    open func loadData() {
-        MBProgressHUD.showAdded(to: self.view, animated: true)
-        PushAPI.getMessagesFromContact(contact) { (messages) in
-            MBProgressHUD.hide(for: self.view, animated: true)
-            if let messages = messages {
-                self.messageList = messages
-                self.messageList = self.messageList.reversed()
-                self.tableView.reloadData()
-                self.tableViewScrollToBottom(true)
-            }
-        }
-    }
-    
     func insertRowInIndex(_ indexPath:IndexPath) {
         self.tableView.insertRows(at: [indexPath], with: .fade)
         self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
@@ -278,7 +216,7 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
     // MARK: - Table view data source
     
     open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.messageList.count
+        return messages.count
     }
     
     open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -288,21 +226,18 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
     
     open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        var cell:FCMChannelChatMessageViewCell?
+        var cell: FCMChannelChatMessageViewCell?
         
-        let message = self.messageList[(indexPath as NSIndexPath).row]
-        
-        if message.direction == FCMChannelMessageDirection.In.rawValue {
-            cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(FCMChannelOutgoingChatMessageViewCell.self), for: indexPath) as! FCMChannelOutgoingChatMessageViewCell
-            cell!.setupLayout(incomingLabelMsgColor, bubbleColor: incomingBubleMsgColor, userName: nil)
-        }else {
+        let message = messages[indexPath.row]
+
+        if message.incoming {
             cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(FCMChannelIncomingChatMessageViewCell.self), for: indexPath) as! FCMChannelIncomingChatMessageViewCell
-            cell!.setupLayout(outgoingLabelMsgColor, bubbleColor: outgoingBubleMsgColor, userName: botName)
+        } else {
+            cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(FCMChannelOutgoingChatMessageViewCell.self), for: indexPath) as! FCMChannelOutgoingChatMessageViewCell
         }
-        
-        cell!.setupCell(with: message)
-        
-        return cell!
+
+        cell?.setupCell(with: message)
+        return cell ?? UITableViewCell()
     }
     
     open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -312,102 +247,10 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
     //MARK: Button Events
     
     @IBAction public func btSendTapped(_ button:UIButton) {
-        if let text = self.txtMessage.text {
-            
-            if text.count > 0 {
-                
-                self.txtMessage.text = ""
-                self.messageList.append(FCMChannelMessage(msg:text))
-                
-                OperationQueue.main.addOperation {
-                    let indexPath = IndexPath(row: self.messageList.count - 1, section: 0)
-                    self.insertRowInIndex(indexPath)
-                }
-                
-                self.tableViewScrollToBottom(false)
-                self.loadCurrentRulesetDelayed(delay: 3)
-                
-                PushAPI.sendMessage(contact, message: text, completion: {
-                    success in
-                    if success {}
-                })
-                
-                self.txtMessage.keyboardType = UIKeyboardType.alphabet
-            }
-        }
-    }
-    
-    func loadCurrentRulesetDelayed(delay:Int? = 2) {
-        
-        if let message = FCMChannelMessage.lastMessage() {
-            DispatchQueue.main.async { //asyncAfter(deadline: .now() + Double(delay!)) {
-                self.addQuickRepliesOptions(message: message)
-            }
-        }else {
-            
-            DispatchQueue.main.async { //After(deadline: .now() + Double(delay!)) {
-                PushAPI.getFlowRuns(self.contact, completion: { (flowRuns: [FCMChannelFlowRun]?) -> Void in
-                    if let flowRuns = flowRuns {
-                        self.getLastRuleset(from: flowRuns.first!)
-                    }
-                })
-            }
-        }        
-    }
-    
-    private func getLastRuleset(from flowRun: FCMChannelFlowRun) {
-        if isFlowActive(flowRun: flowRun) {
-            let latestFlowStep = flowRun.path.last
-            loadFlow(flowRun: flowRun, latestFlowStep: latestFlowStep!)
-        }
-    }
-    
-    private func isFlowActive(flowRun:FCMChannelFlowRun) -> Bool {
-        guard let exit_type = flowRun.exitType else {
-            return true
-        }
-        
-//        let exitType = !(exit_type == "completed" || exit_type == "expired")
-        
-        if flowRun.path != nil && !flowRun.path.isEmpty {
-            return true
-        }
-        return false
-    }
-    
-    private func loadFlow(flowRun: FCMChannelFlowRun, latestFlowStep: FCMChannelFlowStep) {
-        if let uuid = flowRun.flow.uuid {
-            PushAPI.getFlowDefinition(uuid) {
-                (flowDefinition) in
-                if let lastFlow = flowDefinition?.flows?.last {
-                    self.getRulesetFor(flow: lastFlow, flowStep: latestFlowStep)
-                }
-            }
-        }
-    }
-    
-    private func getRulesetFor(flow: FCMChannelFlow, flowStep: FCMChannelFlowStep) {
-        if let uuid = flowStep.node {
-            if let index = getIndexForStepUuid(uuid: uuid, flow: flow) {
-                if index >= 0 {
-                    if let ruleset = flow.ruleSets?[index] {
-                        setCurrentRulesets(rulesets: ruleset)
-                    }
-                }
-            }
-        }
-    }
-    
-    private func getIndexForStepUuid(uuid: String, flow: FCMChannelFlow) -> Int? {
-        if let rulesets = flow.ruleSets {
-            for (i, ruleset) in rulesets.enumerated() {
-                if ruleset.uuid == uuid {
-                    return i
-                }
-            }
-        }
-        
-        return nil
+        guard let text = txtMessage.text, text.count > 0 else { return }
+        txtMessage.text = ""
+        txtMessage.keyboardType = UIKeyboardType.alphabet
+        presenter?.onSendMessage(with: text)
     }
     
     private func checkButtonsValidity(flowRule:FCMChannelFlowRule) -> Bool {
@@ -441,37 +284,18 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
         button.contentEdgeInsets = UIEdgeInsets(top: 7, left: 7, bottom: 7, right: 7)
         button.layer.cornerRadius = 20
         button.layer.borderWidth = 2
-        button.layer.borderColor = self.choiceAnswerBorderColor//UIColor.white.cgColor
+        button.layer.borderColor = self.choiceAnswerBorderColor
         button.backgroundColor = self.choiceAnswerButtonColor
-        button.setTitleColor(self.outgoingLabelMsgColor, for: .normal)
+        button.setTitleColor(buttonTitleColor, for: .normal)
         button.addTarget(self, action: #selector(self.answerTapped), for: .touchUpInside)
 
         return button
     }
-    
-    private func addQuickRepliesOptions(message:FCMChannelMessage) {
-        self.scrollViewPage.views = []
-        var views = [UIView]()
-        var showOptions = false
-        if let quickReplies = message.quickReplies {
-            for quickReply in quickReplies {
-                showOptions = true
-                let button = buildButton(name: quickReply.title)
-                
-                self.txtMessage.keyboardType = UIKeyboardType.alphabet
-                let viewSpace = UIView(frame: CGRect(x: 0, y: 0, width: 8, height: 40))
-                viewSpace.backgroundColor = UIColor.clear
-                views.append(viewSpace)
-                views.append(button)
-            }
-        }
-        
-        self.scrollViewPage.setCustomViews(views)
-        self.showAnswerOptionWithAnimation(showOptions)
-        self.currentMessageIsShowingOption = showOptions
-    }
-    
-    private func setCurrentRulesets(rulesets: FCMChannelFlowRuleset) {
+}
+
+extension FCMChannelChatViewController: ChatViewContract {
+
+    func setCurrentRulesets(rulesets: FCMChannelFlowRuleset) {
         self.scrollViewPage.views = []
         var showOptions = false
         var views = [UIView]()
@@ -481,20 +305,20 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
 
                 let typeValidation = self.flowTypeManager.getTypeValidationForRule(flowRule)
                 let answerDescription = flowRule.ruleCategory.values.first
-                
+
                 if !checkButtonsValidity(flowRule: flowRule) {
                     // Do nothing
                 } else {
                     showOptions = true
-                    
+
                     let button = buildButton(name: answerDescription!)
-                    
+
                     self.txtMessage.keyboardType = UIKeyboardType.alphabet
                     let viewSpace = UIView(frame: CGRect(x: 0, y: 0, width: 8, height: 40))
                     viewSpace.backgroundColor = UIColor.clear
                     views.append(viewSpace)
                     views.append(button)
-                    
+
                     switch typeValidation.type! {
                     case FCMChannelFlowType.openField:
                         break
@@ -508,11 +332,45 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
                     }
                 }
             }
-           
+
             self.scrollViewPage.setCustomViews(views)
             self.showAnswerOptionWithAnimation(showOptions)
             self.currentMessageIsShowingOption = showOptions
         }
     }
-}
 
+    func update(with models: [ChatCellViewModel]) {
+        self.messages = models
+        self.tableView.reloadData()
+        self.tableViewScrollToBottom(true)
+    }
+
+    func addQuickRepliesOptions(_ quickReplies: [FCMChannelQuickReply]) {
+        self.scrollViewPage.views = []
+        var views = [UIView]()
+        var showOptions = false
+
+        for quickReply in quickReplies {
+            showOptions = true
+            let button = buildButton(name: quickReply.title)
+
+            self.txtMessage.keyboardType = UIKeyboardType.alphabet
+            let viewSpace = UIView(frame: CGRect(x: 0, y: 0, width: 8, height: 40))
+            viewSpace.backgroundColor = UIColor.clear
+            views.append(viewSpace)
+            views.append(button)
+        }
+
+        self.scrollViewPage.setCustomViews(views)
+        self.showAnswerOptionWithAnimation(showOptions)
+        self.currentMessageIsShowingOption = showOptions
+    }
+
+    func setLoading(to active: Bool) {
+        if active {
+            MBProgressHUD.showAdded(to: view, animated: true)
+        } else {
+            MBProgressHUD.hide(for: self.view, animated: true)
+        }
+    }
+}

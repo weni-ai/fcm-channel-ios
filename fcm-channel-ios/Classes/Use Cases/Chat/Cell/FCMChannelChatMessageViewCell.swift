@@ -36,27 +36,19 @@ open class FCMChannelChatMessageViewCell: UITableViewCell, MDHTMLLabelDelegate {
 //        self.contentMediaView.addSubview(playMediaView)
     }
     
-    open func setupCell(with message:FCMChannelMessage) {
+    open func setupCell(with model: ChatCellViewModel) {
         
+        lbMessage.htmlText = model.text
+
+        if let userName = model.userName {
+            lbUserName?.text = userName
+        }
+
         self.contentMediaView.isHidden = true
         self.baloonView.isHidden = false
-        self.lbMessage.htmlText = message.text
-        
-        // self.lbUserName?.text = message.user.name
-    }
 
-    open func setupLayout(_ msgColor:UIColor!,bubbleColor:UIColor!,userName:String?) {
-        self.msgColor = msgColor
-        self.bubbleColor = bubbleColor
-        if let userName = userName {
-            self.lbUserName?.text = userName
-        }
-        updateUI()
-    }
-    
-    private func updateUI() {        
-        self.baloonView.backgroundColor = bubbleColor
-        self.lbMessage.textColor = msgColor
+        self.baloonView.backgroundColor = model.bubbleColor
+        self.lbMessage.textColor = model.msgColor
     }
     
     //MARK: MDHTMLLabelDelegate
