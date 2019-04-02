@@ -58,7 +58,6 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
         super.init(nibName: nibName, bundle: bundle)
 
         presenter = ChatPresenter(view: self,
-                                  dataSource: nil,
                                   contact: contact,
                                   incomingBubleMsgColor: incomingBubleMsgColor,
                                   incomingLabelMsgColor: incomingLabelMsgColor,
@@ -294,6 +293,22 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
 }
 
 extension FCMChannelChatViewController: ChatViewContract {
+
+    func addRow() {
+        addRow(scroll: nil)
+    }
+
+    func addRow(scroll: Bool?) {
+
+        OperationQueue.main.addOperation {
+            let indexPath = IndexPath(row: self.messages.count - 1, section: 0)
+            self.insertRowInIndex(indexPath)
+        }
+
+        if let scroll = scroll {
+            tableViewScrollToBottom(false)
+        }
+    }
 
     func setCurrentRulesets(rulesets: FCMChannelFlowRuleset) {
         self.scrollViewPage.views = []

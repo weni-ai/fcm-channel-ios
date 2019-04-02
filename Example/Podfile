@@ -14,7 +14,7 @@ target 'fcm-channel-ios_Example' do
   pod 'Firebase/Database', '4.0.4'
   
   pod 'AlamofireObjectMapper', '6.0.0'
-  pod 'Alamofire', '5.0.0-beta.2'
+  pod 'Alamofire', '5.0.0-beta.3'
   pod 'MDHTMLLabel', '1.0.2'
   pod 'MBProgressHUD', '1.0.0'
   pod 'TPKeyboardAvoiding', '1.3'

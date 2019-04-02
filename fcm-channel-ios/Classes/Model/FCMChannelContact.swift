@@ -85,7 +85,7 @@ open class FCMChannelContact: NSObject, Mappable {
                                             completion: @escaping (_ contact: FCMChannelContact?, _ error: Error?) -> Void) {
         
         let contact = FCMChannelContact(uuid:uuid, urn: urn, name: name, fcmToken: fcmToken)
-        PushAPI.registerContact(contact) { uuid, error in
+        PushAPI.registerFCMContact(contact) { uuid, error in
             if let uuid = uuid {
                 contact.uuid = uuid
                 setActive(contact: contact)

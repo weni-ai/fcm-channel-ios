@@ -9,23 +9,19 @@ import Foundation
 
 class ChatPresenter  {
     private weak var view: ChatViewContract?
-    private var dataSource: Any?
 
     private var messageList = [FCMChannelMessage]()
     private var contact: FCMChannelContact
 
     private var loadMessagesOnInit = false
 
-    open var incomingBubleMsgColor: UIColor!
-    open var incomingLabelMsgColor: UIColor!
-    open var outgoingBubleMsgColor: UIColor!
-    open var outgoingLabelMsgColor: UIColor!
-    open var botName: String!
-
-
+    open var incomingBubleMsgColor: UIColor
+    open var incomingLabelMsgColor: UIColor
+    open var outgoingBubleMsgColor: UIColor
+    open var outgoingLabelMsgColor: UIColor
+    open var botName: String
 
     init(view: ChatViewContract,
-         dataSource: Any?,
          contact: FCMChannelContact,
          incomingBubleMsgColor: UIColor = UIColor(with: "#2F97F8"),
          incomingLabelMsgColor: UIColor = UIColor.black,
@@ -35,7 +31,6 @@ class ChatPresenter  {
          loadMessagesOnInit: Bool = true) {
 
         self.view = view
-        self.dataSource = dataSource
         self.contact = contact
         self.incomingBubleMsgColor = incomingBubleMsgColor
         self.incomingLabelMsgColor = incomingLabelMsgColor
@@ -49,16 +44,10 @@ class ChatPresenter  {
     func onSendMessage(with text: String) {
 
         self.messageList.append(FCMChannelMessage(msg:text))
-
-        OperationQueue.main.addOperation {
-//            let indexPath = IndexPath(row: self.messageList.count - 1, section: 0)
-            //                self.insertRowInIndex(indexPath)
-        }
-
-//        self.tableViewScrollToBottom(false)
+        view?.addRow(scroll: false)
         self.loadCurrentRulesetDelayed(delay: 3)
 
-        PushAPI.sendMessage(contact, message: text, completion: {
+        PushAPI.sendReceivedMessage(contact, message: text, completion: {
             success in
             if success {}
         })
@@ -72,7 +61,10 @@ class ChatPresenter  {
             loadCurrentRulesetDelayed()
         }
 
-        NotificationCenter.default.addObserver(self, selector: #selector(newMessageReceived), name:NSNotification.Name(rawValue: "newMessageReceived"), object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(newMessageReceived),
+                                               name:NSNotification.Name(rawValue: "newMessageReceived"),
+                                               object: nil)
     }
 
     func onReload() {
@@ -101,13 +93,11 @@ class ChatPresenter  {
         //TODO: temporary workaround for duplicated push notifications. Remove as soon as Push fixes this.
         guard !messageList.contains(where: {$0.id == message.id}) else { return }
 
-        self.messageList.append(message)
-
-        let indexPath = IndexPath(row: self.messageList.count - 1, section: 0)
-//        insertRowInIndex(indexPath)
-
+        messageList.append(message)
+        didUpdateMessages()
+        view?.addRow()
         FCMChannelMessage.addLastMessage(message: message)
-        self.loadCurrentRulesetDelayed(delay: 1)
+        loadCurrentRulesetDelayed(delay: 1)
     }
 
     private func getLastRuleset(from flowRun: FCMChannelFlowRun) {
@@ -142,7 +132,7 @@ class ChatPresenter  {
 
     private func loadData() {
         view?.setLoading(to: true)
-        PushAPI.getMessagesFromContact(contact) { (messages) in
+        PushAPI.loadMessages(contact: contact) { (messages) in
             self.view?.setLoading(to: false)
             guard let messages = messages else { return }
             self.messageList = messages.reversed()
@@ -158,7 +148,7 @@ class ChatPresenter  {
                     self.view?.addQuickRepliesOptions(quickReplies)
                 }
             }
-        }else {
+        } else {
 
             DispatchQueue.main.async { //After(deadline: .now() + Double(delay!)) {
                 PushAPI.getFlowRuns(self.contact, completion: { (flowRuns: [FCMChannelFlowRun]?) -> Void in
@@ -207,8 +197,8 @@ class ChatPresenter  {
         return messageList.map { message in
 
             let incoming = message.direction == FCMChannelMessageDirection.In.rawValue
-            let msgColor = (incoming ? incomingLabelMsgColor : outgoingLabelMsgColor) ?? .clear
-            let bubbleColor = (incoming ? incomingBubleMsgColor : outgoingBubleMsgColor) ?? .clear
+            let msgColor = incoming ? incomingLabelMsgColor : outgoingLabelMsgColor
+            let bubbleColor = incoming ? incomingBubleMsgColor : outgoingBubleMsgColor
             let username: String? = incoming ? nil : botName
 
             return ChatCellViewModel(msgColor: msgColor,

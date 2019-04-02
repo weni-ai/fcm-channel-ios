@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (5.0.0-beta.2)
+  - Alamofire (5.0.0-beta.3)
   - AlamofireObjectMapper (6.0.0):
     - Alamofire (~> 5.0.0-beta.2)
     - ObjectMapper (~> 3.4)
@@ -92,7 +92,7 @@ PODS:
   - TPKeyboardAvoiding (1.3)
 
 DEPENDENCIES:
-  - Alamofire (= 5.0.0-beta.2)
+  - Alamofire (= 5.0.0-beta.3)
   - AlamofireObjectMapper (= 6.0.0)
   - FBSDKCoreKit (= 4.23.0)
   - FBSDKLoginKit (= 4.23.0)
@@ -139,7 +139,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Alamofire: d1e5493588babe3e7b56ae29e8032942f4de09fe
+  Alamofire: 50d6fa7e8cbe7f84559e86ab641ffd029db655f8
   AlamofireObjectMapper: 8cf0e01a1b36b485877033f8f6aa733977488da3
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   FBSDKCoreKit: d7829f5a69901cd7296105328e4c3c3fc7da6518
@@ -165,6 +165,6 @@ SPEC CHECKSUMS:
   SwiftLint: 7a0227733d786395817373b2d0ca799fd0093ff3
   TPKeyboardAvoiding: a5138f318c06fb3e151f886e18ce4a72695d9cbe
 
-PODFILE CHECKSUM: b576a14615dc0e95269d95ab8ac149ab044d43db
+PODFILE CHECKSUM: 41bbedb14102e66dffd782f0490218053488ef01
 
 COCOAPODS: 1.5.3

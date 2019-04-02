@@ -15,9 +15,9 @@ class LoginViewModel {
     
     static let shared = LoginViewModel()
     
-    func facebookLogin(from: UIViewController, completion: @escaping (_ user: Bool, _ error: Error?) -> ()) {
+    func facebookLogin(from: UIViewController, completion: @escaping (_ user: Bool, _ error: Error?) -> Void) {
         let fbLoginManager = FBSDKLoginManager()
-        
+        fbLoginManager.logOut()
         fbLoginManager.logIn(withReadPermissions: ["public_profile", "email"], from: from) {
             (result, error) in
             

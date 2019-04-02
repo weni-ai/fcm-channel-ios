@@ -21,12 +21,17 @@ open class PushAPI: NSObject {
     static var sendingAnswers:Bool = false
     
     static var headers: HTTPHeaders {
-        return [ "Authorization": FCMChannelSettings.shared.token!]
+
+        let token = FCMChannelSettings.shared.token
+
+        return ["authorization": "token \(token)",
+                "Accept": "application/json"
+                ]
     }
     
     class func getFlowDefinition(_ flowUuid: String, completion:@escaping (FCMChannelFlowDefinition?) -> Void) {
         
-        let url = "\(FCMChannelSettings.shared.url!)\(FCMChannelSettings.V2)definitions.json?flow=\(flowUuid)"
+        let url = "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.V2)definitions.json?flow=\(flowUuid)"
         
         AF.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers).responseObject {
             (response: DataResponse<FCMChannelFlowDefinition>) in
@@ -40,14 +45,13 @@ open class PushAPI: NSObject {
             case .success(let value):
                 completion(value)
             }
-            
         }
     }
     
     class func getFlowRuns(_ contact: FCMChannelContact, completion: @escaping ([FCMChannelFlowRun]?) -> Void) {
         
         let afterDate = FCMChannelDateUtil.dateFormatter(getMinimumDate())
-        let url = "\(FCMChannelSettings.shared.url!)\(FCMChannelSettings.V2)runs.json?contact=\(contact.uuid!)&after=\(afterDate)"
+        let url = "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.V2)runs.json?contact=\(contact.uuid!)&after=\(afterDate)"
         
         AF.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers).responseObject {
             
@@ -75,8 +79,11 @@ open class PushAPI: NSObject {
         return (gregorian as NSCalendar).date(byAdding: offsetComponents, to: date, options: [])!;
     }
     
-    class func sendMessage(_ contact: FCMChannelContact, message: String, completion:@escaping (_ success: Bool) -> Void) {
-        if let token = contact.fcmToken, let channel = FCMChannelSettings.shared.channel, let urn = contact.urn, let handlerUrl = FCMChannelSettings.shared.handlerURL {
+    class func sendReceivedMessage(_ contact: FCMChannelContact, message: String, completion:@escaping (_ success: Bool) -> Void) {
+        if let token = contact.fcmToken, let urn = contact.urn {
+            let handlerUrl = FCMChannelSettings.shared.handlerURL
+            let channel = FCMChannelSettings.shared.channel
+
             let params = [
                 "from": urn,
                 "msg": message,
@@ -102,9 +109,9 @@ open class PushAPI: NSObject {
         }
     }
     
-    open class func getMessagesFromContact(_ contact: FCMChannelContact, completion: @escaping (_ messages:[FCMChannelMessage]?) -> Void ) {
+    open class func loadMessages(contact: FCMChannelContact, completion: @escaping (_ messages:[FCMChannelMessage]?) -> Void ) {
         
-        let url = "\(FCMChannelSettings.shared.url!)\(FCMChannelSettings.V2)messages.json?contact=\(contact.uuid!)"
+        let url = "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.V2)messages.json?contact=\(contact.uuid!)"
         
         AF.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers).responseObject { (response: DataResponse<FCMChannelMessagesResponse>) in
             
@@ -125,9 +132,9 @@ open class PushAPI: NSObject {
         }
     }
     
-    open class func getMessageByID(_ messageID: Int, completion: @escaping (_ message: FCMChannelMessage?) -> Void ) {
-        
-        let url = "\(FCMChannelSettings.shared.url!)\(FCMChannelSettings.V2)messages.json?id=\(messageID)"
+    open class func loadMessageByID(_ messageID: Int, completion: @escaping (_ message: FCMChannelMessage?) -> Void ) {
+
+        let url = "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.V2)messages.json?id=\(messageID)"
         
         AF.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers).responseObject { (response: DataResponse<FCMChannelMessagesResponse>) in
             
@@ -149,10 +156,14 @@ open class PushAPI: NSObject {
     }
 
     open class func loadContact(fromUrn urn: String, completion: @escaping (_ contact: FCMChannelContact?) -> Void) {
-        let url = "\(FCMChannelSettings.shared.url!)\(FCMChannelSettings.V2)contacts.json?urns=\(urn)"
 
-        AF.request(url, method: .get, headers: headers).responseJSON {
-            (response: DataResponse<Any>) in
+        let url: URL! = URL(string: "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.V2)contacts.json?urns=\(urn)")
+
+        let request = AF.request(url,
+                                 method: .get,
+                                 encoding: URLEncoding.default,
+                                 headers: headers)
+                .responseJSON { (response: DataResponse<Any>) in
 
             if let response = response.result.value as? [String: Any] {
                 guard let results = response["results"] as? [[String: Any]], results.count > 0 else {
@@ -165,10 +176,11 @@ open class PushAPI: NSObject {
                 let name = firstResult["name"] as! String
                 let contact = FCMChannelContact(urn: urn, name: name, fcmToken: "")
                 contact.uuid = uuid
-
                 completion(contact)
             }
         }
+
+        debugPrint(request)
     }
     
     open class func fetchContact(completion: @escaping (_ success:Bool, _ error:Error?) -> Void) {
@@ -177,7 +189,7 @@ open class PushAPI: NSObject {
             return
         }
         
-        let url = "\(FCMChannelSettings.shared.url!)\(FCMChannelSettings.V2)contacts.json?urn=fcm:\(contact.urn!)"
+        let url = "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.V2)contacts.json?urn=fcm:\(contact.urn!)"
         
         AF.request(url, method: .get, headers: headers).responseJSON {
             (response: DataResponse<Any>) in
@@ -209,7 +221,7 @@ open class PushAPI: NSObject {
         }
     }
     
-    open class func registerContact(_ contact: FCMChannelContact, completion: @escaping (_ uuid: String?, _ error: Error?) -> Void) {
+    open class func registerFCMContact(_ contact: FCMChannelContact, completion: @escaping (_ uuid: String?, _ error: Error?) -> Void) {
         
         let name = contact.name ?? ""
         let params = ["contact_uuid": contact.uuid!,
@@ -217,7 +229,7 @@ open class PushAPI: NSObject {
                       "name": name,
                       "fcm_token": contact.fcmToken!] as [String:Any]
         
-        AF.request("\(FCMChannelSettings.shared.handlerURL!)/register/\(FCMChannelSettings.shared.channel!)/", method: .post, parameters: params).responseJSON( completionHandler: { response in
+        AF.request("\(FCMChannelSettings.shared.handlerURL)/register/\(FCMChannelSettings.shared.channel)/", method: .post, parameters: params).responseJSON( completionHandler: { response in
             
             switch response.result {
                 
