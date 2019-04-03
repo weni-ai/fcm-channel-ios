@@ -12,7 +12,7 @@ open class FCMChannelIncomingChatMessageViewCell: FCMChannelChatMessageViewCell 
 
     override open func awakeFromNib() {
         super.awakeFromNib()
-        self.contentMediaView.layer.borderColor = self.baloonView.backgroundColor?.cgColor
-        self.contentMediaView.layer.borderWidth = 3
+        contentMediaView.layer.borderColor = self.baloonView.backgroundColor?.cgColor
+        contentMediaView.layer.borderWidth = 3
     }
 }

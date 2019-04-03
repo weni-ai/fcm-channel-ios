@@ -43,7 +43,7 @@ class FCMChannelManager {
             }
         }
         
-        FCMChannelSettings.setup(token, channel: channel, url: apiPrefix, handlerURL: handlerUrl)
+        FCMClient.setup(token, channel: channel, url: apiPrefix)
     }
     
     static func createContact(completion: @escaping (_ success: Bool) -> Void) {
@@ -54,7 +54,7 @@ class FCMChannelManager {
 
         User.current.contact = FCMChannelContact(urn: key, name: name, fcmToken: fcmToken)
 
-        PushAPI.registerFCMContact(contact) { uuid, error  in
+        FCMClient.registerFCMContact(contact) { uuid, error  in
 
             if let uuid = uuid, error == nil {
                 User.current.contact_uid = uuid
@@ -69,7 +69,7 @@ class FCMChannelManager {
     }
     
     class func loadContact(urn: String, completion: @escaping (FCMChannelContact?) -> Void) {
-        PushAPI.loadContact(fromUrn: urn) { contact in
+        FCMClient.loadContact(fromUrn: urn) { contact in
             completion(contact)
         }
     }

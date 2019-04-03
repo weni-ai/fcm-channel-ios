@@ -12,5 +12,5 @@ public struct ChatCellViewModel {
     let bubbleColor: UIColor
     let userName: String?
     let text: String?
-    let incoming: Bool
+    let fromUser: Bool
 }

@@ -18,17 +18,16 @@ open class FCMChannelChatMessageViewCell: UITableViewCell, MDHTMLLabelDelegate {
     @IBOutlet var lbSentTime: UILabel!
     @IBOutlet public var contentMediaView: UIView!
     
-    var msgColor:UIColor!
-    var bubbleColor:UIColor!
-    
-    var parentViewController:UIViewController!
-    
+//    var msgColor: UIColor!
+//    var bubbleColor: UIColor!
+//    var parentViewController: UIViewController!
+
     override open func awakeFromNib() {
         super.awakeFromNib()
-        self.selectionStyle = .none
+        selectionStyle = .none
         baloonView.layer.cornerRadius = 20
-        self.contentMediaView.layer.borderColor = self.baloonView.backgroundColor?.cgColor
-        self.contentMediaView.layer.borderWidth = 3
+        contentMediaView.layer.borderColor = self.baloonView.backgroundColor?.cgColor
+        contentMediaView.layer.borderWidth = 3
     }
     
     func setupCellWithPlayerMediaView() {
@@ -39,21 +38,18 @@ open class FCMChannelChatMessageViewCell: UITableViewCell, MDHTMLLabelDelegate {
     open func setupCell(with model: ChatCellViewModel) {
         
         lbMessage.htmlText = model.text
+        lbUserName?.text = model.userName
 
-        if let userName = model.userName {
-            lbUserName?.text = userName
-        }
+        contentMediaView.isHidden = true
+        baloonView.isHidden = false
 
-        self.contentMediaView.isHidden = true
-        self.baloonView.isHidden = false
-
-        self.baloonView.backgroundColor = model.bubbleColor
-        self.lbMessage.textColor = model.msgColor
+        baloonView.backgroundColor = model.bubbleColor
+        lbMessage.textColor = model.msgColor
     }
     
     //MARK: MDHTMLLabelDelegate
     
     open func htmlLabel(_ label: MDHTMLLabel!, didSelectLinkWith URL: Foundation.URL!) {
-        UIApplication.shared.openURL(URL)
+        UIApplication.shared.open(URL, options: [:], completionHandler: nil)
     }
 }

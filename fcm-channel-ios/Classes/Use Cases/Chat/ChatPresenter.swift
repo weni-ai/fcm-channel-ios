@@ -43,12 +43,11 @@ class ChatPresenter  {
     // MARK: - Action
     func onSendMessage(with text: String) {
 
-        self.messageList.append(FCMChannelMessage(msg:text))
+        self.messageList.append(FCMChannelMessage(msg: text))
 //        view?.addRow(scroll: false)
         self.loadCurrentRulesetDelayed(delay: 3)
 
-        PushAPI.sendReceivedMessage(contact, message: text, completion: {
-            success in
+        FCMClient.sendReceivedMessage(contact, message: text, completion: { success in
             if success {}
         })
 
@@ -74,7 +73,7 @@ class ChatPresenter  {
 
     // MARK: - Data
 
-     @objc open func newMessageReceived(_ notification:Notification) {
+     @objc open func newMessageReceived(_ notification: Notification) {
 
         let message = FCMChannelMessage()
 
@@ -108,8 +107,7 @@ class ChatPresenter  {
 
     private func loadFlow(flowRun: FCMChannelFlowRun, latestFlowStep: FCMChannelFlowStep) {
         if let uuid = flowRun.flow.uuid {
-            PushAPI.getFlowDefinition(uuid) {
-                (flowDefinition) in
+            FCMClient.getFlowDefinition(uuid) { flowDefinition in
                 if let lastFlow = flowDefinition?.flows?.last {
                     self.getRulesetFor(flow: lastFlow, flowStep: latestFlowStep)
                 }
@@ -131,7 +129,7 @@ class ChatPresenter  {
 
     private func loadData() {
         view?.setLoading(to: true)
-        PushAPI.loadMessages(contact: contact) { (messages) in
+        FCMClient.loadMessages(contact: contact) { (messages) in
             self.view?.setLoading(to: false)
             guard let messages = messages else { return }
             self.messageList = messages.reversed()
@@ -139,7 +137,7 @@ class ChatPresenter  {
         }
     }
 
-    private func loadCurrentRulesetDelayed(delay:Int? = 2) {
+    private func loadCurrentRulesetDelayed(delay: Int? = 2) {
 
         if let message = FCMChannelMessage.lastMessage() {
             DispatchQueue.main.async { //asyncAfter(deadline: .now() + Double(delay!)) {
@@ -150,7 +148,7 @@ class ChatPresenter  {
         } else {
 
             DispatchQueue.main.async { //After(deadline: .now() + Double(delay!)) {
-                PushAPI.getFlowRuns(self.contact, completion: { (flowRuns: [FCMChannelFlowRun]?) -> Void in
+                FCMClient.getFlowRuns(self.contact, completion: { (flowRuns: [FCMChannelFlowRun]?) -> Void in
                     if let flowRun = flowRuns?.first {
                         self.getLastRuleset(from: flowRun)
                     }
@@ -162,15 +160,8 @@ class ChatPresenter  {
     // MARK: - Util
 
     private func getIndexForStepUuid(uuid: String, flow: FCMChannelFlow) -> Int? {
-        if let rulesets = flow.ruleSets {
-            for (i, ruleset) in rulesets.enumerated() {
-                if ruleset.uuid == uuid {
-                    return i
-                }
-            }
-        }
-
-        return nil
+            return flow.ruleSets?.enumerated()
+                .first(where: { $0.element.uuid == uuid })?.offset
     }
 
     func convertStringToDictionary(json: String) -> [String: AnyObject]? {
@@ -178,7 +169,7 @@ class ChatPresenter  {
 
             do {
                 let json = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
-                return json as? [String : AnyObject]
+                return json as? [String: AnyObject]
             } catch let error {
                 print(error.localizedDescription)
                 return nil
@@ -195,20 +186,20 @@ class ChatPresenter  {
 
         return messageList.map { message in
 
-            let incoming = message.direction == FCMChannelMessageDirection.In.rawValue
-            let msgColor = incoming ? incomingLabelMsgColor : outgoingLabelMsgColor
-            let bubbleColor = incoming ? incomingBubleMsgColor : outgoingBubleMsgColor
-            let username: String? = incoming ? nil : botName
+            let fromUser = message.direction == FCMChannelMessageDirection.In.rawValue
+            let msgColor = fromUser ? incomingLabelMsgColor : outgoingLabelMsgColor
+            let bubbleColor = fromUser ? incomingBubleMsgColor : outgoingBubleMsgColor
+            let username: String? = fromUser ? nil : botName
 
             return ChatCellViewModel(msgColor: msgColor,
                                     bubbleColor: bubbleColor,
                                     userName: username,
                                     text: message.text,
-                                    incoming: incoming)
+                                    fromUser: fromUser)
         }
     }
 
-    private func isFlowActive(flowRun:FCMChannelFlowRun) -> Bool {
+    private func isFlowActive(flowRun: FCMChannelFlowRun) -> Bool {
         guard let exit_type = flowRun.exitType else {
             return true
         }

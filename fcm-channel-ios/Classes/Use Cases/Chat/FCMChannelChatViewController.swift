@@ -73,18 +73,16 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
     
     override open func viewDidLoad() {
         super.viewDidLoad()
-        
 
-        
         automaticallyAdjustsScrollViewInsets = false
         setupScrollViewPage()
         setupTableView()
         setupKeyBoardNotification()
         setupPullToRefresh()
         
-        self.txtMessage.delegate = self
+        txtMessage.delegate = self
         defaultViewSendHeight = viewSendHeight.constant
-        self.edgesForExtendedLayout = UIRectEdge();
+        edgesForExtendedLayout = UIRectEdge()
 
         presenter?.onViewDidLoad()
     }
@@ -93,12 +91,12 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
         super.viewDidAppear(animated)
     }
     
-    //MAR: ISScrollViewPageDelegate
+    // MARK: ISScrollViewPageDelegate
     
     open func scrollViewPageDidScroll(_ scrollView: UIScrollView) {}
     open func scrollViewPageDidChanged(_ scrollViewPage: ISScrollViewPage, index: Int) {}
     
-    //MARK: UITextFieldDelegate
+    // MARK: UITextFieldDelegate
     
     open func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
@@ -109,7 +107,7 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
         return true 
     }
     
-    //MARK: Class Methods
+    // MARK: Class Methods
     
     private func setupPullToRefresh() {
         self.refreshControl = UIRefreshControl()
@@ -153,7 +151,7 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
         self.scrollViewPage.scrollViewPageDelegate = self
     }
     
-    @objc open func answerTapped(_ button:UIButton) {
+    @objc open func answerTapped(_ button: UIButton) {
         FCMChannelMessage.removeLastMessage()
         currentMessageIsShowingOption = false
         showAnswerOptionWithAnimation(false)
@@ -166,8 +164,8 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
         scrollViewPage.setCustomViews([])
     }
     
-    fileprivate func showAnswerOptionWithAnimation(_ show:Bool) {
-        if show && currentMessageIsShowingOption{
+    fileprivate func showAnswerOptionWithAnimation(_ show: Bool) {
+        if show && currentMessageIsShowingOption {
             return
         }
         
@@ -175,7 +173,7 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
         
         UIView.animate(withDuration: 0.1, animations: {
             self.view.layoutIfNeeded()
-        }, completion: { (finish) in
+        }, completion: { finish in
             guard !self.messages.isEmpty else { return }
             self.tableView.scrollToRow(at: IndexPath(row: self.messages.count - 1, section: 0), at: .top, animated: false)
         })
@@ -199,7 +197,7 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
         })
     }
     
-    func insertRowInIndex(_ indexPath:IndexPath) {
+    func insertRowInIndex(_ indexPath: IndexPath) {
         self.tableView.insertRows(at: [indexPath], with: .fade)
         self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
     }
@@ -232,7 +230,7 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
         
         let message = messages[indexPath.row]
 
-        if message.incoming {
+        if message.fromUser {
             cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(FCMChannelIncomingChatMessageViewCell.self), for: indexPath) as? FCMChannelIncomingChatMessageViewCell
         } else {
             cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(FCMChannelOutgoingChatMessageViewCell.self), for: indexPath) as? FCMChannelOutgoingChatMessageViewCell
@@ -269,11 +267,11 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
         return true
     }
     
-    private func buildButton(name:String) -> UIButton {
+    private func buildButton(name: String) -> UIButton {
         let button = UIButton()
         button.setTitle(name, for: .normal)
 
-        let stringSize = button.titleLabel?.text?.size(withAttributes: [NSAttributedString.Key.font : button.titleLabel?.font]) ?? .zero
+        let stringSize = button.titleLabel?.text?.size(withAttributes: [NSAttributedString.Key.font: button.titleLabel?.font]) ?? .zero
         var width = stringSize.width
         
         if width < 40 {

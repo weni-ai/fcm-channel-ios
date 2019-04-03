@@ -8,39 +8,36 @@
 
 import UIKit
 
-open class FCMChannelSettings: NSObject {
+class FCMChannelSettings: NSObject {
 
-    open var token: String = ""
-    open var channel: String = ""
-    open var url: String = ""
-    open var handlerURL: String = ""
+    var token: String = ""
+    var channel: String = ""
+    var url: String = ""
+    var handlerURL: String = "https://push.ilhasoft.mobi/handlers/fcm"
 
-    static let preferedLanguageKey = "language"
-    static let defaultLanguage = "en"
-    static let V1 = "v1/"
-    static let V2 = "v2/"
+    let preferedLanguageKey = "language"
+    let defaultLanguage = "en"
+    let V2 = "v2/"
 
     static var shared = FCMChannelSettings()
 
     private override init() {}
 
-    open class func setup(_ token:String,
+    static func setup(_ token:String,
                 channel:String,
-                url: String = "https://push.ilhasoft.mobi/api/",
-                handlerURL: String = "https://push.ilhasoft.mobi/handlers/fcm") {
+                url: String = "https://push.ilhasoft.mobi/api/") {
         shared.token = token
         shared.channel = channel
         shared.url = url
-        shared.handlerURL = handlerURL
     }
 
-    open class func savePreferedLanguage(_ language:String) {
+    func savePreferedLanguage(_ language:String) {
         let defaults = UserDefaults.standard
         defaults.set(language, forKey: preferedLanguageKey)
         defaults.synchronize()
     }
 
-    open class func getPreferedLanguage() -> String {
+   func getPreferedLanguage() -> String {
         let defaults = UserDefaults.standard
         if let preferedLanguage = defaults.object(forKey: preferedLanguageKey) {
             return preferedLanguage as? String ?? ""

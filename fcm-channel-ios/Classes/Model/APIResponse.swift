@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import Alamofire
+import AlamofireObjectMapper
 import ObjectMapper
 
 class APIResponse<T: Mappable>: Mappable {
