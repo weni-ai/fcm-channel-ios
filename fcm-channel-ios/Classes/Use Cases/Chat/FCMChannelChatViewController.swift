@@ -127,7 +127,10 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
-        self.viewSendBottom.constant = (notification.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue.height
+
+        guard let value = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+
+        self.viewSendBottom.constant = value.cgRectValue.height
         
         UIView.animate(withDuration: 0.5, animations: {
             self.view.layoutIfNeeded()
@@ -157,7 +160,7 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
         self.txtMessage.text = button.titleLabel?.text
         self.btSendTapped(self.btSend)
         
-        NotificationCenter.default.post(name: Notification.Name(rawValue: "ISAnsweredPollMessageSent"), object: nil, userInfo: ["answerTapped": (button.titleLabel?.text)!])
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "ISAnsweredPollMessageSent"), object: nil, userInfo: ["answerTapped": (button.titleLabel?.text) ?? ""])
         
         self.view.endEditing(true)
         scrollViewPage.setCustomViews([])
@@ -230,9 +233,9 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
         let message = messages[indexPath.row]
 
         if message.incoming {
-            cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(FCMChannelIncomingChatMessageViewCell.self), for: indexPath) as! FCMChannelIncomingChatMessageViewCell
+            cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(FCMChannelIncomingChatMessageViewCell.self), for: indexPath) as? FCMChannelIncomingChatMessageViewCell
         } else {
-            cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(FCMChannelOutgoingChatMessageViewCell.self), for: indexPath) as! FCMChannelOutgoingChatMessageViewCell
+            cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(FCMChannelOutgoingChatMessageViewCell.self), for: indexPath) as? FCMChannelOutgoingChatMessageViewCell
         }
 
         cell?.setupCell(with: message)
@@ -260,7 +263,7 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
             answerDescription == "All Responses" ||
             answerDescription == "Other") {
             return false
-        }else if typeValidation.validation == "regex" {
+        } else if typeValidation?.validation == "regex" {
             return false
         }
         return true
@@ -270,7 +273,7 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
         let button = UIButton()
         button.setTitle(name, for: .normal)
 
-        let stringSize = button.titleLabel!.text!.size(withAttributes: [NSAttributedString.Key.font : button.titleLabel!.font])
+        let stringSize = button.titleLabel?.text?.size(withAttributes: [NSAttributedString.Key.font : button.titleLabel?.font]) ?? .zero
         var width = stringSize.width
         
         if width < 40 {
@@ -318,7 +321,9 @@ extension FCMChannelChatViewController: ChatViewContract {
         if let flowRules = rulesets.rules {
             for flowRule in flowRules {
 
-                let typeValidation = self.flowTypeManager.getTypeValidationForRule(flowRule)
+                guard let typeValidation = self.flowTypeManager.getTypeValidationForRule(flowRule) else {
+                    return
+                }
                 let answerDescription = flowRule.ruleCategory.values.first
 
                 if !checkButtonsValidity(flowRule: flowRule) {
@@ -326,7 +331,7 @@ extension FCMChannelChatViewController: ChatViewContract {
                 } else {
                     showOptions = true
 
-                    let button = buildButton(name: answerDescription!)
+                    let button = buildButton(name: answerDescription ?? "")
 
                     self.txtMessage.keyboardType = UIKeyboardType.alphabet
                     let viewSpace = UIView(frame: CGRect(x: 0, y: 0, width: 8, height: 40))
@@ -334,7 +339,9 @@ extension FCMChannelChatViewController: ChatViewContract {
                     views.append(viewSpace)
                     views.append(button)
 
-                    switch typeValidation.type! {
+                    guard let type = typeValidation.type else { return }
+
+                    switch type {
                     case FCMChannelFlowType.openField:
                         break
                     case FCMChannelFlowType.choice:

@@ -44,7 +44,7 @@ class ChatPresenter  {
     func onSendMessage(with text: String) {
 
         self.messageList.append(FCMChannelMessage(msg:text))
-        view?.addRow(scroll: false)
+//        view?.addRow(scroll: false)
         self.loadCurrentRulesetDelayed(delay: 3)
 
         PushAPI.sendReceivedMessage(contact, message: text, completion: {
@@ -78,13 +78,13 @@ class ChatPresenter  {
 
         let message = FCMChannelMessage()
 
-        let object = notification.object as! [String: AnyObject]
+        let object = notification.object as? [String: AnyObject]
 
-        let text = object["message"] as! String
+        let text = object?["message"] as? String
         message.text = text
-        message.id = Int(object["message_id"] as! String)
+        message.id = Int(object?["message_id"] as? String ?? "")
 
-        if let metadata = object["metadata"], let json = convertStringToDictionary(json: metadata as! String) {
+        if let metadata = object?["metadata"] as? String, let json = convertStringToDictionary(json: metadata) {
             if let quick_replies = json["quick_replies"] as? [String] {
                 message.quickReplies = quick_replies.map { FCMChannelQuickReply($0) }
             }
@@ -101,9 +101,8 @@ class ChatPresenter  {
     }
 
     private func getLastRuleset(from flowRun: FCMChannelFlowRun) {
-        if isFlowActive(flowRun: flowRun) {
-            let latestFlowStep = flowRun.path.last
-            loadFlow(flowRun: flowRun, latestFlowStep: latestFlowStep!)
+        if isFlowActive(flowRun: flowRun), let latestFlowStep = flowRun.path.last {
+            loadFlow(flowRun: flowRun, latestFlowStep: latestFlowStep)
         }
     }
 
@@ -152,8 +151,8 @@ class ChatPresenter  {
 
             DispatchQueue.main.async { //After(deadline: .now() + Double(delay!)) {
                 PushAPI.getFlowRuns(self.contact, completion: { (flowRuns: [FCMChannelFlowRun]?) -> Void in
-                    if let flowRuns = flowRuns {
-                        self.getLastRuleset(from: flowRuns.first!)
+                    if let flowRun = flowRuns?.first {
+                        self.getLastRuleset(from: flowRun)
                     }
                 })
             }

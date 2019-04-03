@@ -35,8 +35,8 @@ class FCMChannelFlowTypeManager: NSObject {
         typeValidations = [OpenField, Choice, OpenFieldContains, OpenFieldNotEmpty, OpenFieldStarts, OpenFieldRegex, Number, NumberLessThan, NumberGreaterThan, NumberBetween, NumberEqual, Date, DateBefore, DateAfter, DateEqual, Phone, State, District]
     }
     
-    func getTypeValidationForRule(_ flowRule:FCMChannelFlowRule) -> FCMChannelFlowTypeValidation {
-        return getTypeValidation((flowRule.test?.type)!)
+    func getTypeValidationForRule(_ flowRule:FCMChannelFlowRule) -> FCMChannelFlowTypeValidation? {
+        return getTypeValidation((flowRule.test?.type ?? ""))
     }
     
     func getTypeValidation(_ validation:String) -> FCMChannelFlowTypeValidation {

@@ -28,22 +28,6 @@ open class PushAPI: NSObject {
                 "Accept": "application/json"]
     }
 
-    // TODO: check groups encoding
-    class func saveContact(_ contact: FCMChannelContact, completion:@escaping (FCMChannelContact?, Error?) -> Void) {
-        let url = "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.V2)contacts.json?uuid=\(contact.uuid ?? "")"
-
-        let parameters = contact.toDict() as Parameters
-
-        AF.request(url, method: .post,
-                   parameters: parameters,
-                   encoding: JSONEncoding.default,
-                   headers: headers)
-            .responseObject { (response: DataResponse<FCMChannelContact>) in
-
-                completion(response.value, response.error)
-        }
-    }
-
     class func getFlowDefinition(_ flowUuid: String, completion:@escaping (FCMChannelFlowDefinition?) -> Void) {
         
         let url = "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.V2)definitions.json?flow=\(flowUuid)"
@@ -64,13 +48,18 @@ open class PushAPI: NSObject {
     }
     
     class func getFlowRuns(_ contact: FCMChannelContact, completion: @escaping ([FCMChannelFlowRun]?) -> Void) {
+
+        guard let contactId = contact.uuid, let minimumDate = getMinimumDate() else {
+            completion(nil)
+            return
+        }
+
+        let afterDate = FCMChannelDateUtil.dateFormatter(minimumDate)
+        let url = "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.V2)runs.json?contact=\(contactId)&after=\(afterDate)"
         
-        let afterDate = FCMChannelDateUtil.dateFormatter(getMinimumDate())
-        let url = "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.V2)runs.json?contact=\(contact.uuid!)&after=\(afterDate)"
-        
-        AF.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers).responseObject {
-            
-            (response: DataResponse<APIResponse<FCMChannelFlowRun>>) in
+        AF.request(url, method: .get,
+                   encoding: JSONEncoding.default,
+                   headers: headers).responseObject { (response: DataResponse<APIResponse<FCMChannelFlowRun>>) in
 
             switch response.result {
                 
@@ -88,12 +77,12 @@ open class PushAPI: NSObject {
         }
     }
     
-    class func getMinimumDate() -> Date {
+    class func getMinimumDate() -> Date? {
         let date = Date()
         let gregorian = Calendar(identifier: Calendar.Identifier.gregorian)
         var offsetComponents = DateComponents();
         offsetComponents.month = -1;
-        return (gregorian as NSCalendar).date(byAdding: offsetComponents, to: date, options: [])!;
+        return (gregorian as NSCalendar).date(byAdding: offsetComponents, to: date, options: []);
     }
     
     class func sendReceivedMessage(_ contact: FCMChannelContact, message: String, completion:@escaping (_ success: Bool) -> Void) {
@@ -127,8 +116,13 @@ open class PushAPI: NSObject {
     }
     
     open class func loadMessages(contact: FCMChannelContact, completion: @escaping (_ messages:[FCMChannelMessage]?) -> Void ) {
+
+        guard let contactId = contact.uuid else {
+            completion(nil)
+            return
+        }
         
-        let url = "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.V2)messages.json?contact=\(contact.uuid!)"
+        let url = "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.V2)messages.json?contact=\(contactId)"
         
         AF.request(url, method: .get,
                    encoding: JSONEncoding.default,
@@ -163,8 +157,8 @@ open class PushAPI: NSObject {
                 completion(nil)
                 
             case .success(let value):
-                if !(value.results?.isEmpty ?? true) {
-                    completion(value.results!.first)
+                if let results = value.results, !results.isEmpty {
+                    completion(results.first)
                 } else {
                     completion(nil)
                 }
@@ -189,9 +183,13 @@ open class PushAPI: NSObject {
                     return
                 }
 
-                let firstResult = results.first!
-                let uuid = firstResult["uuid"] as! String
-                let name = firstResult["name"] as! String
+                guard let firstResult = results.first else {
+                    completion(nil)
+                    return
+                }
+
+                let uuid = firstResult["uuid"] as? String
+                let name = firstResult["name"] as? String
                 let contact = FCMChannelContact(urn: urn, name: name, fcmToken: "")
                 contact.uuid = uuid
                 completion(contact)
@@ -201,34 +199,40 @@ open class PushAPI: NSObject {
         debugPrint(request)
     }
     
-    open class func fetchContact(completion: @escaping (_ success:Bool, _ error:Error?) -> Void) {
-        guard let contact = FCMChannelContact.current() else {
+    open class func fetchContact(completion: @escaping (_ success: Bool, _ error: Error?) -> Void) {
+        guard let contact = FCMChannelContact.current(), let urn = contact.urn else {
             completion(false, nil)
             return
         }
         
-        let url = "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.V2)contacts.json?urn=fcm:\(contact.urn!)"
+        let url = "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.V2)contacts.json?urn=fcm:\(urn)"
         
         AF.request(url, method: .get, headers: headers).responseJSON {
             (response: DataResponse<Any>) in
             
-            if let response = response.result.value as? [String: Any] {
-                guard let results = response["results"] as? [[String: Any]], results.count > 0 else {
-                    completion(false,nil)
+            if let responseValue = response.result.value as? [String: Any] {
+                guard let results = responseValue["results"] as? [[String: Any]], results.count > 0 else {
+                    completion(false, nil)
                     return
                 }
                 
-                let data = results.first!
+                guard let data = results.first else {
+                    completion(false, nil)
+                    return
+                }
+
                 var fcmToken = ""
-                
                 if let urns = data["urns"] as? [String] {
                     let filtered = urns.filter {($0.contains("fcm"))}
                     if !filtered.isEmpty {
-                        fcmToken = String(filtered.first!.dropFirst(4))
+                        fcmToken = String(filtered.first?.dropFirst(4) ?? "")
                     }
                 }
                 
-                let contact = Mapper<FCMChannelContact>().map(JSONObject: data)!
+                guard let contact = Mapper<FCMChannelContact>().map(JSONObject: data) else {
+                    completion(false, response.result.error)
+                    return
+                }
                 contact.urn = fcmToken
                 
                 FCMChannelContact.setActive(contact: contact)
@@ -240,12 +244,19 @@ open class PushAPI: NSObject {
     }
     
     open class func registerFCMContact(_ contact: FCMChannelContact, completion: @escaping (_ uuid: String?, _ error: Error?) -> Void) {
-        
+
+        guard let uid = contact.uuid,
+            let urn = contact.urn,
+            let token = contact.fcmToken else {
+                completion(nil, nil)
+                return
+        }
+
         let name = contact.name ?? ""
-        let params = ["contact_uuid": contact.uuid!,
-                      "urn": contact.urn!,
+        let params = ["contact_uuid": uid,
+                      "urn": urn,
                       "name": name,
-                      "fcm_token": contact.fcmToken!] as [String:Any]
+                      "fcm_token": token] as [String:Any]
         
         AF.request("\(FCMChannelSettings.shared.handlerURL)/register/\(FCMChannelSettings.shared.channel)/", method: .post, parameters: params).responseJSON( completionHandler: { response in
             

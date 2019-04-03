@@ -43,8 +43,8 @@ open class FCMChannelSettings: NSObject {
     open class func getPreferedLanguage() -> String {
         let defaults = UserDefaults.standard
         if let preferedLanguage = defaults.object(forKey: preferedLanguageKey) {
-            return preferedLanguage as! String
-        }else {
+            return preferedLanguage as? String ?? ""
+        } else {
             return defaultLanguage
         }
     }

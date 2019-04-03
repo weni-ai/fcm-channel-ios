@@ -9,8 +9,11 @@ disabled_rules: # rule identifiers to exclude from running
   - todo
 opt_in_rules:
   - force_unwrapping
+included:
+    - ../fcm-channel-ios
 excluded:
   - Pods
+  - Pods/Deve
 line_length: 110
 # they can set both implicitly with an array
 force_unwrapping:

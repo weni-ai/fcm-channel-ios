@@ -25,7 +25,7 @@ open class FCMChannelContact: NSObject, Mappable {
     open var born: String?
     open var fields: [String:Any]?
     
-    public init(uuid:String?=nil, urn: String, name: String, fcmToken: String) {
+    public init(uuid:String?=nil, urn: String, name: String?, fcmToken: String) {
         self.uuid = uuid
         self.urn = urn
         self.name = name
