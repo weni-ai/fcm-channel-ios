@@ -231,9 +231,9 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
         let message = messages[indexPath.row]
 
         if message.fromUser {
-            cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(FCMChannelIncomingChatMessageViewCell.self), for: indexPath) as? FCMChannelIncomingChatMessageViewCell
-        } else {
             cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(FCMChannelOutgoingChatMessageViewCell.self), for: indexPath) as? FCMChannelOutgoingChatMessageViewCell
+        } else {
+            cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(FCMChannelIncomingChatMessageViewCell.self), for: indexPath) as? FCMChannelIncomingChatMessageViewCell
         }
 
         cell?.setupCell(with: message)
@@ -340,13 +340,8 @@ extension FCMChannelChatViewController: ChatViewContract {
                     guard let type = typeValidation.type else { return }
 
                     switch type {
-                    case FCMChannelFlowType.openField:
-                        break
-                    case FCMChannelFlowType.choice:
-                        break
                     case FCMChannelFlowType.number:
                         self.txtMessage.keyboardType = UIKeyboardType.numberPad
-                        break
                     default:
                         break
                     }
