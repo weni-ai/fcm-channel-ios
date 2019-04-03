@@ -11,13 +11,13 @@ import ObjectMapper
 
 open class FCMChannelFlowRuleTest: NSObject, Mappable {
 
-    open var test: [String : String] = [:]
+    open var test: [String: String] = [:]
     open var base: String?
     open var type: String?
     open var min: String?
     open var max: String?
 
-    required public init?(map: Map){}
+    required public init?(map: Map) {}
 
     open func mapping(map: Map) {
         self.test        <- map["test"]

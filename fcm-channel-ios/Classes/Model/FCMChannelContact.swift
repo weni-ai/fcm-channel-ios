@@ -13,6 +13,7 @@ open class FCMChannelContact: NSObject, Mappable {
    
     open var uuid: String?
     open var urn: String?
+    open var urns: String?
     open var name: String?
     open var phoneNumber: String?
     open var email: String?
@@ -23,9 +24,9 @@ open class FCMChannelContact: NSObject, Mappable {
     open var gender: String?
     open var fcmToken: String?
     open var born: String?
-    open var fields: [String:Any]?
+    open var fields: [String: Any]?
     
-    public init(uuid:String?=nil, urn: String, name: String?, fcmToken: String) {
+    public init(uuid: String? = nil, urn: String, name: String?, fcmToken: String) {
         self.uuid = uuid
         self.urn = urn
         self.name = name
@@ -35,7 +36,7 @@ open class FCMChannelContact: NSObject, Mappable {
     required public init?(map: Map){}
     
     open func mapping(map: Map) {
-        self.urn            <- map["urn"]
+        self.urns           <- map["urns"]
         self.uuid           <- map["uuid"]
         self.name           <- map["name"]
         self.phoneNumber    <- map["phoneNumber"]
@@ -50,7 +51,7 @@ open class FCMChannelContact: NSObject, Mappable {
         self.fields         <- map["fields"]
     }
     
-    open class func formatExtContactId(_ key:String) -> String {
+    open class func formatExtContactId(_ key: String) -> String {
         return key.replacingOccurrences(of: "+", with: "%2B")
     }
     
@@ -71,20 +72,20 @@ open class FCMChannelContact: NSObject, Mappable {
         defaults.synchronize()
     }
     
-    public static func setActive(contact:FCMChannelContact) {
+    public static func setActive(contact: FCMChannelContact) {
         let defaults: UserDefaults = UserDefaults.standard
         let encodedObject: Data = NSKeyedArchiver.archivedData(withRootObject: contact.toJSONString() as Any)
         defaults.set(encodedObject, forKey: "fcmchannelcontact")
         defaults.synchronize()
     }
     
-    public static func createContactAndSave(name:String,
-                                            uuid:String?,
-                                            urn:String,
-                                            fcmToken:String,
+    public static func createContactAndSave(name: String,
+                                            uuid: String?,
+                                            urn: String,
+                                            fcmToken: String,
                                             completion: @escaping (_ contact: FCMChannelContact?, _ error: Error?) -> Void) {
         
-        let contact = FCMChannelContact(uuid:uuid, urn: urn, name: name, fcmToken: fcmToken)
+        let contact = FCMChannelContact(uuid: uuid, urn: urn, name: name, fcmToken: fcmToken)
         FCMClient.registerFCMContact(contact) { uuid, error in
             if let uuid = uuid {
                 contact.uuid = uuid
@@ -93,25 +94,5 @@ open class FCMChannelContact: NSObject, Mappable {
 
             completion(contact, error)
         }
-    }
-
-    func toDict() -> [String: Any?] {
-        var dict: [String: Any?] = [:]
-
-        dict["uuid"] = uuid
-        dict["urn"] = urn
-        dict["name"] = name
-        dict["phoneNumber"] = phoneNumber
-        dict["email"] = email
-        dict["state"] = state
-        dict["birthday"] = birthday
-        dict["country"] = country
-        dict["picture"] = picture
-        dict["gender"] = gender
-        dict["fcmToken"] = fcmToken
-        dict["born"] = born
-        dict["fields"] = fields
-
-        return dict
     }
 }

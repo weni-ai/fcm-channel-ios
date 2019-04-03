@@ -25,3 +25,59 @@ pod 'fcm-channel-ios'
 ## License
 
 fcm-channel-ios is available under the AGPL-3.0 license. See the LICENSE file for more info.
+
+
+## How to use
+
+Before making any Push calls or using the chat view, configure the fcm-channel by calling:
+
+`FCMClient.setup(<push authorization token>, channel: ”<Channel-id>”, url:”<push-url(optional)>”)`
+
+FCMClient is responsible for making calls to Push API.
+
+You'll have to notify Push when new messages arrive via push notifications. Add this piece of code to AppDelegate:
+
+To notifiy about new messages from push notification, call:
+
+~~~~
+@available(iOS 10.0, *)
+func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+//Enter on touch notification
+let userInfo = response.notification.request.content.userInfo
+if let _ = FCMChannelContact.current() {
+receiveNotification(userInfo: userInfo)
+// Notify the fcm-channel if notification comes from rapidpro
+NotificationCenter.default.post(name: Notification.Name(rawValue: "newMessageReceived"), object: userInfo)
+}
+}
+~~~~
+
+## API call methods:
+
+These methods can be called from FCMClient.
+
+### Flow
+
+`open class func getFlowDefinition(_ flowUuid: String, completion: @escaping (FCMChannelFlowDefinition?) -> Void)`
+
+`open class func getFlowRuns(_ contact: FCMChannelContact, completion: @escaping ([FCMChannelFlowRun]?) -> Void)`
+
+### Messages
+`open class func sendReceivedMessage(_ contact: FCMChannelContact, message: String, completion: @escaping (_ success: Bool) -> Void)`
+
+`open class func loadMessages(contact: FCMChannelContact, completion: @escaping (_ messages:[FCMChannelMessage]?) -> Void )`
+
+`open class func loadMessageByID(_ messageID: Int, completion: @escaping (_ message: FCMChannelMessage?) -> Void ) `
+
+### Contact
+`open class func loadContact(fromUrn urn: String, completion: @escaping (_ contact: FCMChannelContact?) -> Void) `
+
+`open class func fetchContact(completion: @escaping (_ success: Bool, _ error: Error?) -> Void) `
+
+`open class func registerFCMContact(_ contact: FCMChannelContact, completion: @escaping (_ uuid: String?, _ error: Error?) -> Void) `
+
+`open class func savePreferedLanguage(_ language:String) `
+
+`open class func getPreferedLanguage() -> String`
+
+

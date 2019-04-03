@@ -15,12 +15,12 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
     
     private var refreshControl: UIRefreshControl!
     
-    @IBOutlet public var txtMessage:UITextField!
-    @IBOutlet public var btSend:UIButton!
-    @IBOutlet public var viewSendHeight:NSLayoutConstraint!
-    @IBOutlet var viewSendBottom:NSLayoutConstraint!
-    @IBOutlet public var tableView:UITableView!
-    @IBOutlet open var viewSend:UIView!
+    @IBOutlet public var txtMessage: UITextField!
+    @IBOutlet public var btSend: UIButton!
+    @IBOutlet public var viewSendHeight: NSLayoutConstraint!
+    @IBOutlet var viewSendBottom: NSLayoutConstraint!
+    @IBOutlet public var tableView: UITableView!
+    @IBOutlet open var viewSend: UIView!
     @IBOutlet public var scrollViewPage: ISScrollViewPage!
     
 //    fileprivate var isSendingAnswer = false
@@ -244,22 +244,22 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
         self.txtMessage.resignFirstResponder()
     }
     
-    //MARK: Button Events
+    // MARK: Button Events
     
-    @IBAction public func btSendTapped(_ button:UIButton) {
+    @IBAction public func btSendTapped(_ button: UIButton) {
         guard let text = txtMessage.text, text.count > 0 else { return }
         txtMessage.text = ""
         txtMessage.keyboardType = UIKeyboardType.alphabet
         presenter?.onSendMessage(with: text)
     }
     
-    private func checkButtonsValidity(flowRule:FCMChannelFlowRule) -> Bool {
+    private func checkButtonsValidity(flowRule: FCMChannelFlowRule) -> Bool {
         let typeValidation = self.flowTypeManager.getTypeValidationForRule(flowRule)
         let answerDescription = flowRule.ruleCategory.values.first
         
-        if (answerDescription == "reply" ||
+        if answerDescription == "reply" ||
             answerDescription == "All Responses" ||
-            answerDescription == "Other") {
+            answerDescription == "Other" {
             return false
         } else if typeValidation?.validation == "regex" {
             return false

@@ -23,15 +23,15 @@ class FCMChannelSettings: NSObject {
 
     private override init() {}
 
-    static func setup(_ token:String,
-                channel:String,
-                url: String = "https://push.ilhasoft.mobi/api/") {
+    static func setup(_ token: String,
+                      channel: String,
+                      url: String = "https://push.ilhasoft.mobi/api/") {
         shared.token = token
         shared.channel = channel
         shared.url = url
     }
 
-    func savePreferedLanguage(_ language:String) {
+    func savePreferedLanguage(_ language: String) {
         let defaults = UserDefaults.standard
         defaults.set(language, forKey: preferedLanguageKey)
         defaults.synchronize()

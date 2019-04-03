@@ -26,8 +26,9 @@ class RestServices {
 
         let url = "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.shared.V2)definitions.json?flow=\(flowUuid)"
 
-        AF.request(url, method: .get, encoding: JSONEncoding.default, headers: headers).responseObject {
-            (response: DataResponse<FCMChannelFlowDefinition>) in
+        AF.request(url, method: .get,
+                   encoding: JSONEncoding.default,
+                   headers: headers).responseObject { (response: DataResponse<FCMChannelFlowDefinition>) in
 
             switch response.result {
 
@@ -86,8 +87,7 @@ class RestServices {
 
             let url = "\(handlerUrl)/receive/\(channel)/"
 
-            AF.request(url, method: .post, parameters: params).responseString {
-                (response) in
+            AF.request(url, method: .post, parameters: params).responseString { (response) in
 
                 switch response.result {
 
@@ -177,10 +177,11 @@ class RestServices {
                         return
                     }
 
-                    let uuid = firstResult["uuid"] as? String
-                    let name = firstResult["name"] as? String
-                    let contact = FCMChannelContact(urn: urn, name: name, fcmToken: "")
-                    contact.uuid = uuid
+                    let contact = Mapper<FCMChannelContact>().map(JSON: firstResult)
+                    if contact?.fcmToken == nil {
+                        contact?.fcmToken = ""
+                    }
+
                     completion(contact)
                 }
         }
@@ -225,9 +226,9 @@ class RestServices {
                 contact.urn = fcmToken
 
                 FCMChannelContact.setActive(contact: contact)
-                completion(true,nil)
+                completion(true, nil)
             } else if let error = response.result.error {
-                completion(false,error)
+                completion(false, error)
             }
         }
     }
@@ -245,7 +246,7 @@ class RestServices {
         let params = ["contact_uuid": uid,
                       "urn": urn,
                       "name": name,
-                      "fcm_token": token] as [String:Any]
+                      "fcm_token": token] as [String: Any]
 
         AF.request("\(FCMChannelSettings.shared.handlerURL)/register/\(FCMChannelSettings.shared.channel)/", method: .post, parameters: params).responseJSON( completionHandler: { response in
 
@@ -256,7 +257,7 @@ class RestServices {
                 completion(nil, error)
 
             case .success(let value):
-                if let response = value as? [String: String], let uuid = response["contact_uuid"]  {
+                if let response = value as? [String: String], let uuid = response["contact_uuid"] {
                     completion(uuid, nil)
                 } else {
                     completion(nil, nil)

@@ -6,7 +6,6 @@
 //  Copyright © 2015 ilhasoft. All rights reserved.
 //
 
-
 import UIKit
 import ObjectMapper
 

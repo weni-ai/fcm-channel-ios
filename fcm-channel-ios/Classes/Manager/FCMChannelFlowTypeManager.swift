@@ -35,17 +35,12 @@ class FCMChannelFlowTypeManager: NSObject {
         typeValidations = [OpenField, Choice, OpenFieldContains, OpenFieldNotEmpty, OpenFieldStarts, OpenFieldRegex, Number, NumberLessThan, NumberGreaterThan, NumberBetween, NumberEqual, Date, DateBefore, DateAfter, DateEqual, Phone, State, District]
     }
     
-    func getTypeValidationForRule(_ flowRule:FCMChannelFlowRule) -> FCMChannelFlowTypeValidation? {
+    func getTypeValidationForRule(_ flowRule: FCMChannelFlowRule) -> FCMChannelFlowTypeValidation? {
         return getTypeValidation((flowRule.test?.type ?? ""))
     }
     
-    func getTypeValidation(_ validation:String) -> FCMChannelFlowTypeValidation {
-        for typeValidation in self.typeValidations {
-            if typeValidation.validation == validation {
-                return typeValidation
-            }
-        }
-        return OpenField
+    func getTypeValidation(_ validation: String) -> FCMChannelFlowTypeValidation {
+        return typeValidations.first(where: { $0.validation == validation }) ?? OpenField
     }
     
 }

@@ -11,7 +11,7 @@ import ObjectMapper
 
 open class FCMChannelFlowRule: NSObject, Mappable {
 
-    open var ruleCategory: [String : String] = [:]
+    open var ruleCategory: [String: String] = [:]
     open var test: FCMChannelFlowRuleTest?
     open var destination: String?
     open var uuid: NSString?

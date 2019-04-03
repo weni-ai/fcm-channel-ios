@@ -18,8 +18,8 @@ open class FCMChannelFlowStep: NSObject, Mappable {
     public required init?(map: Map) {}
     
     open func mapping(map: Map) {
-        self.node           <- map["node"]
-        self.time           <- map["time"]
+        self.node <- map["node"]
+        self.time <- map["time"]
     }
 }
 

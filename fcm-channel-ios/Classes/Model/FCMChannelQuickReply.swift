@@ -12,7 +12,7 @@ open class FCMChannelQuickReply: NSObject, Mappable {
         
     open var title: String = ""
     
-    required public init?(map: Map){}
+    required public init?(map: Map) {}
 
     init(_ title: String) {
         self.title = title

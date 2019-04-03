@@ -9,12 +9,12 @@
 import UIKit
 import ObjectMapper
 
-public enum FCMChannelMessageDirection:String {
+public enum FCMChannelMessageDirection: String {
     case In = "in"
     case Out = "Out"
 }
 
-public enum FCMChannelMessageType:String {
+public enum FCMChannelMessageType: String {
     case Flow = "flow"
     case Inbox = "inbox"
 }
@@ -47,7 +47,7 @@ open class FCMChannelMessage: NSObject, Mappable {
         self.direction = FCMChannelMessageDirection.Out.rawValue
     }
 
-    required public init?(map: Map){}
+    required public init?(map: Map) {}
 
     open func mapping(map: Map) {
         self.id              <- map["id"]

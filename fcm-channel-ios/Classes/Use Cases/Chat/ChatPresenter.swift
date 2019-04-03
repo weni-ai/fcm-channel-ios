@@ -7,7 +7,7 @@
 
 import Foundation
 
-class ChatPresenter  {
+class ChatPresenter {
     private weak var view: ChatViewContract?
 
     private var messageList = [FCMChannelMessage]()
@@ -44,7 +44,6 @@ class ChatPresenter  {
     func onSendMessage(with text: String) {
 
         self.messageList.append(FCMChannelMessage(msg: text))
-//        view?.addRow(scroll: false)
         self.loadCurrentRulesetDelayed(delay: 3)
 
         FCMClient.sendReceivedMessage(contact, message: text, completion: { success in
@@ -94,7 +93,6 @@ class ChatPresenter  {
 
         messageList.append(message)
         didUpdateMessages()
-        view?.addRow()
         FCMChannelMessage.addLastMessage(message: message)
         loadCurrentRulesetDelayed(delay: 1)
     }

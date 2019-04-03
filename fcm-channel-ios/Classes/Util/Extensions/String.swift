@@ -16,7 +16,7 @@ extension String {
 
     init(htmlEncodedString: String) {
         let encodedData = htmlEncodedString.data(using: String.Encoding.utf8)
-        let attributedOptions : [NSAttributedString.DocumentReadingOptionKey: AnyObject] = [
+        let attributedOptions: [NSAttributedString.DocumentReadingOptionKey: AnyObject] = [
             NSAttributedString.DocumentReadingOptionKey(rawValue: NSAttributedString.DocumentAttributeKey.documentType.rawValue): NSAttributedString.DocumentType.html as AnyObject,
             NSAttributedString.DocumentReadingOptionKey(rawValue: NSAttributedString.DocumentAttributeKey.characterEncoding.rawValue): String.Encoding.utf8 as AnyObject
         ]

@@ -19,7 +19,7 @@ open class FCMChannelFlowRun: NSObject, Mappable {
     open var modifiedOn: Date!
     open var exitType: String!
 
-    required public init?(map: Map){}
+    required public init?(map: Map) {}
 
     open func mapping(map: Map) {
         self.flow       <- map["flow"]

@@ -11,13 +11,13 @@ import ObjectMapper
 
 open class FCMChannelFlowActionSet: NSObject, Mappable {
 
-    open var positionX:Int?
-    open var positionY:Int?
-    open var destination:String?
-    open var uuid:String?
-    open var actions:[FCMChannelFlowAction]?
+    open var positionX: Int?
+    open var positionY: Int?
+    open var destination: String?
+    open var uuid: String?
+    open var actions: [FCMChannelFlowAction]?
 
-    required public init?(map: Map){}
+    required public init?(map: Map) {}
 
     open func mapping(map: Map) {
         self.positionX    <- map["x"]

@@ -53,34 +53,34 @@ class User: Serializable {
         
         FCMChannelManager.loadContact(urn: key) { (contact) in
             if let contact = contact {
-//                userRef.observeSingleEvent(of: .value, with: {
-//
-//                    (snapshot) in
-//                    if let value = snapshot.value as? NSDictionary {
-//                        if let email = value["email"] as? String, let nickname = value["nickname"] as? String, let fcmToken = value["fcmToken"] as? String, let contact_uid = value["contact_uid"] as? String {
+                userRef.observeSingleEvent(of: .value, with: {
 
-//                            User.current.key = key
-//                            User.current.email = email
-//                            User.current.nickname = nickname
-//                            User.current.fcmToken = fcmToken
-//                            User.current.contact_uid = contact_uid
-//                            User.current.contact = contact
+                    (snapshot) in
+                    if let value = snapshot.value as? NSDictionary {
+                        if let email = value["email"] as? String, let nickname = value["nickname"] as? String, let fcmToken = value["fcmToken"] as? String, let contact_uid = value["contact_uid"] as? String {
 
-                    User.current.key = key
-                    User.current.email = "email"
-                    User.current.nickname = "nickname"
-                    User.current.fcmToken = "token"
-                    User.current.contact_uid = contact.uuid ?? ""
-                    User.current.contact = contact
-                            
+                            User.current.key = key
+                            User.current.email = email
+                            User.current.nickname = nickname
+                            User.current.fcmToken = fcmToken
+                            User.current.contact_uid = contact_uid
+                            User.current.contact = contact
+
+//                    User.current.key = key
+//                    User.current.email = "email"
+//                    User.current.nickname = "nickname"
+//                    User.current.fcmToken = "token"
+//                    User.current.contact_uid = contact.uuid ?? ""
+//                    User.current.contact = contact
+
                             completion(true)
-//                        } else {
-//                            completion(false)
-//                        }
-//                    } else {
-//                        completion(false)
-//                    }
-//                })
+                        } else {
+                            completion(false)
+                        }
+                    } else {
+                        completion(false)
+                    }
+                })
             } else {
                 completion(false)
             }

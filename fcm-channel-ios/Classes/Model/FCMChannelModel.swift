@@ -13,7 +13,7 @@ open class FCMChannelModel: NSObject, Mappable {
     open var uuid: String?
     open var name: String?
     
-    required public init?(map: Map){}
+    required public init?(map: Map) {}
     
     open func mapping(map: Map) {
         self.uuid              <- map["uuid"]

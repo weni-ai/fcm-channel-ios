@@ -26,7 +26,7 @@ open class FCMChannelFlowRuleset: NSObject, Mappable {
     public init(uuid: String) {
         self.uuid = uuid
     }
-    required public init?(map: Map){}
+    required public init?(map: Map) {}
 
     open func mapping(map: Map) {
         self.uuid          <- map["uuid"]

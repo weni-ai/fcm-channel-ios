@@ -10,9 +10,9 @@ import UIKit
 
 class FCMChannelFlowTypeValidation: NSObject {
 
-    var type:FCMChannelFlowType!
-    var validation:String!
-    var message:String!
+    var type: FCMChannelFlowType!
+    var validation: String!
+    var message: String!
 
     init(type: FCMChannelFlowType, validation: String, message: String) {
         self.type = type

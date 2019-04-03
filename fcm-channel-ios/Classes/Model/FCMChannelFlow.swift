@@ -35,5 +35,3 @@ open class FCMChannelFlow: NSObject, Mappable {
         self.metadata        <- map["metadata"]
     }
 }
-
-
