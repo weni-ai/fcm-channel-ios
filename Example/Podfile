@@ -8,10 +8,10 @@ target 'fcm-channel-ios_Example' do
   pod 'FBSDKLoginKit', '4.23.0'
   pod 'FBSDKCoreKit', '4.23.0'
 
-  pod 'Firebase/Core', '4.0.4'
-  pod 'Firebase/Messaging', '4.0.4'
-  pod 'Firebase/Auth', '4.0.4'
-  pod 'Firebase/Database', '4.0.4'
+  pod 'Firebase/Core', '5.20.1'
+  pod 'Firebase/Messaging', '5.20.1'
+  pod 'Firebase/Auth', '5.20.1'
+  pod 'Firebase/Database', '5.20.1'
   
   pod 'AlamofireObjectMapper', '6.0.0'
   pod 'Alamofire', '5.0.0-beta.3'

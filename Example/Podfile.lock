@@ -22,51 +22,79 @@ PODS:
     - MDHTMLLabel (= 1.0.2)
     - Reusable (= 4.0.5)
     - TPKeyboardAvoiding
-  - Firebase/Auth (4.0.4):
-    - Firebase/Core
-    - FirebaseAuth (= 4.0.0)
-  - Firebase/Core (4.0.4):
-    - FirebaseAnalytics (= 4.0.2)
-    - FirebaseCore (= 4.0.4)
-  - Firebase/Database (4.0.4):
-    - Firebase/Core
-    - FirebaseDatabase (= 4.0.0)
-  - Firebase/Messaging (4.0.4):
-    - Firebase/Core
-    - FirebaseMessaging (= 2.0.0)
-  - FirebaseAnalytics (4.0.2):
-    - FirebaseCore (~> 4.0)
-    - FirebaseInstanceID (~> 2.0)
-    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
-  - FirebaseAuth (4.0.0):
-    - FirebaseAnalytics (~> 4.0)
-    - "GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)"
-    - GTMSessionFetcher/Core (~> 1.1)
-  - FirebaseCore (4.0.4):
-    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
+  - Firebase/Auth (5.20.1):
+    - Firebase/CoreOnly
+    - FirebaseAuth (= 5.4.2)
+  - Firebase/Core (5.20.1):
+    - Firebase/CoreOnly
+    - FirebaseAnalytics (= 5.8.0)
+  - Firebase/CoreOnly (5.20.1):
+    - FirebaseCore (= 5.4.1)
+  - Firebase/Database (5.20.1):
+    - Firebase/CoreOnly
+    - FirebaseDatabase (= 5.1.1)
+  - Firebase/Messaging (5.20.1):
+    - Firebase/CoreOnly
+    - FirebaseMessaging (= 3.5.0)
+  - FirebaseAnalytics (5.8.0):
+    - FirebaseCore (~> 5.4)
+    - FirebaseInstanceID (~> 3.8)
+    - GoogleAppMeasurement (= 5.8.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 5.2)
+    - GoogleUtilities/MethodSwizzler (~> 5.2)
+    - GoogleUtilities/Network (~> 5.2)
+    - "GoogleUtilities/NSData+zlib (~> 5.2)"
     - nanopb (~> 0.3)
-  - FirebaseDatabase (4.0.0):
-    - FirebaseAnalytics (~> 4.0)
-  - FirebaseInstanceID (2.0.10):
-    - FirebaseCore (~> 4.0)
-  - FirebaseMessaging (2.0.0):
-    - FirebaseAnalytics (~> 4.0)
-    - FirebaseCore (~> 4.0)
-    - FirebaseInstanceID (~> 2.0)
-    - GoogleToolboxForMac/Logger (~> 2.1)
+  - FirebaseAnalyticsInterop (1.2.0)
+  - FirebaseAuth (5.4.2):
+    - FirebaseAuthInterop (~> 1.0)
+    - FirebaseCore (~> 5.2)
+    - GoogleUtilities/Environment (~> 5.2)
+    - GTMSessionFetcher/Core (~> 1.1)
+  - FirebaseAuthInterop (1.0.0)
+  - FirebaseCore (5.4.1):
+    - GoogleUtilities/Environment (~> 5.2)
+    - GoogleUtilities/Logger (~> 5.2)
+  - FirebaseDatabase (5.1.1):
+    - FirebaseAuthInterop (~> 1.0)
+    - FirebaseCore (~> 5.2)
+    - leveldb-library (~> 1.18)
+  - FirebaseInstanceID (3.8.1):
+    - FirebaseCore (~> 5.2)
+    - GoogleUtilities/Environment (~> 5.2)
+    - GoogleUtilities/UserDefaults (~> 5.2)
+  - FirebaseMessaging (3.5.0):
+    - FirebaseAnalyticsInterop (~> 1.1)
+    - FirebaseCore (~> 5.2)
+    - FirebaseInstanceID (~> 3.6)
+    - GoogleUtilities/Environment (~> 5.3)
+    - GoogleUtilities/Reachability (~> 5.3)
+    - GoogleUtilities/UserDefaults (~> 5.3)
     - Protobuf (~> 3.1)
-  - GoogleToolboxForMac/DebugUtils (2.2.0):
-    - GoogleToolboxForMac/Defines (= 2.2.0)
-  - GoogleToolboxForMac/Defines (2.2.0)
-  - GoogleToolboxForMac/Logger (2.2.0):
-    - GoogleToolboxForMac/Defines (= 2.2.0)
-  - "GoogleToolboxForMac/NSData+zlib (2.2.0)":
-    - GoogleToolboxForMac/Defines (= 2.2.0)
-  - "GoogleToolboxForMac/NSDictionary+URLArguments (2.2.0)":
-    - GoogleToolboxForMac/DebugUtils (= 2.2.0)
-    - GoogleToolboxForMac/Defines (= 2.2.0)
-    - "GoogleToolboxForMac/NSString+URLArguments (= 2.2.0)"
-  - "GoogleToolboxForMac/NSString+URLArguments (2.2.0)"
+  - GoogleAppMeasurement (5.8.0):
+    - GoogleUtilities/AppDelegateSwizzler (~> 5.2)
+    - GoogleUtilities/MethodSwizzler (~> 5.2)
+    - GoogleUtilities/Network (~> 5.2)
+    - "GoogleUtilities/NSData+zlib (~> 5.2)"
+    - nanopb (~> 0.3)
+  - GoogleUtilities/AppDelegateSwizzler (5.5.0):
+    - GoogleUtilities/Environment
+    - GoogleUtilities/Logger
+    - GoogleUtilities/Network
+  - GoogleUtilities/Environment (5.5.0)
+  - GoogleUtilities/Logger (5.5.0):
+    - GoogleUtilities/Environment
+  - GoogleUtilities/MethodSwizzler (5.5.0):
+    - GoogleUtilities/Logger
+  - GoogleUtilities/Network (5.5.0):
+    - GoogleUtilities/Logger
+    - "GoogleUtilities/NSData+zlib"
+    - GoogleUtilities/Reachability
+  - "GoogleUtilities/NSData+zlib (5.5.0)"
+  - GoogleUtilities/Reachability (5.5.0):
+    - GoogleUtilities/Logger
+  - GoogleUtilities/UserDefaults (5.5.0):
+    - GoogleUtilities/Logger
   - GTMSessionFetcher/Core (1.2.1)
   - IGListKit (3.4.0):
     - IGListKit/Default (= 3.4.0)
@@ -74,6 +102,7 @@ PODS:
     - IGListKit/Diffing
   - IGListKit/Diffing (3.4.0)
   - ISScrollViewPageSwift (1.0.0)
+  - leveldb-library (1.20)
   - MBProgressHUD (1.0.0)
   - MDHTMLLabel (1.0.2)
   - nanopb (0.3.901):
@@ -97,10 +126,10 @@ DEPENDENCIES:
   - FBSDKCoreKit (= 4.23.0)
   - FBSDKLoginKit (= 4.23.0)
   - fcm-channel-ios (from `../`)
-  - Firebase/Auth (= 4.0.4)
-  - Firebase/Core (= 4.0.4)
-  - Firebase/Database (= 4.0.4)
-  - Firebase/Messaging (= 4.0.4)
+  - Firebase/Auth (= 5.20.1)
+  - Firebase/Core (= 5.20.1)
+  - Firebase/Database (= 5.20.1)
+  - Firebase/Messaging (= 5.20.1)
   - ISScrollViewPageSwift (= 1.0.0)
   - MBProgressHUD (= 1.0.0)
   - MDHTMLLabel (= 1.0.2)
@@ -116,15 +145,19 @@ SPEC REPOS:
     - FBSDKLoginKit
     - Firebase
     - FirebaseAnalytics
+    - FirebaseAnalyticsInterop
     - FirebaseAuth
+    - FirebaseAuthInterop
     - FirebaseCore
     - FirebaseDatabase
     - FirebaseInstanceID
     - FirebaseMessaging
-    - GoogleToolboxForMac
+    - GoogleAppMeasurement
+    - GoogleUtilities
     - GTMSessionFetcher
     - IGListKit
     - ISScrollViewPageSwift
+    - leveldb-library
     - MBProgressHUD
     - MDHTMLLabel
     - nanopb
@@ -145,17 +178,21 @@ SPEC CHECKSUMS:
   FBSDKCoreKit: d7829f5a69901cd7296105328e4c3c3fc7da6518
   FBSDKLoginKit: 6b92bd65f319d669d2b0730e49db495ef1660566
   fcm-channel-ios: a6c61d79dc73497e065b8680ecf677bbdb90e312
-  Firebase: 1492bf04e1b73a7353b4fb2cf5a20bac9692f341
-  FirebaseAnalytics: ad41720e3e67fc63fbe3d2948d3e26932a8de311
-  FirebaseAuth: ebb6abcbabae00fc47446d690c19ce68d8484fde
-  FirebaseCore: cfc042628ef9f20debe09c0eb683135fcd404cb4
-  FirebaseDatabase: d829b3a8c3e2ac7a16773c5df226966b0805dfc2
-  FirebaseInstanceID: 8d20d890d65c917f9f7d9950b6e10a760ad34321
-  FirebaseMessaging: 227406c05b0dc9290702d2e9f18ab5528f0c2cf2
-  GoogleToolboxForMac: ff31605b7d66400dcec09bed5861689aebadda4d
+  Firebase: 2f5235e62f141cb86181c3af0dfe4509706351ac
+  FirebaseAnalytics: fd72a26bf8dac84cefba2f0864366f718555a5b0
+  FirebaseAnalyticsInterop: efbe45c8385ec626e29f9525e5ebd38520dfb6c1
+  FirebaseAuth: dd7bbf03a5aee0eafb3a1aee4d2812bd74bac890
+  FirebaseAuthInterop: 0ffa57668be100582bb7643d4fcb7615496c41fc
+  FirebaseCore: f1a9a8be1aee4bf71a2fc0f4096df6788bdfda61
+  FirebaseDatabase: 2c15b0ea6f2c6eb5e57413f9d6340f1e50b81ae3
+  FirebaseInstanceID: a122b0c258720cf250551bb2bedf48c699f80d90
+  FirebaseMessaging: 4235f949ce1c4e827aeb19705ba5c53f9b85aa10
+  GoogleAppMeasurement: 1624046ab1bcc5e170061a56ef5679000b079c8e
+  GoogleUtilities: 6481e6318c5fcabaaa8513ef8120f329055d7c10
   GTMSessionFetcher: 32aeca0aa144acea523e1c8e053089dec2cb98ca
   IGListKit: 7a5d788e9fb746bcd402baa8e8b24bc3bd2a5a07
   ISScrollViewPageSwift: 0f4b7957b3e0f52a37ac8d05d0c2f14da221093c
+  leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   MDHTMLLabel: 18bf09ec7d6c1ae396497345c005857c0493ee0a
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
@@ -165,6 +202,6 @@ SPEC CHECKSUMS:
   SwiftLint: 7a0227733d786395817373b2d0ca799fd0093ff3
   TPKeyboardAvoiding: a5138f318c06fb3e151f886e18ce4a72695d9cbe
 
-PODFILE CHECKSUM: 41bbedb14102e66dffd782f0490218053488ef01
+PODFILE CHECKSUM: f12e09047173c002e864ca2eadede9339b31233d
 
 COCOAPODS: 1.5.3

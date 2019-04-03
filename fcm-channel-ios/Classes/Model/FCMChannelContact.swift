@@ -94,5 +94,24 @@ open class FCMChannelContact: NSObject, Mappable {
             completion(contact, error)
         }
     }
-    
+
+    func toDict() -> [String: Any?] {
+        var dict: [String: Any?] = [:]
+
+        dict["uuid"] = uuid
+        dict["urn"] = urn
+        dict["name"] = name
+        dict["phoneNumber"] = phoneNumber
+        dict["email"] = email
+        dict["state"] = state
+        dict["birthday"] = birthday
+        dict["country"] = country
+        dict["picture"] = picture
+        dict["gender"] = gender
+        dict["fcmToken"] = fcmToken
+        dict["born"] = born
+        dict["fields"] = fields
+
+        return dict
+    }
 }

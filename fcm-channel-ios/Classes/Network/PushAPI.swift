@@ -25,10 +25,25 @@ open class PushAPI: NSObject {
         let token = FCMChannelSettings.shared.token
 
         return ["authorization": "token \(token)",
-                "Accept": "application/json"
-                ]
+                "Accept": "application/json"]
     }
-    
+
+    // TODO: check groups encoding
+    class func saveContact(_ contact: FCMChannelContact, completion:@escaping (FCMChannelContact?, Error?) -> Void) {
+        let url = "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.V2)contacts.json?uuid=\(contact.uuid ?? "")"
+
+        let parameters = contact.toDict() as Parameters
+
+        AF.request(url, method: .post,
+                   parameters: parameters,
+                   encoding: JSONEncoding.default,
+                   headers: headers)
+            .responseObject { (response: DataResponse<FCMChannelContact>) in
+
+                completion(response.value, response.error)
+        }
+    }
+
     class func getFlowDefinition(_ flowUuid: String, completion:@escaping (FCMChannelFlowDefinition?) -> Void) {
         
         let url = "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.V2)definitions.json?flow=\(flowUuid)"
@@ -55,8 +70,8 @@ open class PushAPI: NSObject {
         
         AF.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers).responseObject {
             
-            (response: DataResponse<FCMChannelFlowRunResponse>) in
-            
+            (response: DataResponse<APIResponse<FCMChannelFlowRun>>) in
+
             switch response.result {
                 
             case .failure(let error):
@@ -64,8 +79,10 @@ open class PushAPI: NSObject {
                 completion(nil)
                 
             case .success(let value):
-                if value.results != nil && value.results.count > 0 {
+                if let results = value.results, !results.isEmpty {
                     completion(value.results)
+                } else {
+                    completion(nil)
                 }
             }
         }
@@ -113,7 +130,9 @@ open class PushAPI: NSObject {
         
         let url = "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.V2)messages.json?contact=\(contact.uuid!)"
         
-        AF.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers).responseObject { (response: DataResponse<FCMChannelMessagesResponse>) in
+        AF.request(url, method: .get,
+                   encoding: JSONEncoding.default,
+                   headers: headers).responseObject { (response: DataResponse<APIResponse<FCMChannelMessage>>) in
             
             switch response.result {
                 
@@ -122,12 +141,11 @@ open class PushAPI: NSObject {
                 completion(nil)
                 
             case .success(let value):
-                if value.results != nil && !value.results!.isEmpty {
+                if let results = value.results, !results.isEmpty {
                     completion(value.results)
                 } else {
                     completion(nil)
                 }
-                
             }
         }
     }
@@ -136,7 +154,7 @@ open class PushAPI: NSObject {
 
         let url = "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.V2)messages.json?id=\(messageID)"
         
-        AF.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers).responseObject { (response: DataResponse<FCMChannelMessagesResponse>) in
+        AF.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers).responseObject { (response: DataResponse<APIResponse<FCMChannelMessage>>) in
             
             switch response.result {
                 

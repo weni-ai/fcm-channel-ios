@@ -55,7 +55,6 @@ class User: Serializable {
             if let contact = contact {
                 userRef.observeSingleEvent(of: .value, with: {
                     (snapshot) in
-                    
                     if let value = snapshot.value as? NSDictionary {
                         if let email = value["email"] as? String, let nickname = value["nickname"] as? String, let fcmToken = value["fcmToken"] as? String, let contact_uid = value["contact_uid"] as? String {
                             
