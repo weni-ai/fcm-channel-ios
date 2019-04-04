@@ -31,7 +31,8 @@ fcm-channel-ios is available under the AGPL-3.0 license. See the LICENSE file fo
 
 Before making any Push calls or using the chat view, configure the fcm-channel by calling:
 
-`FCMClient.setup(<push authorization token>, channel: ”<Channel-id>”, url:”<push-url(optional)>”)`
+`FCMClient.setup("<push authorization token>", channel: "<Channel-id>", url: "<push-url(optional)>")`
+Replace the values in brackets with their appropriate values.
 
 FCMClient is responsible for making calls to Push API.
 
@@ -42,13 +43,30 @@ To notifiy about new messages from push notification, call:
 ~~~~
 @available(iOS 10.0, *)
 func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-//Enter on touch notification
-let userInfo = response.notification.request.content.userInfo
-if let _ = FCMChannelContact.current() {
-receiveNotification(userInfo: userInfo)
-// Notify the fcm-channel if notification comes from rapidpro
-NotificationCenter.default.post(name: Notification.Name(rawValue: "newMessageReceived"), object: userInfo)
-}
+    //Enter on touch notification
+    let userInfo = response.notification.request.content.userInfo
+    if FCMChannelContact.current() != nil {
+        var notificationType: String? = nil
+        
+        if let type = userInfo["type"] as? String {
+            notificationType = type
+        } else if let type = userInfo["gcm.notification.type"] as? String {
+            notificationType = type
+        }
+        
+        guard let type = notificationType else { return }
+        
+        switch type {
+            case "rapidpro":
+                let application = UIApplication.shared
+                if application.applicationState != .active {
+                    application.applicationIconBadgeNumber = 1
+                }
+                NotificationCenter.default.post(name: Notification.Name(rawValue: "newMessageReceived"), object: userInfo)
+            default:
+                break
+        }
+    }
 }
 ~~~~
 
