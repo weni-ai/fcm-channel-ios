@@ -38,7 +38,7 @@ open class FCMChannelMessage: NSObject, Mappable {
     open var sentOn: Date?
     open var ruleset: FCMChannelFlowRuleset?
 
-    public init(msg:String) {
+    public init(msg: String) {
         self.text = msg
         self.direction = FCMChannelMessageDirection.In.rawValue
     }
@@ -85,7 +85,7 @@ open class FCMChannelMessage: NSObject, Mappable {
         defaults.synchronize()
     }
     
-    static func addLastMessage(message:FCMChannelMessage) {
+    static func addLastMessage(message: FCMChannelMessage) {
         removeLastMessage()
         let defaults: UserDefaults = UserDefaults.standard
         let encodedObject: Data = NSKeyedArchiver.archivedData(withRootObject: message.toJSONString() as Any)

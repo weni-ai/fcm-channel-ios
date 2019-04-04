@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FCMChannelChatViewController" customModule="fcm_channel_ios" customModuleProvider="target">
             <connections>
                 <outlet property="btSend" destination="bFF-tY-L89" id="fkf-05-gpo"/>
+                <outlet property="collectionView" destination="gRx-y4-AsZ" id="nFE-pZ-EqD"/>
                 <outlet property="scrollViewPage" destination="Bah-VZ-yid" id="gcj-Dw-yXe"/>
-                <outlet property="tableView" destination="yTC-Ch-OSR" id="eS2-Ij-HdK"/>
                 <outlet property="txtMessage" destination="FlN-Rk-IUD" id="Fgu-W1-KKs"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="viewSend" destination="iFN-Wq-dlc" id="APi-ba-WL2"/>
@@ -29,14 +29,16 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AQ5-2z-LmB" userLabel="ContentView">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <subviews>
-                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="yTC-Ch-OSR">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
-                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <connections>
-                                <outlet property="dataSource" destination="-1" id="nNk-yT-BzS"/>
-                                <outlet property="delegate" destination="-1" id="gen-AX-Z0v"/>
-                            </connections>
-                        </tableView>
+                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="gRx-y4-AsZ">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="621"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="MVo-ik-VKx">
+                                <size key="itemSize" width="50" height="50"/>
+                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            </collectionViewFlowLayout>
+                        </collectionView>
                         <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iFN-Wq-dlc">
                             <rect key="frame" x="0.0" y="621" width="375" height="46"/>
                             <subviews>
@@ -59,7 +61,7 @@
                                         <action selector="btSendTapped:" destination="-1" eventType="touchUpInside" id="xtt-wk-UXp"/>
                                     </connections>
                                 </button>
-                                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bah-VZ-yid" customClass="ISScrollViewPage" customModule="ISScrollViewPageSwift">
+                                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bah-VZ-yid" customClass="ISScrollViewPage" customModule="ISScrollViewPageSwift">
                                     <rect key="frame" x="8" y="-46" width="359" height="46"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="46" id="U0l-vr-Lfh"/>
@@ -107,12 +109,12 @@
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="iFN-Wq-dlc" secondAttribute="bottom" id="7aa-2U-jgR"/>
-                        <constraint firstItem="yTC-Ch-OSR" firstAttribute="leading" secondItem="AQ5-2z-LmB" secondAttribute="leading" id="CNj-8U-6AP"/>
+                        <constraint firstItem="gRx-y4-AsZ" firstAttribute="leading" secondItem="AQ5-2z-LmB" secondAttribute="leading" id="DEq-U4-W57"/>
                         <constraint firstItem="iFN-Wq-dlc" firstAttribute="leading" secondItem="AQ5-2z-LmB" secondAttribute="leading" id="OXb-rW-e1q"/>
-                        <constraint firstItem="iFN-Wq-dlc" firstAttribute="top" secondItem="yTC-Ch-OSR" secondAttribute="bottom" constant="3" id="Y3y-2c-Pa2"/>
                         <constraint firstAttribute="trailing" secondItem="iFN-Wq-dlc" secondAttribute="trailing" id="bVz-8H-J2C"/>
-                        <constraint firstItem="yTC-Ch-OSR" firstAttribute="top" secondItem="AQ5-2z-LmB" secondAttribute="top" id="hPG-Aq-TEU"/>
-                        <constraint firstAttribute="trailing" secondItem="yTC-Ch-OSR" secondAttribute="trailing" id="sUv-Es-lkH"/>
+                        <constraint firstItem="iFN-Wq-dlc" firstAttribute="top" secondItem="gRx-y4-AsZ" secondAttribute="bottom" id="uha-9r-ewc"/>
+                        <constraint firstAttribute="trailing" secondItem="gRx-y4-AsZ" secondAttribute="trailing" id="vTh-qK-PBT"/>
+                        <constraint firstItem="gRx-y4-AsZ" firstAttribute="top" secondItem="AQ5-2z-LmB" secondAttribute="top" id="vwI-VK-sId"/>
                     </constraints>
                 </view>
             </subviews>

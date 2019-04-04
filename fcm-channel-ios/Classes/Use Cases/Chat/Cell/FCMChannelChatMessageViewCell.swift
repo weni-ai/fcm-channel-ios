@@ -9,7 +9,7 @@
 import UIKit
 import MDHTMLLabel
 
-open class FCMChannelChatMessageViewCell: UITableViewCell, MDHTMLLabelDelegate {
+open class FCMChannelChatMessageViewCell: UICollectionViewCell, MDHTMLLabelDelegate {
     
     @IBOutlet public var baloonView: UIView!
     @IBOutlet var lbMessage: MDHTMLLabel!
@@ -51,5 +51,22 @@ open class FCMChannelChatMessageViewCell: UITableViewCell, MDHTMLLabelDelegate {
     
     open func htmlLabel(_ label: MDHTMLLabel!, didSelectLinkWith URL: Foundation.URL!) {
         UIApplication.shared.open(URL, options: [:], completionHandler: nil)
+    }
+
+    static func height(for model: ChatCellViewModel) -> CGFloat {
+        let totalCellWidth = UIScreen.main.bounds.width
+        let topMargin: CGFloat = 34
+        let leftMargin: CGFloat = 44
+        let bottomMargin: CGFloat = 24
+        let rightMargin: CGFloat = 25
+        let contentMaxWidth = totalCellWidth - leftMargin - rightMargin
+
+        var height: CGFloat = 0
+        height += topMargin
+        height += getHeightForCell(withString: model.text ?? "",
+                                   usingFont: UIFont(name: ".HelveticaNeue", size: 15) ?? UIFont.systemFont(ofSize: 15),
+                                   maxWidth: contentMaxWidth)
+        height += bottomMargin
+        return height
     }
 }

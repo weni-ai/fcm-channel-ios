@@ -10,6 +10,8 @@ import UIKit
 
 open class FCMChannelOutgoingChatMessageViewCell: FCMChannelChatMessageViewCell {
 
+    static let nibName = "FCMChannelOutgoingChatMessageViewCell"
+
     override open func awakeFromNib() {
         super.awakeFromNib()
         contentMediaView.layer.borderColor = baloonView.backgroundColor?.cgColor

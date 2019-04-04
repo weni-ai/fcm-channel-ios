@@ -10,6 +10,7 @@ import UIKit
 import ISScrollViewPageSwift
 import MBProgressHUD
 import ObjectMapper
+import IGListKit
 
 open class FCMChannelChatViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, ISScrollViewPageDelegate {
     
@@ -19,7 +20,7 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
     @IBOutlet public var btSend: UIButton!
     @IBOutlet public var viewSendHeight: NSLayoutConstraint!
     @IBOutlet var viewSendBottom: NSLayoutConstraint!
-    @IBOutlet public var tableView: UITableView!
+    @IBOutlet public var collectionView: UICollectionView!
     @IBOutlet open var viewSend: UIView!
     @IBOutlet public var scrollViewPage: ISScrollViewPage!
     
@@ -36,6 +37,8 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
 
     private var presenter: ChatPresenter?
     private var messages: [ChatCellViewModel] = []
+
+    private var listAdapter: ListAdapter?
     
     public init( contact: FCMChannelContact,
                  incomingBubleMsgColor: UIColor = UIColor(with: "#2F97F8"),
@@ -76,7 +79,7 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
 
         automaticallyAdjustsScrollViewInsets = false
         setupScrollViewPage()
-        setupTableView()
+        setupCollectionView()
         setupKeyBoardNotification()
         setupPullToRefresh()
         
@@ -112,7 +115,7 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
     private func setupPullToRefresh() {
         self.refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(reloadTableView), for: .valueChanged)
-        self.tableView.addSubview(refreshControl)
+        self.collectionView.addSubview(refreshControl)
     }
     
     @objc private func reloadTableView(sender: AnyObject) {
@@ -134,7 +137,7 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
             self.view.layoutIfNeeded()
         })
         
-        self.tableViewScrollToBottom(false)
+        scrollToBottom(false)
     }
     
     @objc func keyboardWillHide(notification: NSNotification) {
@@ -175,42 +178,45 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
             self.view.layoutIfNeeded()
         }, completion: { finish in
             guard !self.messages.isEmpty else { return }
-            self.tableView.scrollToRow(at: IndexPath(row: self.messages.count - 1, section: 0), at: .top, animated: false)
+           self.collectionView.scrollToItem(at: IndexPath(row: self.messages.count - 1, section: 0), at: .top, animated: false)
         })
     }
     
-    fileprivate func tableViewScrollToBottom(_ animated: Bool) {
+    open func scrollToBottom(_ animated: Bool) {
         
         let delay = 0.1 * Double(NSEC_PER_SEC)
         let time = DispatchTime.now() + Double(Int64(delay)) / Double(NSEC_PER_SEC)
         
         DispatchQueue.main.asyncAfter(deadline: time, execute: {
             
-            let numberOfSections = self.tableView.numberOfSections
-            let numberOfRows = self.tableView.numberOfRows(inSection: numberOfSections-1)
+            let sections = self.collectionView.numberOfSections
+            let items = self.collectionView.numberOfItems(inSection: sections-1)
             
-            if numberOfRows > 0 {
-                let indexPath = IndexPath(row: numberOfRows-1, section: (numberOfSections-1))
-                self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: animated)
+            if items > 0 {
+                let indexPath = IndexPath(row: items-1, section: (sections-1))
+                self.collectionView.scrollToItem(at: indexPath, at: .bottom, animated: animated)
             }
             
         })
     }
     
-    func insertRowInIndex(_ indexPath: IndexPath) {
-        self.tableView.insertRows(at: [indexPath], with: .fade)
-        self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
-    }
-    
-    open func setupTableView() {
-        self.tableView.separatorStyle = .none
-        self.tableView.delegate = self
-        self.tableView.backgroundColor = UIColor.white
-        self.tableView.estimatedRowHeight = 75
-        self.tableView.rowHeight = UITableView.automaticDimension
-        self.tableView.register(UINib(nibName: "FCMChannelIncomingChatMessageViewCell", bundle: Bundle(for: FCMChannelChatViewController.self)), forCellReuseIdentifier: NSStringFromClass(FCMChannelIncomingChatMessageViewCell.self))
-        self.tableView.register(UINib(nibName: "FCMChannelOutgoingChatMessageViewCell", bundle: Bundle(for: FCMChannelChatViewController.self)), forCellReuseIdentifier: NSStringFromClass(FCMChannelOutgoingChatMessageViewCell.self))
-        self.tableView.separatorColor = UIColor.clear
+    open func setupCollectionView() {
+
+        collectionView.register(
+            FCMChannelIncomingChatMessageViewCell.self,
+            forCellWithReuseIdentifier: FCMChannelIncomingChatMessageViewCell.nibName
+        )
+
+        collectionView.register(
+            FCMChannelOutgoingChatMessageViewCell.self,
+            forCellWithReuseIdentifier: FCMChannelOutgoingChatMessageViewCell.nibName
+        )
+
+        listAdapter = ListAdapter(updater: ListAdapterUpdater(), viewController: self)
+        listAdapter?.collectionView = collectionView
+        listAdapter?.dataSource = self
+        listAdapter?.collectionViewDelegate = self
+        listAdapter?.scrollViewDelegate = self
     }
     
     // MARK: - Table view data source
@@ -295,22 +301,6 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
 
 extension FCMChannelChatViewController: ChatViewContract {
 
-    func addRow() {
-        addRow(scroll: nil)
-    }
-
-    func addRow(scroll: Bool?) {
-
-        OperationQueue.main.addOperation {
-            let indexPath = IndexPath(row: self.messages.count - 1, section: 0)
-            self.insertRowInIndex(indexPath)
-        }
-
-        if let scroll = scroll {
-            tableViewScrollToBottom(false)
-        }
-    }
-
     func setCurrentRulesets(rulesets: FCMChannelFlowRuleset) {
         self.scrollViewPage.views = []
         var showOptions = false
@@ -355,9 +345,9 @@ extension FCMChannelChatViewController: ChatViewContract {
     }
 
     func update(with models: [ChatCellViewModel]) {
-        self.messages = models
-        self.tableView.reloadData()
-        self.tableViewScrollToBottom(true)
+        messages = models
+        listAdapter?.performUpdates(animated: true, completion: nil)
+        scrollToBottom(true)
     }
 
     func addQuickRepliesOptions(_ quickReplies: [FCMChannelQuickReply]) {
@@ -387,5 +377,29 @@ extension FCMChannelChatViewController: ChatViewContract {
         } else {
             MBProgressHUD.hide(for: self.view, animated: true)
         }
+    }
+}
+
+extension FCMChannelChatViewController: ListAdapterDataSource {
+    public func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
+        if let model = object as? ChatCellViewModel {
+            return ChatBubbleListAdapter(model: model)
+        } else {
+            fatalError("Unrecognized model!")
+        }
+    }
+
+    public func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
+        return messages
+    }
+
+    public func emptyView(for listAdapter: ListAdapter) -> UIView? {
+        return nil
+    }
+}
+
+extension FCMChannelChatViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return messages.count
     }
 }
