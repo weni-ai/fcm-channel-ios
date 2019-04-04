@@ -55,15 +55,16 @@ class FCMChannelManager {
 
             if let uuid = uuid, error == nil {
                 User.current.contact_uid = uuid
+                contact.uuid = uuid
+                contact.fcmToken = User.current.fcmToken
+                contact.urn = key
                 User.current.contact = contact
-                User.current.contact?.uuid = uuid
                 completion(true)
             } else {
                 print("Error: User couldn't register to channel.")
                 completion(false)
             }
         }
-
     }
     
     class func loadContact(urn: String, completion: @escaping (FCMChannelContact?) -> Void) {

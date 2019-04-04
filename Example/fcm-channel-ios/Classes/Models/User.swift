@@ -15,7 +15,7 @@ class User: Serializable {
     static var current = User()
     
     var key: String!
-    var name: String = "FCM Channel Sample User"
+    var name: String?
     var email: String = "sample@gmail.com"
     var fcmToken: String?
     var contact_uid: String?
@@ -36,13 +36,13 @@ class User: Serializable {
 
         FCMChannelManager.loadContact(urn: key) { (contact) in
             if let contact = contact {
-
                 User.current.key = key
-                User.current.fcmToken = contact.fcmToken
+                User.current.name = contact.name
                 User.current.contact_uid = contact.uuid
                 User.current.contact = contact
                 User.current.fcmToken = FCMChannelManager.getFCMToken()
-
+                User.current.contact?.fcmToken = User.current.fcmToken
+                User.current.contact?.urn = key
                 completion(true)
             } else {
                 completion(false)
