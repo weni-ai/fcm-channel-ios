@@ -25,6 +25,7 @@ open class FCMChannelContact: NSObject, Mappable {
     open var fcmToken: String?
     open var born: String?
     open var fields: [String: Any]?
+    open var groups: [FCMChannelGroup] = []
     
     public init(uuid: String? = nil, urn: String, name: String?, fcmToken: String) {
         self.uuid = uuid
@@ -49,6 +50,7 @@ open class FCMChannelContact: NSObject, Mappable {
         self.fcmToken       <- map["fcmToken"]
         self.born           <- map["born"]
         self.fields         <- map["fields"]
+        self.groups         <- map["groups"]
     }
     
     open class func formatExtContactId(_ key: String) -> String {

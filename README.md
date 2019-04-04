@@ -31,15 +31,12 @@ fcm-channel-ios is available under the AGPL-3.0 license. See the LICENSE file fo
 
 Before making any Push calls or using the chat view, configure the fcm-channel by calling:
 
-`FCMClient.setup("<push authorization token>", channel: "<Channel-id>", url: "<push-url(optional)>")`
-Replace the values in brackets with their appropriate values.
+`FCMClient.setup("<push authorization token>", channel: "<channel id>", url: "<push url(optional)>")`
 
+Replace the values in brackets with their appropriate values.
 FCMClient is responsible for making calls to Push API.
 
 You'll have to notify Push when new messages arrive via push notifications. Add this piece of code to AppDelegate:
-
-To notifiy about new messages from push notification, call:
-
 ~~~~
 @available(iOS 10.0, *)
 func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
