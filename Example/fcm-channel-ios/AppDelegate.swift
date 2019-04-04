@@ -74,7 +74,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         //Enter on touch notification
         let userInfo = response.notification.request.content.userInfo
         
-        if let _ = User.activeUser() {
+        if User.activeUser() != nil {
             openNotification(userInfo)
         }
     }

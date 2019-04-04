@@ -167,21 +167,15 @@ class RestServices {
             .responseJSON { (response: DataResponse<Any>) in
 
                 if let response = response.result.value as? [String: Any] {
-                    guard let results = response["results"] as? [[String: Any]], results.count > 0 else {
+                    guard let result = (response["results"] as? [[String: Any]])?.first else {
                         completion(nil)
                         return
                     }
 
-                    guard let firstResult = results.first else {
-                        completion(nil)
-                        return
-                    }
-
-                    let contact = Mapper<FCMChannelContact>().map(JSON: firstResult)
+                    let contact = Mapper<FCMChannelContact>().map(JSON: result)
                     if contact?.fcmToken == nil {
                         contact?.fcmToken = ""
                     }
-
                     completion(contact)
                 }
         }
@@ -197,8 +191,7 @@ class RestServices {
 
         let url = "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.shared.V2)contacts.json?urn=fcm:\(urn)"
 
-        AF.request(url, method: .get, headers: headers).responseJSON {
-            (response: DataResponse<Any>) in
+        AF.request(url, method: .get, headers: headers).responseJSON { (response: DataResponse<Any>) in
 
             if let responseValue = response.result.value as? [String: Any] {
                 guard let results = responseValue["results"] as? [[String: Any]], results.count > 0 else {
