@@ -48,16 +48,14 @@ class FCMChannelManager {
     
     static func createContact(completion: @escaping (_ success: Bool) -> Void) {
         guard let key = User.current.key,
-            let name = User.current.nickname,
-            let fcmToken = User.current.fcmToken,
-            let contact = User.current.contact else { return }
+            let fcmToken = User.current.fcmToken else { return }
 
-        User.current.contact = FCMChannelContact(urn: key, name: name, fcmToken: fcmToken)
-
+        let contact = FCMChannelContact(urn: key, name: User.current.name, fcmToken: fcmToken)
         FCMClient.registerFCMContact(contact) { uuid, error  in
 
             if let uuid = uuid, error == nil {
                 User.current.contact_uid = uuid
+                User.current.contact = contact
                 User.current.contact?.uuid = uuid
                 completion(true)
             } else {

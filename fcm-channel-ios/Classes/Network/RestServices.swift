@@ -272,6 +272,6 @@ class RestServices {
         let gregorian = Calendar(identifier: Calendar.Identifier.gregorian)
         var offsetComponents = DateComponents()
         offsetComponents.month = -1
-        return (gregorian as NSCalendar).date(byAdding: offsetComponents, to: date, options: []);
+        return (gregorian as NSCalendar).date(byAdding: offsetComponents, to: date, options: [])
     }
 }

@@ -113,40 +113,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     func openNotification(_ userInfo:[AnyHashable:Any]) {
         
-        var notificationType:String? = nil
+        var notificationType: String? = nil
 
         if let type = userInfo["type"] as? String {
             notificationType = type
-        } else if let type = userInfo["gcm.notification.type"] as? String {
+        } else if let type = userInfo["fcm.notification.type"] as? String {
             notificationType = type
         }
-//
+
 //        if let notificationType = notificationType {
 //            switch notificationType {
 //            case URConstant.NotificationType.CHAT:
-//                
+//
 //                if let chatRoomKey = getChatRoomKey(userInfo) {
 //                    if UIApplication.shared.applicationState != UIApplicationState.active {
 //                        URNavigationManager.setupNavigationControllerWithMainViewController(URMainViewController(chatRoomKey: chatRoomKey))
 //                    }else{
-//                        
+//
 //                        NotificationCenter.default.post(name: Notification.Name(rawValue: "newChatReceived"), object: userInfo)
-//                        
+//
 //                        if let visibleViewController = URNavigationManager.navigation.visibleViewController {
 //                            if !(visibleViewController is URMessagesViewController) {
-//                                //                                AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+//                                AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
 //                            }
 //                        }
 //                    }
 //                }
-//                
+//
 //                break
 //            case URConstant.NotificationType.RAPIDPRO:
-//                
+//
 //                if URRapidProManager.sendingAnswers {
 //                    break
 //                }
-//                
+//
 //                URNavigationManager.setupNavigationControllerWithMainViewController(URMainViewController(viewControllerToShow: URClosedPollTableViewController()))
 //                break
 //            default:
@@ -157,7 +157,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 }
 
 extension AppDelegate: MessagingDelegate {
-    func messaging(_ messaging: Messaging, didRefreshRegistrationToken fcmToken: String) {
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
         print("Firebase registration token was refreshed: \(fcmToken)")
         FCMChannelManager.saveFCMToken(fcmToken: fcmToken)
     }

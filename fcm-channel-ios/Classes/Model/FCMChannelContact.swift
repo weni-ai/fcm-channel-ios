@@ -33,7 +33,7 @@ open class FCMChannelContact: NSObject, Mappable {
         self.fcmToken = fcmToken
     }
     
-    required public init?(map: Map){}
+    required public init?(map: Map) {}
     
     open func mapping(map: Map) {
         self.urns           <- map["urns"]
