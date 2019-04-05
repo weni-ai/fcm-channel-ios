@@ -13,7 +13,7 @@ PODS:
     - Bolts (~> 1.7)
   - FBSDKLoginKit (4.23.0):
     - FBSDKCoreKit
-  - fcm-channel-ios (0.2.2):
+  - fcm-channel-ios (0.3.0):
     - Alamofire
     - AlamofireObjectMapper (= 6.0.0)
     - IGListKit (= 3.4.0)
@@ -177,7 +177,7 @@ SPEC CHECKSUMS:
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   FBSDKCoreKit: d7829f5a69901cd7296105328e4c3c3fc7da6518
   FBSDKLoginKit: 6b92bd65f319d669d2b0730e49db495ef1660566
-  fcm-channel-ios: a6c61d79dc73497e065b8680ecf677bbdb90e312
+  fcm-channel-ios: ba6309863a0f6aa455c606eb8bf1c7ee6de234c3
   Firebase: 2f5235e62f141cb86181c3af0dfe4509706351ac
   FirebaseAnalytics: fd72a26bf8dac84cefba2f0864366f718555a5b0
   FirebaseAnalyticsInterop: efbe45c8385ec626e29f9525e5ebd38520dfb6c1
