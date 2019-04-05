@@ -12,10 +12,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FCMChannelIncomingChatMessageViewCell" customModule="fcm_channel_ios">
             <connections>
-                <outlet property="baloonView" destination="JIi-Qi-EOB" id="df0-IU-vFj"/>
-                <outlet property="contentMediaView" destination="Wfa-eD-Kxh" id="LDl-xF-fX3"/>
-                <outlet property="lbMessage" destination="BTQ-3p-X9m" id="TOO-zt-7oG"/>
-                <outlet property="lbUserName" destination="N6I-ja-Iwv" id="d75-Jb-XMN"/>
+                <outlet property="baloonView" destination="JIi-Qi-EOB" id="yME-L1-MXC"/>
+                <outlet property="contentMediaView" destination="Wfa-eD-Kxh" id="ovx-bF-4qW"/>
+                <outlet property="lbMessage" destination="BTQ-3p-X9m" id="29Z-Zs-XW1"/>
+                <outlet property="lbUserName" destination="N6I-ja-Iwv" id="2LO-n2-DKj"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

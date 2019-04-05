@@ -8,23 +8,17 @@
 
 import UIKit
 import MDHTMLLabel
+import Reusable
 
-open class FCMChannelChatMessageViewCell: UICollectionViewCell, MDHTMLLabelDelegate {
+open class FCMChannelChatMessageViewCell: UICollectionViewCell, MDHTMLLabelDelegate, NibReusable {
     
     @IBOutlet public var baloonView: UIView!
     @IBOutlet var lbMessage: MDHTMLLabel!
-    @IBOutlet var imgUser: UIImageView?
     @IBOutlet var lbUserName: UILabel?
-    @IBOutlet var lbSentTime: UILabel!
     @IBOutlet public var contentMediaView: UIView!
-    
-//    var msgColor: UIColor!
-//    var bubbleColor: UIColor!
-//    var parentViewController: UIViewController!
 
     override open func awakeFromNib() {
         super.awakeFromNib()
-        selectionStyle = .none
         baloonView.layer.cornerRadius = 20
         contentMediaView.layer.borderColor = self.baloonView.backgroundColor?.cgColor
         contentMediaView.layer.borderWidth = 3
@@ -37,14 +31,14 @@ open class FCMChannelChatMessageViewCell: UICollectionViewCell, MDHTMLLabelDeleg
     
     open func setupCell(with model: ChatCellViewModel) {
         
-        lbMessage.htmlText = model.text
-        lbUserName?.text = model.userName
-
-        contentMediaView.isHidden = true
-        baloonView.isHidden = false
-
-        baloonView.backgroundColor = model.bubbleColor
-        lbMessage.textColor = model.msgColor
+//        lbMessage.htmlText = model.text
+//        lbUserName?.text = model.userName
+//
+//        contentMediaView.isHidden = true
+//        baloonView.isHidden = false
+//
+//        baloonView.backgroundColor = model.bubbleColor
+//        lbMessage.textColor = model.msgColor
     }
     
     //MARK: MDHTMLLabelDelegate

@@ -30,6 +30,7 @@ open class ChatCellViewModel: ListDiffable {
                 userName: String?,
                 text: String?,
                 fromUser: Bool) {
+        self.key = key
         self.msgColor = msgColor
         self.bubbleColor = bubbleColor
         self.userName = userName

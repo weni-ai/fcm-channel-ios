@@ -12,7 +12,7 @@ import MBProgressHUD
 import ObjectMapper
 import IGListKit
 
-open class FCMChannelChatViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, ISScrollViewPageDelegate {
+open class FCMChannelChatViewController: UIViewController, UITextFieldDelegate, ISScrollViewPageDelegate {
     
     private var refreshControl: UIRefreshControl!
     
@@ -202,52 +202,14 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
     
     open func setupCollectionView() {
 
-        collectionView.register(
-            FCMChannelIncomingChatMessageViewCell.self,
-            forCellWithReuseIdentifier: FCMChannelIncomingChatMessageViewCell.nibName
-        )
-
-        collectionView.register(
-            FCMChannelOutgoingChatMessageViewCell.self,
-            forCellWithReuseIdentifier: FCMChannelOutgoingChatMessageViewCell.nibName
-        )
+        collectionView.register(cellType: FCMChannelIncomingChatMessageViewCell.self)
+        collectionView.register(cellType: FCMChannelOutgoingChatMessageViewCell.self)
 
         listAdapter = ListAdapter(updater: ListAdapterUpdater(), viewController: self)
         listAdapter?.collectionView = collectionView
         listAdapter?.dataSource = self
         listAdapter?.collectionViewDelegate = self
         listAdapter?.scrollViewDelegate = self
-    }
-    
-    // MARK: - Table view data source
-    
-    open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return messages.count
-    }
-    
-    open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
-        return UITableView.automaticDimension
-    }
-    
-    open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        var cell: FCMChannelChatMessageViewCell?
-        
-        let message = messages[indexPath.row]
-
-        if message.fromUser {
-            cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(FCMChannelOutgoingChatMessageViewCell.self), for: indexPath) as? FCMChannelOutgoingChatMessageViewCell
-        } else {
-            cell = tableView.dequeueReusableCell(withIdentifier: NSStringFromClass(FCMChannelIncomingChatMessageViewCell.self), for: indexPath) as? FCMChannelIncomingChatMessageViewCell
-        }
-
-        cell?.setupCell(with: message)
-        return cell ?? UITableViewCell()
-    }
-    
-    open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.txtMessage.resignFirstResponder()
     }
     
     // MARK: Button Events

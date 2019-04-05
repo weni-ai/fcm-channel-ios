@@ -189,7 +189,8 @@ class ChatPresenter {
             let bubbleColor = fromUser ? incomingBubleMsgColor : outgoingBubleMsgColor
             let username: String? = fromUser ? nil : botName
 
-            return ChatCellViewModel(msgColor: msgColor,
+            return ChatCellViewModel(key: message.id ?? 0,
+                                    msgColor: msgColor,
                                     bubbleColor: bubbleColor,
                                     userName: username,
                                     text: message.text,

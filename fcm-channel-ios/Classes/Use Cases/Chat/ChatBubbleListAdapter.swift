@@ -19,27 +19,27 @@ class ChatBubbleListAdapter: ListSectionController {
 
     override func cellForItem(at index: Int) -> UICollectionViewCell {
 
-        var cell: FCMChannelChatMessageViewCell?
-
         guard let model = self.model else {
             return UICollectionViewCell()
         }
 
-        if model.fromUser {
-            cell = collectionContext?.dequeueReusableCell(withNibName: FCMChannelOutgoingChatMessageViewCell.nibName,
-                                                          bundle: nil,
-                                                          for: self,
-                                                          at: index) as? FCMChannelOutgoingChatMessageViewCell
+        let nibName = model.fromUser
+            ? FCMChannelOutgoingChatMessageViewCell.nibName
+            : FCMChannelIncomingChatMessageViewCell.nibName
 
-        } else {
-            cell = collectionContext?.dequeueReusableCell(withNibName: FCMChannelIncomingChatMessageViewCell.nibName,
-                                                          bundle: nil,
-                                                          for: self,
-                                                          at: index) as? FCMChannelIncomingChatMessageViewCell
+        let bundle = Bundle(for: (model.fromUser
+            ? FCMChannelOutgoingChatMessageViewCell.self
+            : FCMChannelIncomingChatMessageViewCell.self).classForCoder())
+
+        guard let cell = collectionContext?.dequeueReusableCell(withNibName: nibName,
+                                                                bundle: bundle,
+                                                                for: self,
+                                                                at: index) else {
+                                                                    fatalError("Cell not configured")
         }
 
-        cell?.setupCell(with: model)
-        return cell ?? UICollectionViewCell()
+        (cell as? FCMChannelChatMessageViewCell)?.setupCell(with: model)
+        return cell
     }
 
     override func sizeForItem(at index: Int) -> CGSize {
