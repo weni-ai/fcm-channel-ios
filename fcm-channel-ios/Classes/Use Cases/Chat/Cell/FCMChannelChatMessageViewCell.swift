@@ -12,10 +12,10 @@ import Reusable
 
 open class FCMChannelChatMessageViewCell: UICollectionViewCell, MDHTMLLabelDelegate, NibReusable {
     
-    @IBOutlet public var baloonView: UIView!
-    @IBOutlet var lbMessage: MDHTMLLabel!
-    @IBOutlet var lbUserName: UILabel?
-    @IBOutlet public var contentMediaView: UIView!
+    @IBOutlet public weak var baloonView: UIView!
+    @IBOutlet weak var lbMessage: MDHTMLLabel!
+    @IBOutlet weak var lbUserName: UILabel?
+    @IBOutlet public weak var contentMediaView: UIView!
 
     override open func awakeFromNib() {
         super.awakeFromNib()
@@ -23,7 +23,7 @@ open class FCMChannelChatMessageViewCell: UICollectionViewCell, MDHTMLLabelDeleg
         contentMediaView.layer.borderColor = self.baloonView.backgroundColor?.cgColor
         contentMediaView.layer.borderWidth = 3
     }
-    
+
     func setupCellWithPlayerMediaView() {
 //        let playMediaView = CCPlayMediaView(parentViewController: parentViewController, parseMedia: parseMedia, frame: CGRect(x: 0, y: 0, width: contentMediaView.frame.size.width, height: contentMediaView.frame.size.height))
 //        self.contentMediaView.addSubview(playMediaView)
@@ -31,14 +31,14 @@ open class FCMChannelChatMessageViewCell: UICollectionViewCell, MDHTMLLabelDeleg
     
     open func setupCell(with model: ChatCellViewModel) {
         
-//        lbMessage.htmlText = model.text
-//        lbUserName?.text = model.userName
-//
-//        contentMediaView.isHidden = true
-//        baloonView.isHidden = false
-//
-//        baloonView.backgroundColor = model.bubbleColor
-//        lbMessage.textColor = model.msgColor
+        lbMessage.htmlText = model.text
+        lbUserName?.text = model.userName
+
+        contentMediaView.isHidden = true
+        baloonView.isHidden = false
+
+        baloonView.backgroundColor = model.bubbleColor
+        lbMessage.textColor = model.msgColor
     }
     
     //MARK: MDHTMLLabelDelegate
