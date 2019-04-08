@@ -23,10 +23,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="481" height="216"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6hD-V2-Klh">
-                                <rect key="frame" x="83" y="24" width="385" height="182"/>
+                                <rect key="frame" x="292.5" y="24" width="175.5" height="182"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Estou muito feliz hoje!" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0dV-SL-tUk" customClass="MDHTMLLabel">
-                                        <rect key="frame" x="14" y="14" width="357" height="154"/>
+                                        <rect key="frame" x="14" y="14" width="147.5" height="154"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                         <color key="textColor" red="0.9999160171" green="1" blue="0.99987202880000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -55,7 +55,7 @@
                             <constraint firstAttribute="trailing" secondItem="eJm-VX-g16" secondAttribute="trailing" constant="13" id="FUI-Jp-lGV"/>
                             <constraint firstItem="6hD-V2-Klh" firstAttribute="top" secondItem="yD8-Lc-DXj" secondAttribute="top" constant="24" id="LlX-b7-Qi0"/>
                             <constraint firstItem="eJm-VX-g16" firstAttribute="top" secondItem="yD8-Lc-DXj" secondAttribute="top" constant="2" id="OXN-PT-FV8"/>
-                            <constraint firstItem="6hD-V2-Klh" firstAttribute="leading" secondItem="yD8-Lc-DXj" secondAttribute="leading" constant="83" id="aBi-EG-KQ1"/>
+                            <constraint firstItem="6hD-V2-Klh" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="yD8-Lc-DXj" secondAttribute="leading" constant="83" id="aBi-EG-KQ1"/>
                             <constraint firstAttribute="bottom" secondItem="6hD-V2-Klh" secondAttribute="bottom" constant="10" id="oMK-Ui-2fR"/>
                         </constraints>
                     </view>

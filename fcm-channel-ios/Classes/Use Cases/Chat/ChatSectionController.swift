@@ -8,7 +8,7 @@
 import Foundation
 import IGListKit
 
-class ChatBubbleListAdapter: ListSectionController {
+class ChatSectionController: ListSectionController {
 
     private var model: ChatCellViewModel?
 

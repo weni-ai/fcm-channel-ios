@@ -345,7 +345,7 @@ extension FCMChannelChatViewController: ChatViewContract {
 extension FCMChannelChatViewController: ListAdapterDataSource {
     public func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
         if let model = object as? ChatCellViewModel {
-            return ChatBubbleListAdapter(model: model)
+            return ChatSectionController(model: model)
         } else {
             fatalError("Unrecognized model!")
         }

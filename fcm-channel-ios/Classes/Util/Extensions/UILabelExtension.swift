@@ -37,6 +37,7 @@ func getWidthForCell(withString string: String,
 private func getSizeForCell(withString string: String,
                             usingFont font: UIFont,
                             maxWidth: CGFloat) -> CGRect {
+    
     let attributedStringBody = NSMutableAttributedString(string: string)
     attributedStringBody.addAttributes([.font: font],
                                        range: NSRange(location: 0, length: (string as NSString).length))

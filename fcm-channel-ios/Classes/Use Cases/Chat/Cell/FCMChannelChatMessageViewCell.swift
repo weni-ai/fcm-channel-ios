@@ -49,16 +49,17 @@ open class FCMChannelChatMessageViewCell: UICollectionViewCell, MDHTMLLabelDeleg
 
     static func height(for model: ChatCellViewModel) -> CGFloat {
         let totalCellWidth = UIScreen.main.bounds.width
-        let topMargin: CGFloat = 34
-        let leftMargin: CGFloat = 44
+        let topMargin: CGFloat = 38
+        let leftMargin: CGFloat = 27
         let bottomMargin: CGFloat = 24
-        let rightMargin: CGFloat = 25
+        let rightMargin: CGFloat = 97
         let contentMaxWidth = totalCellWidth - leftMargin - rightMargin
 
         var height: CGFloat = 0
+        let font = UIFont(name: "HelveticaNeue", size: 15)
         height += topMargin
         height += getHeightForCell(withString: model.text ?? "",
-                                   usingFont: UIFont(name: ".HelveticaNeue", size: 15) ?? UIFont.systemFont(ofSize: 15),
+                                   usingFont: font ?? UIFont.systemFont(ofSize: 15),
                                    maxWidth: contentMaxWidth)
         height += bottomMargin
         return height
