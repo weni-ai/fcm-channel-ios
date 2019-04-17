@@ -3,6 +3,7 @@ PODS:
   - AlamofireObjectMapper (6.0.0):
     - Alamofire (~> 5.0.0-beta.2)
     - ObjectMapper (~> 3.4)
+  - Atributika (4.8.2)
   - Bolts (1.9.0):
     - Bolts/AppLinks (= 1.9.0)
     - Bolts/Tasks (= 1.9.0)
@@ -16,10 +17,10 @@ PODS:
   - fcm-channel-ios (0.3.0):
     - Alamofire
     - AlamofireObjectMapper (= 6.0.0)
+    - Atributika (= 4.8.2)
     - IGListKit (= 3.4.0)
     - ISScrollViewPageSwift (= 1.0.0)
     - MBProgressHUD (= 1.0.0)
-    - MDHTMLLabel (= 1.0.2)
     - Reusable (= 4.0.5)
     - TPKeyboardAvoiding
   - Firebase/Auth (5.20.1):
@@ -104,7 +105,6 @@ PODS:
   - ISScrollViewPageSwift (1.0.0)
   - leveldb-library (1.20)
   - MBProgressHUD (1.0.0)
-  - MDHTMLLabel (1.0.2)
   - nanopb (0.3.901):
     - nanopb/decode (= 0.3.901)
     - nanopb/encode (= 0.3.901)
@@ -123,6 +123,7 @@ PODS:
 DEPENDENCIES:
   - Alamofire (= 5.0.0-beta.3)
   - AlamofireObjectMapper (= 6.0.0)
+  - Atributika (= 4.8.2)
   - FBSDKCoreKit (= 4.23.0)
   - FBSDKLoginKit (= 4.23.0)
   - fcm-channel-ios (from `../`)
@@ -132,7 +133,6 @@ DEPENDENCIES:
   - Firebase/Messaging (= 5.20.1)
   - ISScrollViewPageSwift (= 1.0.0)
   - MBProgressHUD (= 1.0.0)
-  - MDHTMLLabel (= 1.0.2)
   - SwiftLint
   - TPKeyboardAvoiding (= 1.3)
 
@@ -140,6 +140,7 @@ SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
     - AlamofireObjectMapper
+    - Atributika
     - Bolts
     - FBSDKCoreKit
     - FBSDKLoginKit
@@ -159,7 +160,6 @@ SPEC REPOS:
     - ISScrollViewPageSwift
     - leveldb-library
     - MBProgressHUD
-    - MDHTMLLabel
     - nanopb
     - ObjectMapper
     - Protobuf
@@ -174,10 +174,11 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Alamofire: 50d6fa7e8cbe7f84559e86ab641ffd029db655f8
   AlamofireObjectMapper: 8cf0e01a1b36b485877033f8f6aa733977488da3
+  Atributika: 7b3631032cf11f2197b352343e0bd1b783d8ca88
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   FBSDKCoreKit: d7829f5a69901cd7296105328e4c3c3fc7da6518
   FBSDKLoginKit: 6b92bd65f319d669d2b0730e49db495ef1660566
-  fcm-channel-ios: ba6309863a0f6aa455c606eb8bf1c7ee6de234c3
+  fcm-channel-ios: f0cad05dae17f9e2d8e1d2d7eff00d988dad8e7b
   Firebase: 2f5235e62f141cb86181c3af0dfe4509706351ac
   FirebaseAnalytics: fd72a26bf8dac84cefba2f0864366f718555a5b0
   FirebaseAnalyticsInterop: efbe45c8385ec626e29f9525e5ebd38520dfb6c1
@@ -194,7 +195,6 @@ SPEC CHECKSUMS:
   ISScrollViewPageSwift: 0f4b7957b3e0f52a37ac8d05d0c2f14da221093c
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
-  MDHTMLLabel: 18bf09ec7d6c1ae396497345c005857c0493ee0a
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   ObjectMapper: 0d4402610f4e468903ae64629eec4784531e5c51
   Protobuf: 7a877b7f3e5964e3fce995e2eb323dbc6831bb5a
@@ -202,6 +202,6 @@ SPEC CHECKSUMS:
   SwiftLint: 7a0227733d786395817373b2d0ca799fd0093ff3
   TPKeyboardAvoiding: a5138f318c06fb3e151f886e18ce4a72695d9cbe
 
-PODFILE CHECKSUM: f12e09047173c002e864ca2eadede9339b31233d
+PODFILE CHECKSUM: dc699b340079d9d1312482e49937923119a0bbc8
 
 COCOAPODS: 1.5.3
