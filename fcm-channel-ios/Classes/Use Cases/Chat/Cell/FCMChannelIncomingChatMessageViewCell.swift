@@ -7,9 +7,9 @@
 //
 
 import UIKit
+import Atributika
 
 open class FCMChannelIncomingChatMessageViewCell: FCMChannelChatMessageViewCell {
-
     static let nibName = "FCMChannelIncomingChatMessageViewCell"
 
     override open func awakeFromNib() {

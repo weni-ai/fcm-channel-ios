@@ -41,33 +41,24 @@ open class FCMChannelChatViewController: UIViewController, UITextFieldDelegate, 
     private var listAdapter: ListAdapter?
     
     public init( contact: FCMChannelContact,
-                 incomingBubleMsgColor: UIColor = UIColor(with: "#2F97F8"),
-                 incomingLabelMsgColor: UIColor = UIColor.black,
                  botName: String,
-                 outgoingBubleMsgColor: UIColor = UIColor.groupTableViewBackground,
-                 outgoingLabelMsgColor: UIColor = UIColor.gray,
-                 choiceAnswerButtonColor: UIColor = UIColor.white,
-                 choiceAnswerBorderColor: CGColor = UIColor.clear.cgColor,
-                 buttonHeight: CGFloat = CGFloat(20),
+                 loadMessagesOnInit: Bool = true,
                  nibName: String = "FCMChannelChatViewController",
                  bundle: Bundle = Bundle(for: FCMChannelChatViewController.self),
-                 loadMessagesOnInit: Bool = true ) {
+                 preferences: ChatPreferences = ChatPreferences.defaultPreferences()) {
 
-        defaultFieldBottonHeight = buttonHeight
-        buttonTitleColor = outgoingLabelMsgColor
-        self.choiceAnswerBorderColor = choiceAnswerBorderColor
-        self.choiceAnswerButtonColor = choiceAnswerButtonColor
+        defaultFieldBottonHeight = preferences.buttonHeight
+        buttonTitleColor = preferences.buttonTitleColor
+        choiceAnswerBorderColor = preferences.choiceAnswerBorderColor
+        choiceAnswerButtonColor = preferences.choiceAnswerButtonColor
 
         super.init(nibName: nibName, bundle: bundle)
 
         presenter = ChatPresenter(view: self,
                                   contact: contact,
-                                  incomingBubleMsgColor: incomingBubleMsgColor,
-                                  incomingLabelMsgColor: incomingLabelMsgColor,
                                   botName: botName,
-                                  outgoingBubleMsgColor: outgoingBubleMsgColor,
-                                  outgoingLabelMsgColor: outgoingLabelMsgColor,
-                                  loadMessagesOnInit: loadMessagesOnInit)
+                                  loadMessagesOnInit: loadMessagesOnInit,
+                                  preferences: preferences)
     }
     
     required public init?(coder aDecoder: NSCoder) {

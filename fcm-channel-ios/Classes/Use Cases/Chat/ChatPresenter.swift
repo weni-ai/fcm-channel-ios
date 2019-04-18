@@ -14,29 +14,19 @@ class ChatPresenter {
     private var contact: FCMChannelContact
 
     private var loadMessagesOnInit = false
-
-    open var incomingBubleMsgColor: UIColor
-    open var incomingLabelMsgColor: UIColor
-    open var outgoingBubleMsgColor: UIColor
-    open var outgoingLabelMsgColor: UIColor
     open var botName: String
+    open var preferences: ChatPreferences
 
     init(view: ChatViewContract,
          contact: FCMChannelContact,
-         incomingBubleMsgColor: UIColor = UIColor(with: "#2F97F8"),
-         incomingLabelMsgColor: UIColor = UIColor.black,
          botName: String,
-         outgoingBubleMsgColor: UIColor = UIColor.groupTableViewBackground,
-         outgoingLabelMsgColor: UIColor = UIColor.gray,
-         loadMessagesOnInit: Bool = true) {
+         loadMessagesOnInit: Bool,
+         preferences: ChatPreferences) {
 
         self.view = view
         self.contact = contact
-        self.incomingBubleMsgColor = incomingBubleMsgColor
-        self.incomingLabelMsgColor = incomingLabelMsgColor
+        self.preferences = preferences
         self.botName = botName
-        self.outgoingBubleMsgColor = outgoingBubleMsgColor
-        self.outgoingLabelMsgColor = outgoingLabelMsgColor
         self.loadMessagesOnInit = loadMessagesOnInit
     }
 
@@ -130,7 +120,17 @@ class ChatPresenter {
         FCMClient.loadMessages(contact: contact) { (messages) in
             self.view?.setLoading(to: false)
             guard let messages = messages else { return }
+            var testMessages: [String] = []
+            testMessages.append(" 🕞 clock330  🏹 bow_and_arrow  😷 mask  🇹🇩 Chad             ☎ telephone                🔽 arrow_down_small 🙋🏿                🏉 rugby_football                ☪ star_and_crescent                🚿 shower                ☦ orthodox_cross                🔶 large_orange_diamond                🇸🇻 El Salvador                🚵🏿‍♀                🆚 vs                🍤 fried_shrimp                👊🏻                🔼 arrow_up_small                🔎 mag_right                🇿🇲 Zambia                🚜 tractor                🎭 performing_arts                ☺ white smiling face                🙋🏽‍♂                📬 mailbox_with_mail ")
+            testMessages.append("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Convallis posuere morbi leo urna. google.com Laoreet non curabitur gravida arcu ac tortor dignissim. Eu consequat ac felis donec et odio pellentesque. Purus sit http://google.com amet luctus venenatis lectus.")
+            testMessages.append("ellus molestie nunc non blandit massa. In hendrerit gravida rutrum quisque non. Eu feugiat pretium nibh ipsum. Id semper risus in hendrerit gravida rutrum. Sit amet risus nullam eget felis eget nunc lobortis. Integer enim neque volutpat ac tincidunt vitae semper quis lectus. Bibendum arcu vitae elementum curabitur vitae nunc sed. Elementum facilisis leo vel fringilla est ullamcorper eget nulla. Aliquam ultrices sagittis orci a scelerisque. Posuere ac ut consequat semper. Eget nunc lobortis mattis aliquam faucibus purus in massa.")
+            testMessages.append("Tortor at auctor urna nunc id cursus metus aliquam eleifend. Tincidunt nunc pulvinar sapien et ligula ullamcorper. Arcu risus quis varius quam quisque id diam. Duis ut diam quam nulla porttitor massa id neque. Sed ullamcorper morbi tincidunt ornare. Libero nunc consequat interdum varius. Risus viverra adipiscing at in tellus")
             self.messageList = messages.reversed()
+            self.messageList.append(contentsOf: testMessages.map( {
+                    let message = FCMChannelMessage(msg: $0)
+                message.id = Int.random(in: 0..<670)
+                    return message
+            }))
             self.didUpdateMessages()
         }
     }
@@ -185,16 +185,18 @@ class ChatPresenter {
         return messageList.map { message in
 
             let fromUser = message.direction == FCMChannelMessageDirection.In.rawValue
-            let msgColor = fromUser ? incomingLabelMsgColor : outgoingLabelMsgColor
-            let bubbleColor = fromUser ? incomingBubleMsgColor : outgoingBubleMsgColor
+            let msgColor = fromUser ? preferences.incomingLabelMsgColor : preferences.outgoingLabelMsgColor
+            let bubbleColor = fromUser ? preferences.incomingBubleMsgColor : preferences.outgoingBubleMsgColor
             let username: String? = fromUser ? nil : botName
+            let linkColor = fromUser ? preferences.incomingLinkColor : preferences.outgoingLinkColor
 
             return ChatCellViewModel(key: message.id ?? 0,
                                     msgColor: msgColor,
                                     bubbleColor: bubbleColor,
                                     userName: username,
                                     text: message.text,
-                                    fromUser: fromUser)
+                                    fromUser: fromUser,
+                                    linkColor: linkColor)
         }
     }
 

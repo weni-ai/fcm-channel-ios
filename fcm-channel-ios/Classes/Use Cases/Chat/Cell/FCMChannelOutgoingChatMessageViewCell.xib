@@ -23,21 +23,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="481" height="216"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6hD-V2-Klh">
-                                <rect key="frame" x="292.5" y="24" width="175.5" height="182"/>
+                                <rect key="frame" x="289" y="24" width="179" height="182"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Estou muito feliz hoje!" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0dV-SL-tUk" customClass="MDHTMLLabel">
-                                        <rect key="frame" x="14" y="14" width="147.5" height="154"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                                        <color key="textColor" red="0.9999160171" green="1" blue="0.99987202880000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                    <view opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0Vt-4z-hEr" customClass="AttributedLabel" customModule="Atributika">
+                                        <rect key="frame" x="14" y="14" width="151" height="154"/>
+                                        <accessibility key="accessibilityConfiguration">
+                                            <accessibilityTraits key="traits" staticText="YES"/>
+                                        </accessibility>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" red="0.073332808910000005" green="0.67191445829999996" blue="0.89450895789999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstItem="0dV-SL-tUk" firstAttribute="leading" secondItem="6hD-V2-Klh" secondAttribute="leading" constant="14" id="1nE-Ly-Qo8"/>
-                                    <constraint firstItem="0dV-SL-tUk" firstAttribute="top" secondItem="6hD-V2-Klh" secondAttribute="top" constant="14" id="ISu-H7-UTc"/>
-                                    <constraint firstAttribute="bottom" secondItem="0dV-SL-tUk" secondAttribute="bottom" constant="14" id="Pbt-cK-BuK"/>
-                                    <constraint firstAttribute="trailing" secondItem="0dV-SL-tUk" secondAttribute="trailing" constant="14" id="nFD-FV-pzA"/>
+                                    <constraint firstItem="0Vt-4z-hEr" firstAttribute="leading" secondItem="6hD-V2-Klh" secondAttribute="leading" constant="14" id="0Jf-7o-EBy"/>
+                                    <constraint firstAttribute="trailing" secondItem="0Vt-4z-hEr" secondAttribute="trailing" constant="14" id="5vX-sI-Flz"/>
+                                    <constraint firstAttribute="bottom" secondItem="0Vt-4z-hEr" secondAttribute="bottom" constant="14" id="FQB-Dh-1EZ"/>
+                                    <constraint firstAttribute="width" constant="179" id="JZ8-Ky-F6h"/>
+                                    <constraint firstItem="0Vt-4z-hEr" firstAttribute="top" secondItem="6hD-V2-Klh" secondAttribute="top" constant="14" id="vVJ-pA-c8P"/>
                                 </constraints>
                             </view>
                             <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eJm-VX-g16">
@@ -71,8 +72,9 @@
             <size key="customSize" width="481" height="216"/>
             <connections>
                 <outlet property="baloonView" destination="6hD-V2-Klh" id="z4f-ZH-KfL"/>
+                <outlet property="bubbleWidthConstraint" destination="JZ8-Ky-F6h" id="DLd-pA-nr5"/>
                 <outlet property="contentMediaView" destination="eJm-VX-g16" id="bV5-2u-Lyy"/>
-                <outlet property="lbMessage" destination="0dV-SL-tUk" id="hwA-r2-hBP"/>
+                <outlet property="lbMessage" destination="0Vt-4z-hEr" id="5ht-TL-3v0"/>
             </connections>
             <point key="canvasLocation" x="477.60000000000002" y="229.38530734632684"/>
         </collectionViewCell>

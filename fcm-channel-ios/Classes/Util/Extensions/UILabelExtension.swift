@@ -34,7 +34,7 @@ func getWidthForCell(withString string: String,
 /**
  Calculates the bounding rect of a label using the correct settings for a chat cell (including the fonts, bold text etc.)
  */
-private func getSizeForCell(withString string: String,
+func getSizeForCell(withString string: String,
                             usingFont font: UIFont,
                             maxWidth: CGFloat) -> CGRect {
     

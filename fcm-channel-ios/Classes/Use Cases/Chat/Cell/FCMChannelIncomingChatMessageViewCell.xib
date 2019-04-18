@@ -34,22 +34,17 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JIi-Qi-EOB">
                                 <rect key="frame" x="13" y="24" width="236" height="167"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BTQ-3p-X9m" customClass="MDHTMLLabel">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kgz-dF-XhN" customClass="AttributedLabel" customModule="Atributika">
                                         <rect key="frame" x="14" y="14" width="208" height="139"/>
-                                        <string key="text">Vc vai ver as lutas tbm? Estou
-querendo ir com umas amigas,
-quero ver a jandiroba!</string>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="BTQ-3p-X9m" secondAttribute="bottom" constant="14" id="Dax-H1-i3e"/>
-                                    <constraint firstItem="BTQ-3p-X9m" firstAttribute="leading" secondItem="JIi-Qi-EOB" secondAttribute="leading" constant="14" id="OHG-4T-eJh"/>
-                                    <constraint firstAttribute="trailing" secondItem="BTQ-3p-X9m" secondAttribute="trailing" constant="14" id="q4U-6O-bme"/>
-                                    <constraint firstItem="BTQ-3p-X9m" firstAttribute="top" secondItem="JIi-Qi-EOB" secondAttribute="top" constant="14" id="ubV-AP-06i"/>
+                                    <constraint firstItem="Kgz-dF-XhN" firstAttribute="top" secondItem="JIi-Qi-EOB" secondAttribute="top" constant="14" id="8mR-8G-f5T"/>
+                                    <constraint firstAttribute="trailing" secondItem="Kgz-dF-XhN" secondAttribute="trailing" constant="14" id="PNz-Sd-uOQ"/>
+                                    <constraint firstAttribute="width" constant="236" id="pvB-14-VVV"/>
+                                    <constraint firstItem="Kgz-dF-XhN" firstAttribute="leading" secondItem="JIi-Qi-EOB" secondAttribute="leading" constant="14" id="tK3-IX-HB8"/>
+                                    <constraint firstAttribute="bottom" secondItem="Kgz-dF-XhN" secondAttribute="bottom" constant="14" id="vUl-1F-J5G"/>
                                 </constraints>
                             </view>
                             <view hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wfa-eD-Kxh">
@@ -87,8 +82,9 @@ quero ver a jandiroba!</string>
             <size key="customSize" width="399" height="201"/>
             <connections>
                 <outlet property="baloonView" destination="JIi-Qi-EOB" id="zua-4Y-wa9"/>
+                <outlet property="bubbleWidthConstraint" destination="pvB-14-VVV" id="CW8-cQ-RxU"/>
                 <outlet property="contentMediaView" destination="Wfa-eD-Kxh" id="jLb-TF-20t"/>
-                <outlet property="lbMessage" destination="BTQ-3p-X9m" id="iDa-vI-Sb9"/>
+                <outlet property="lbMessage" destination="Kgz-dF-XhN" id="0PV-nG-BnK"/>
                 <outlet property="lbUserName" destination="N6I-ja-Iwv" id="Acu-99-2ew"/>
             </connections>
             <point key="canvasLocation" x="320.80000000000001" y="114.69265367316342"/>

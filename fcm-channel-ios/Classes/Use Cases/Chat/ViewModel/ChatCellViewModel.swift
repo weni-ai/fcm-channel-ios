@@ -23,18 +23,21 @@ open class ChatCellViewModel: ListDiffable {
     let userName: String?
     let text: String?
     let fromUser: Bool
+    let linkColor: UIColor
 
     public init(key: Int,
                 msgColor: UIColor,
                 bubbleColor: UIColor,
                 userName: String?,
                 text: String?,
-                fromUser: Bool) {
+                fromUser: Bool,
+                linkColor: UIColor) {
         self.key = key
         self.msgColor = msgColor
         self.bubbleColor = bubbleColor
         self.userName = userName
         self.text = text
         self.fromUser = fromUser
+        self.linkColor = linkColor
     }
 }

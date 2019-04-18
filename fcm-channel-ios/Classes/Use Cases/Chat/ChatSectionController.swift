@@ -11,6 +11,7 @@ import IGListKit
 class ChatSectionController: ListSectionController {
 
     private var model: ChatCellViewModel?
+    private var size: CGSize?
 
     init(model: ChatCellViewModel) {
         super.init()
@@ -39,6 +40,7 @@ class ChatSectionController: ListSectionController {
         }
 
         (cell as? FCMChannelChatMessageViewCell)?.setupCell(with: model)
+        (cell as? FCMChannelChatMessageViewCell)?.setBubbleWidth(to: size?.width ?? 0)
         return cell
     }
 
@@ -48,8 +50,9 @@ class ChatSectionController: ListSectionController {
             return CGSize.zero
         }
 
-        let height = FCMChannelChatMessageViewCell.height(for: model)
-        return CGSize(width: UIScreen.main.bounds.width, height: height)
+        let size = FCMChannelChatMessageViewCell.size(for: model)
+        self.size = size
+        return CGSize(width: UIScreen.main.bounds.width, height: size.height)
     }
 
     override func didUpdate(to object: Any) {
