@@ -26,7 +26,7 @@ class RestServices {
 
         let url = "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.shared.V2)definitions.json?flow=\(flowUuid)"
 
-        AF.request(url, method: .get,
+        Alamofire.request(url, method: .get,
                    encoding: JSONEncoding.default,
                    headers: headers).responseObject { (response: DataResponse<FCMChannelFlowDefinition>) in
 
@@ -52,7 +52,7 @@ class RestServices {
         let afterDate = FCMChannelDateUtil.dateFormatter(minimumDate)
         let url = "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.shared.V2)runs.json?contact=\(contactId)&after=\(afterDate)"
 
-        AF.request(url,
+        Alamofire.request(url,
                    method: .get,
                    encoding: JSONEncoding.default,
                    headers: headers).responseObject { (response: DataResponse<APIResponse<FCMChannelFlowRun>>) in
@@ -87,7 +87,7 @@ class RestServices {
 
             let url = "\(handlerUrl)/receive/\(channel)/"
 
-            AF.request(url, method: .post, parameters: params).responseString { (response) in
+            Alamofire.request(url, method: .post, parameters: params).responseString { (response) in
 
                 switch response.result {
 
@@ -112,7 +112,7 @@ class RestServices {
 
         let url = "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.shared.V2)messages.json?contact=\(contactId)"
 
-        AF.request(url, method: .get,
+        Alamofire.request(url, method: .get,
                    encoding: JSONEncoding.default,
                    headers: headers).responseObject { (response: DataResponse<APIResponse<FCMChannelMessage>>) in
 
@@ -136,7 +136,7 @@ class RestServices {
 
         let url = "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.shared.V2)messages.json?id=\(messageID)"
 
-        AF.request(url, method: .get, encoding: JSONEncoding.default, headers: headers).responseObject { (response: DataResponse<APIResponse<FCMChannelMessage>>) in
+        Alamofire.request(url, method: .get, encoding: JSONEncoding.default, headers: headers).responseObject { (response: DataResponse<APIResponse<FCMChannelMessage>>) in
 
             switch response.result {
 
@@ -160,7 +160,7 @@ class RestServices {
 
         let url: URL! = URL(string: "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.shared.V2)contacts.json?urns=\(urn)")
 
-        let request = AF.request(url,
+        let request = Alamofire.request(url,
                                  method: .get,
                                  encoding: URLEncoding.default,
                                  headers: headers)
@@ -191,7 +191,7 @@ class RestServices {
 
         let url = "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.shared.V2)contacts.json?urn=fcm:\(urn)"
 
-        AF.request(url, method: .get, headers: headers).responseJSON { (response: DataResponse<Any>) in
+        Alamofire.request(url, method: .get, headers: headers).responseJSON { (response: DataResponse<Any>) in
 
             if let responseValue = response.result.value as? [String: Any] {
                 guard let results = responseValue["results"] as? [[String: Any]], results.count > 0 else {
@@ -241,7 +241,7 @@ class RestServices {
                       "name": name,
                       "fcm_token": token] as [String: Any]
 
-        AF.request("\(FCMChannelSettings.shared.handlerURL)/register/\(FCMChannelSettings.shared.channel)/", method: .post, parameters: params).responseJSON( completionHandler: { response in
+        Alamofire.request("\(FCMChannelSettings.shared.handlerURL)/register/\(FCMChannelSettings.shared.channel)/", method: .post, parameters: params).responseJSON( completionHandler: { response in
 
             switch response.result {
 
