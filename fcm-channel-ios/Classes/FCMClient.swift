@@ -9,7 +9,7 @@
 import UIKit
 
 
-open class FCMClient: NSObject {
+public class FCMClient: NSObject {
 
     static var sendingAnswers: Bool = false
 
