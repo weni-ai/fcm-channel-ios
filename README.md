@@ -19,7 +19,7 @@ fcm-channel-ios is available through [CocoaPods](http://cocoapods.org). To insta
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'fcm-channel-ios'
+pod 'fcm-channel-ios', :git => 'https://github.com/push-flow/fcm-channel-ios.git', :branch => 'feature/swift5'
 ```
 
 ## License
@@ -44,15 +44,15 @@ func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive respo
     let userInfo = response.notification.request.content.userInfo
     if FCMChannelContact.current() != nil {
         var notificationType: String? = nil
-        
+
         if let type = userInfo["type"] as? String {
             notificationType = type
         } else if let type = userInfo["gcm.notification.type"] as? String {
             notificationType = type
         }
-        
+
         guard let type = notificationType else { return }
-        
+
         switch type {
             case "rapidpro":
                 let application = UIApplication.shared
