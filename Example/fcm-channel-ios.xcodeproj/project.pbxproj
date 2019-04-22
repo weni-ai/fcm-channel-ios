@@ -366,7 +366,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-fcm-channel-ios_Example/Pods-fcm-channel-ios_Example-frameworks.sh",
+				"${SRCROOT}/Pods/Target Support Files/Pods-fcm-channel-ios_Example/Pods-fcm-channel-ios_Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireObjectMapper/AlamofireObjectMapper.framework",
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
@@ -409,7 +409,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-fcm-channel-ios_Example/Pods-fcm-channel-ios_Example-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-fcm-channel-ios_Example/Pods-fcm-channel-ios_Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E240FAF768857E8ED706B192 /* [CP] Check Pods Manifest.lock */ = {

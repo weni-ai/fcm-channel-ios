@@ -21,27 +21,37 @@ class LoginViewController: UIViewController {
     
     @IBAction func loginBtnPressed(_ sender: Any) {
 
-        LoginViewModel.shared.facebookLogin(from: self) {
-            (success, error) in
+        FCMClient.loadContact(fromUrn: "fcm:4") { contact in
 
-            guard let contact = User.current.contact else { return }
+            guard let contact = contact else { return }
 
-            if success {
-                let chatVC = FCMChannelChatViewController(contact: contact, botName: "SANDBOX", loadMessagesOnInit: true)
-                self.present(UINavigationController(rootViewController: chatVC), animated: true, completion: nil)
-            } else {
-                if let error = error {
-                    let alertController = UIAlertController(title: "Login Error", message: error.localizedDescription, preferredStyle: .alert)
-                    let okayAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-                    alertController.addAction(okayAction)
-                    self.present(alertController, animated: true, completion: nil)
-                } else {
-                    let alertController = UIAlertController(title: "Login Error", message: "Algum problema ocorreu durante o login. Por favor, tente novamente.", preferredStyle: .alert)
-                    let okayAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-                    alertController.addAction(okayAction)
-                    self.present(alertController, animated: true, completion: nil)
-                }
-            }
+            User.current.contact = contact
+            let chatVC = FCMChannelChatViewController(contact: contact, botName: "SANDBOX", loadMessagesOnInit: true)
+            self.present(UINavigationController(rootViewController: chatVC), animated: true, completion: nil)
+
         }
+
+//        LoginViewModel.shared.facebookLogin(from: self) {
+//            (success, error) in
+//
+//            guard let contact = User.current.contact else { return }
+//
+//            if success {
+//                let chatVC = FCMChannelChatViewController(contact: contact, botName: "SANDBOX", loadMessagesOnInit: true)
+//                self.present(UINavigationController(rootViewController: chatVC), animated: true, completion: nil)
+//            } else {
+//                if let error = error {
+//                    let alertController = UIAlertController(title: "Login Error", message: error.localizedDescription, preferredStyle: .alert)
+//                    let okayAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+//                    alertController.addAction(okayAction)
+//                    self.present(alertController, animated: true, completion: nil)
+//                } else {
+//                    let alertController = UIAlertController(title: "Login Error", message: "Algum problema ocorreu durante o login. Por favor, tente novamente.", preferredStyle: .alert)
+//                    let okayAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+//                    alertController.addAction(okayAction)
+//                    self.present(alertController, animated: true, completion: nil)
+//                }
+//            }
+//        }
     }
 }
