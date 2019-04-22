@@ -75,12 +75,12 @@ class RestServices {
 
     // MARK: - Messages
     func sendReceivedMessage(_ contact: FCMChannelContact, message: String, completion:@escaping (_ success: Bool) -> Void) {
-        if let token = contact.fcmToken, let urn = contact.urn {
+        if let token = contact.fcmToken, let urn = contact.urns.first {
             let handlerUrl = FCMChannelSettings.shared.handlerURL
             let channel = FCMChannelSettings.shared.channel
 
             let params = [
-                "from": urn,
+                "from": urn.replacingOccurrences(of: "fcm:", with: ""),
                 "msg": message,
                 "fcm_token": token
             ]
@@ -156,14 +156,11 @@ class RestServices {
 
     // MARK: - Contact
 
-    func loadContact(fromUrn urn: String, completion: @escaping (_ contact: FCMChannelContact?) -> Void) {
-
-        let url: URL! = URL(string: "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.shared.V2)contacts.json?urns=\(urn)")
-
+    private func loadContact(fromURL url: URL, completion: @escaping (_ contact: FCMChannelContact?) -> Void) {
         let request = Alamofire.request(url,
-                                 method: .get,
-                                 encoding: URLEncoding.default,
-                                 headers: headers)
+                                        method: .get,
+                                        encoding: URLEncoding.default,
+                                        headers: headers)
             .responseJSON { (response: DataResponse<Any>) in
 
                 if let response = response.result.value as? [String: Any] {
@@ -181,6 +178,16 @@ class RestServices {
         }
 
         debugPrint(request)
+    }
+
+    func loadContact(fromUUID uuid: String, completion: @escaping (_ contact: FCMChannelContact?) -> Void) {
+        let url: URL! = URL(string: "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.shared.V2)contacts.json?uuid=\(uuid)")
+        loadContact(fromURL: url, completion: completion)
+    }
+
+    func loadContact(fromUrn urn: String, completion: @escaping (_ contact: FCMChannelContact?) -> Void) {
+        let url: URL! = URL(string: "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.shared.V2)contacts.json?urn=\(urn)")
+        loadContact(fromURL: url, completion: completion)
     }
 
     func fetchContact(completion: @escaping (_ success: Bool, _ error: Error?) -> Void) {
@@ -228,20 +235,23 @@ class RestServices {
 
     func registerFCMContact(_ contact: FCMChannelContact, completion: @escaping (_ uuid: String?, _ error: Error?) -> Void) {
 
-        guard let uid = contact.uuid,
-            let urn = contact.urn,
+        guard
+//            let uid = contact.uuid,
+            let urn = contact.urns.first,
             let token = contact.fcmToken else {
                 completion(nil, nil)
                 return
         }
 
+        let url = "\(FCMChannelSettings.shared.handlerURL)/register/\(FCMChannelSettings.shared.channel)/"
+
         let name = contact.name ?? ""
-        let params = ["contact_uuid": uid,
+        let params = [//"contact_uuid": nil,
                       "urn": urn,
                       "name": name,
                       "fcm_token": token] as [String: Any]
 
-        Alamofire.request("\(FCMChannelSettings.shared.handlerURL)/register/\(FCMChannelSettings.shared.channel)/", method: .post, parameters: params).responseJSON( completionHandler: { response in
+        Alamofire.request(url, method: .post, parameters: params).responseJSON( completionHandler: { response in
 
             switch response.result {
 

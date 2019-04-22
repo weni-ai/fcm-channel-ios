@@ -13,7 +13,7 @@ open class FCMChannelContact: NSObject, Mappable {
    
     open var uuid: String?
     open var urn: String?
-    open var urns: String?
+    open var urns: [String] = []
     open var name: String?
     open var phoneNumber: String?
     open var email: String?
@@ -29,7 +29,7 @@ open class FCMChannelContact: NSObject, Mappable {
     
     public init(uuid: String? = nil, urn: String, name: String?, fcmToken: String) {
         self.uuid = uuid
-        self.urn = urn
+        self.urns = [urn]
         self.name = name
         self.fcmToken = fcmToken
     }

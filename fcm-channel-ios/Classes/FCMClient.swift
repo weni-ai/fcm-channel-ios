@@ -46,6 +46,10 @@ public class FCMClient: NSObject {
         RestServices.shared.loadContact(fromUrn: urn, completion: completion)
     }
 
+    open class func loadContact(fromUUID uuid: String, completion: @escaping (_ contact: FCMChannelContact?) -> Void) {
+        RestServices.shared.loadContact(fromUUID: uuid, completion: completion)
+    }
+
     open class func fetchContact(completion: @escaping (_ success: Bool, _ error: Error?) -> Void) {
        RestServices.shared.fetchContact(completion: completion)
     }
@@ -54,6 +58,7 @@ public class FCMClient: NSObject {
         RestServices.shared.registerFCMContact(contact, completion: completion)
     }
 
+    // MARK: - Language
     open class func savePreferedLanguage(_ language:String) {
         FCMChannelSettings.shared.savePreferedLanguage(language)
     }
