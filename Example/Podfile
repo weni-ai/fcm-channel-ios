@@ -2,24 +2,24 @@ use_frameworks!
 
 target 'fcm-channel-ios_Example' do
   pod 'fcm-channel-ios', :path => '../'
-  
+
   pod 'SwiftLint'
 
   pod 'FBSDKLoginKit', '4.23.0'
   pod 'FBSDKCoreKit', '4.23.0'
 
-  pod 'Firebase/Core', '5.20.1'
-  pod 'Firebase/Messaging', '5.20.1'
-  pod 'Firebase/Auth', '5.20.1'
-  pod 'Firebase/Database', '5.20.1'
-  
-  pod 'AlamofireObjectMapper', '6.0.0'
-  pod 'Alamofire', '5.0.0-beta.3'
+  pod 'Firebase/Core', '5.20.2'
+  pod 'Firebase/Messaging', '5.20.2'
+  pod 'Firebase/Auth', '5.20.2'
+  pod 'Firebase/Database', '5.20.2'
+
+  pod 'AlamofireObjectMapper', '5.2.0'
+  pod 'Alamofire', '4.8.1'
   pod 'MDHTMLLabel', '1.0.2'
-  pod 'MBProgressHUD', '1.0.0'
-  pod 'TPKeyboardAvoiding', '1.3'
+  pod 'MBProgressHUD', '1.1.0'
+  pod 'TPKeyboardAvoiding', '1.3.2'
   pod 'ISScrollViewPageSwift', '1.0.0'
-  
+
   target 'fcm-channel-ios_Tests' do
     inherit! :search_paths
   end

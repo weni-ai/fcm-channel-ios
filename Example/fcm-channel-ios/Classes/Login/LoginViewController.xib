@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -21,20 +21,33 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Nt-V5-u25">
-                    <rect key="frame" x="102" y="562" width="170" height="30"/>
+                    <rect key="frame" x="102.5" y="562" width="170" height="30"/>
                     <color key="backgroundColor" red="0.37055522200000002" green="0.37056469920000001" blue="0.37055957319999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="170" id="F2R-uC-JI1"/>
                     </constraints>
-                    <state key="normal" title="Entrar com Facebook">
+                    <state key="normal" title="Entrar">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
                         <action selector="loginBtnPressed:" destination="-1" eventType="touchUpInside" id="TNZ-IO-jDp"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kpj-v3-dZ2">
+                    <rect key="frame" x="102.5" y="507" width="170" height="30"/>
+                    <color key="backgroundColor" red="0.37055522200000002" green="0.37056469920000001" blue="0.37055957319999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="170" id="vaL-wo-7xF"/>
+                    </constraints>
+                    <state key="normal" title="Registrar">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="didTapRegisterBt:" destination="-1" eventType="touchUpInside" id="F2g-kH-uOb"/>
+                    </connections>
+                </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FCM Channel" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6QC-0S-qlO">
-                    <rect key="frame" x="45" y="272.5" width="284" height="122"/>
+                    <rect key="frame" x="45.5" y="272.5" width="284" height="122"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="284" id="Sy3-zM-V3i"/>
                         <constraint firstAttribute="height" constant="122" id="V6u-uu-6WX"/>
@@ -47,8 +60,10 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="6QC-0S-qlO" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="D1z-Xq-gOJ"/>
+                <constraint firstItem="4Nt-V5-u25" firstAttribute="top" secondItem="Kpj-v3-dZ2" secondAttribute="bottom" constant="25" id="ERf-Ux-Y64"/>
                 <constraint firstItem="6QC-0S-qlO" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="k6I-pF-gga"/>
                 <constraint firstAttribute="bottom" secondItem="4Nt-V5-u25" secondAttribute="bottom" constant="75" id="paO-cc-qFM"/>
+                <constraint firstItem="Kpj-v3-dZ2" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="wqf-Vx-knw"/>
                 <constraint firstItem="4Nt-V5-u25" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="yeF-vL-Qrv"/>
             </constraints>
             <point key="canvasLocation" x="35.5" y="103.5"/>

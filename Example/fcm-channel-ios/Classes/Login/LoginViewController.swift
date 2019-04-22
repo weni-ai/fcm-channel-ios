@@ -12,19 +12,25 @@ import FBSDKCoreKit
 import fcm_channel_ios
 
 class LoginViewController: UIViewController {
-    
+
     @IBOutlet weak var loginBtn: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-    
+
+    @IBAction func didTapRegisterBt(_ sender: Any) {
+        let registerViewController = RegisterViewController()
+        present(registerViewController, animated: true)
+    }
+
     @IBAction func loginBtnPressed(_ sender: Any) {
 
-        FCMClient.loadContact(fromUrn: "fcm:4") { contact in
+        FCMClient.loadContact(fromUrn: "fcm:123456") { contact in
 
             guard let contact = contact else { return }
 
+            contact.fcmToken = FCMChannelManager.getFCMToken()
             User.current.contact = contact
             let chatVC = FCMChannelChatViewController(contact: contact, botName: "SANDBOX", loadMessagesOnInit: true)
             self.present(UINavigationController(rootViewController: chatVC), animated: true, completion: nil)
