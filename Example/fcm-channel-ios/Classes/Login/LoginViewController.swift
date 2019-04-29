@@ -26,11 +26,15 @@ class LoginViewController: UIViewController {
 
     @IBAction func loginBtnPressed(_ sender: Any) {
 
-        FCMClient.loadContact(fromUrn: "fcm:123456") { contact in
+        FCMClient.loadContact(fromUrn: "fcm:7777") { contact in
 
             guard let contact = contact else { return }
-
             contact.fcmToken = FCMChannelManager.getFCMToken()
+
+            if let name = contact.name, let urn = contact.urns.first, let token = contact.fcmToken {
+                FCMClient.registerFCMContact(urn: urn, name: name, fcmToken: token, contactUuid: contact.uuid) { _, _ in}
+            }
+
             User.current.contact = contact
             let chatVC = FCMChannelChatViewController(contact: contact, botName: "SANDBOX", loadMessagesOnInit: true)
             self.present(UINavigationController(rootViewController: chatVC), animated: true, completion: nil)

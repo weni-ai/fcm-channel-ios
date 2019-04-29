@@ -25,13 +25,10 @@ class RegisterViewController: UIViewController {
             urn != "",
             name != "" else { return }
 
-        let contact = FCMChannelContact(urn: urn, name: name, fcmToken: fcmToken)
-        contact.fcmToken = fcmToken
-
-        FCMClient.registerFCMContact(contact) { uuid, error in
+        FCMClient.registerFCMContact(urn: urn, name: name, fcmToken: fcmToken) { uuid, error in
 
             guard let uuid = uuid else {
-                let alert = UIAlertController(title: "Erro", message: "", preferredStyle: .alert)
+                let alert = UIAlertController(title: "Erro", message: "Erro ao criar contato", preferredStyle: .alert)
                 let action = UIAlertAction(title: "OK", style: .cancel, handler: nil)
                 alert.addAction(action)
                 self.present(alert, animated: true)
@@ -40,7 +37,13 @@ class RegisterViewController: UIViewController {
 
             FCMClient.loadContact(fromUUID: uuid) { contact in
 
-                guard let contact = contact else { return }
+                guard let contact = contact else {
+                    let alert = UIAlertController(title: "Erro", message: "Não foi possível carregar contato", preferredStyle: .alert)
+                    let action = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                    alert.addAction(action)
+                    self.present(alert, animated: true)
+                    return
+                }
 
                 contact.fcmToken = FCMChannelManager.getFCMToken()
                 User.current.contact = contact

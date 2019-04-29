@@ -7,13 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4579A3838BAD7B2FFE198DD2 /* Pods_fcm_channel_ios_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D00163BAABF5D51E599605F9 /* Pods_fcm_channel_ios_Example.framework */; };
-		56625B9A4767A497B00839A8 /* Pods_fcm_channel_ios_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2DF7C8FBA186E13D65F3EC7 /* Pods_fcm_channel_ios_Tests.framework */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		7242A950211B317300DC686E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7242A94F211B317300DC686E /* GoogleService-Info.plist */; };
+		9BA4DC00D5D380434DCC56C0 /* Pods_fcm_channel_ios_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10454F9DEFB8878A7BC200C7 /* Pods_fcm_channel_ios_Example.framework */; };
 		AC96CDC5226DF11E0020E985 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC96CDC3226DF11E0020E985 /* RegisterViewController.swift */; };
 		AC96CDC6226DF11E0020E985 /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC96CDC4226DF11E0020E985 /* RegisterViewController.xib */; };
 		EA650D0F1F7994EA004905DD /* FCMChannelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA650D0A1F7994EA004905DD /* FCMChannelManager.swift */; };
@@ -22,6 +21,7 @@
 		EA650D1A1F79B254004905DD /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA650D181F79B254004905DD /* LoginViewController.swift */; };
 		EA650D1B1F79B254004905DD /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EA650D191F79B254004905DD /* LoginViewController.xib */; };
 		EA88724F1F7AD4700017335B /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA88724E1F7AD4700017335B /* LoginViewModel.swift */; };
+		F30C1C6D5D7F682471546610 /* Pods_fcm_channel_ios_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08B9A9D32F7A511DC6EB54DD /* Pods_fcm_channel_ios_Tests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,8 +35,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		06428379EE5D4882A2967CE6 /* Pods-fcm-channel-ios_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fcm-channel-ios_Example.debug.xcconfig"; path = "Target Support Files/Pods-fcm-channel-ios_Example/Pods-fcm-channel-ios_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		18D9EF8318B79CC54BF650DE /* Pods-fcm-channel-ios_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fcm-channel-ios_Tests.debug.xcconfig"; path = "Target Support Files/Pods-fcm-channel-ios_Tests/Pods-fcm-channel-ios_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		08B9A9D32F7A511DC6EB54DD /* Pods_fcm_channel_ios_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_fcm_channel_ios_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0DEA6E01951ED469FF7BD7A4 /* Pods-fcm-channel-ios_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fcm-channel-ios_Example.release.xcconfig"; path = "Target Support Files/Pods-fcm-channel-ios_Example/Pods-fcm-channel-ios_Example.release.xcconfig"; sourceTree = "<group>"; };
+		10454F9DEFB8878A7BC200C7 /* Pods_fcm_channel_ios_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_fcm_channel_ios_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3470974FD9843938423F3312 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* fcm-channel-ios_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "fcm-channel-ios_Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -46,15 +47,14 @@
 		607FACE51AFB9204008FA782 /* fcm-channel-ios_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "fcm-channel-ios_Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
-		71F95BB54CEF183E1AC08003 /* Pods-fcm-channel-ios_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fcm-channel-ios_Tests.release.xcconfig"; path = "Target Support Files/Pods-fcm-channel-ios_Tests/Pods-fcm-channel-ios_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		7242A94F211B317300DC686E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		8A0A1BBE1A2C10AE0CD27348 /* Pods-fcm-channel-ios_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fcm-channel-ios_Example.release.xcconfig"; path = "Target Support Files/Pods-fcm-channel-ios_Example/Pods-fcm-channel-ios_Example.release.xcconfig"; sourceTree = "<group>"; };
+		76D9755148ED97E2F71442A3 /* Pods-fcm-channel-ios_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fcm-channel-ios_Example.debug.xcconfig"; path = "Target Support Files/Pods-fcm-channel-ios_Example/Pods-fcm-channel-ios_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		91CD9DE6A4F7253661E830D8 /* Pods-fcm-channel-ios_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fcm-channel-ios_Tests.debug.xcconfig"; path = "Target Support Files/Pods-fcm-channel-ios_Tests/Pods-fcm-channel-ios_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		98D4E138E1DAD20FED8EB081 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		AC96CDC3226DF11E0020E985 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		AC96CDC4226DF11E0020E985 /* RegisterViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RegisterViewController.xib; sourceTree = "<group>"; };
 		AF41517B27DA1D77E7D607C6 /* fcm-channel-ios.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = "fcm-channel-ios.podspec"; path = "../fcm-channel-ios.podspec"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		C2DF7C8FBA186E13D65F3EC7 /* Pods_fcm_channel_ios_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_fcm_channel_ios_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D00163BAABF5D51E599605F9 /* Pods_fcm_channel_ios_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_fcm_channel_ios_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C0A2F194A70090262891F8BE /* Pods-fcm-channel-ios_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fcm-channel-ios_Tests.release.xcconfig"; path = "Target Support Files/Pods-fcm-channel-ios_Tests/Pods-fcm-channel-ios_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		EA650D0A1F7994EA004905DD /* FCMChannelManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FCMChannelManager.swift; sourceTree = "<group>"; };
 		EA650D0C1F7994EA004905DD /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		EA650D0E1F7994EA004905DD /* Serializable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Serializable.swift; sourceTree = "<group>"; };
@@ -69,7 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4579A3838BAD7B2FFE198DD2 /* Pods_fcm_channel_ios_Example.framework in Frameworks */,
+				9BA4DC00D5D380434DCC56C0 /* Pods_fcm_channel_ios_Example.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,7 +77,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				56625B9A4767A497B00839A8 /* Pods_fcm_channel_ios_Tests.framework in Frameworks */,
+				F30C1C6D5D7F682471546610 /* Pods_fcm_channel_ios_Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -93,7 +93,7 @@
 				607FACE81AFB9204008FA782 /* Tests */,
 				607FACD11AFB9204008FA782 /* Products */,
 				73D13D82956EF8A0CC958869 /* Pods */,
-				C09CCCAC12899E434A971084 /* Frameworks */,
+				80EA28B83813FB572F08E531 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -157,12 +157,21 @@
 		73D13D82956EF8A0CC958869 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				06428379EE5D4882A2967CE6 /* Pods-fcm-channel-ios_Example.debug.xcconfig */,
-				8A0A1BBE1A2C10AE0CD27348 /* Pods-fcm-channel-ios_Example.release.xcconfig */,
-				18D9EF8318B79CC54BF650DE /* Pods-fcm-channel-ios_Tests.debug.xcconfig */,
-				71F95BB54CEF183E1AC08003 /* Pods-fcm-channel-ios_Tests.release.xcconfig */,
+				76D9755148ED97E2F71442A3 /* Pods-fcm-channel-ios_Example.debug.xcconfig */,
+				0DEA6E01951ED469FF7BD7A4 /* Pods-fcm-channel-ios_Example.release.xcconfig */,
+				91CD9DE6A4F7253661E830D8 /* Pods-fcm-channel-ios_Tests.debug.xcconfig */,
+				C0A2F194A70090262891F8BE /* Pods-fcm-channel-ios_Tests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		80EA28B83813FB572F08E531 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				10454F9DEFB8878A7BC200C7 /* Pods_fcm_channel_ios_Example.framework */,
+				08B9A9D32F7A511DC6EB54DD /* Pods_fcm_channel_ios_Tests.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		AC96CDC2226DF0670020E985 /* Register */ = {
@@ -172,15 +181,6 @@
 				AC96CDC4226DF11E0020E985 /* RegisterViewController.xib */,
 			);
 			path = Register;
-			sourceTree = "<group>";
-		};
-		C09CCCAC12899E434A971084 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				D00163BAABF5D51E599605F9 /* Pods_fcm_channel_ios_Example.framework */,
-				C2DF7C8FBA186E13D65F3EC7 /* Pods_fcm_channel_ios_Tests.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		EA650D081F7994EA004905DD /* Classes */ = {
@@ -237,12 +237,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "fcm-channel-ios_Example" */;
 			buildPhases = (
-				4D0B9FD6702E3254CF333669 /* [CP] Check Pods Manifest.lock */,
+				1AA30DF4000A9E7D4C73342D /* [CP] Check Pods Manifest.lock */,
 				72519B5E211CB46B003D5D3C /* swiflint */,
 				607FACCC1AFB9204008FA782 /* Sources */,
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
-				6F2F11137B0B7B4E4365913F /* [CP] Embed Pods Frameworks */,
+				268A636C58248F00B2E292FE /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -257,7 +257,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "fcm-channel-ios_Tests" */;
 			buildPhases = (
-				A20F40CB21F16F9C3C098FF7 /* [CP] Check Pods Manifest.lock */,
+				8ED0BD821142C87E0A11AF39 /* [CP] Check Pods Manifest.lock */,
 				607FACE11AFB9204008FA782 /* Sources */,
 				607FACE21AFB9204008FA782 /* Frameworks */,
 				607FACE31AFB9204008FA782 /* Resources */,
@@ -343,7 +343,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		4D0B9FD6702E3254CF333669 /* [CP] Check Pods Manifest.lock */ = {
+		1AA30DF4000A9E7D4C73342D /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -365,7 +365,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		6F2F11137B0B7B4E4365913F /* [CP] Embed Pods Frameworks */ = {
+		268A636C58248F00B2E292FE /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -435,7 +435,7 @@
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
-		A20F40CB21F16F9C3C098FF7 /* [CP] Check Pods Manifest.lock */ = {
+		8ED0BD821142C87E0A11AF39 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -595,7 +595,7 @@
 		};
 		607FACF01AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 06428379EE5D4882A2967CE6 /* Pods-fcm-channel-ios_Example.debug.xcconfig */;
+			baseConfigurationReference = 76D9755148ED97E2F71442A3 /* Pods-fcm-channel-ios_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "fcm-channel-ios_Example.entitlements";
@@ -604,7 +604,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.push-flow.fcm-channel-ios-Example";
+				PRODUCT_BUNDLE_IDENTIFIER = br.com.ilhasoft.FCMChannelExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 			};
@@ -612,7 +612,7 @@
 		};
 		607FACF11AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8A0A1BBE1A2C10AE0CD27348 /* Pods-fcm-channel-ios_Example.release.xcconfig */;
+			baseConfigurationReference = 0DEA6E01951ED469FF7BD7A4 /* Pods-fcm-channel-ios_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "fcm-channel-ios_Example.entitlements";
@@ -621,7 +621,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.push-flow.fcm-channel-ios-Example";
+				PRODUCT_BUNDLE_IDENTIFIER = br.com.ilhasoft.FCMChannelExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 			};
@@ -629,7 +629,7 @@
 		};
 		607FACF31AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 18D9EF8318B79CC54BF650DE /* Pods-fcm-channel-ios_Tests.debug.xcconfig */;
+			baseConfigurationReference = 91CD9DE6A4F7253661E830D8 /* Pods-fcm-channel-ios_Tests.debug.xcconfig */;
 			buildSettings = {
 				DEVELOPMENT_TEAM = ZE9A9HAM9Z;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -650,7 +650,7 @@
 		};
 		607FACF41AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 71F95BB54CEF183E1AC08003 /* Pods-fcm-channel-ios_Tests.release.xcconfig */;
+			baseConfigurationReference = C0A2F194A70090262891F8BE /* Pods-fcm-channel-ios_Tests.release.xcconfig */;
 			buildSettings = {
 				DEVELOPMENT_TEAM = ZE9A9HAM9Z;
 				FRAMEWORK_SEARCH_PATHS = (

@@ -54,8 +54,8 @@ public class FCMClient: NSObject {
        RestServices.shared.fetchContact(completion: completion)
     }
 
-    open class func registerFCMContact(_ contact: FCMChannelContact, completion: @escaping (_ uuid: String?, _ error: Error?) -> Void) {
-        RestServices.shared.registerFCMContact(contact, completion: completion)
+    open class func registerFCMContact(urn: String, name: String, fcmToken: String, contactUuid: String? = nil, completion: @escaping (_ uuid: String?, _ error: Error?) -> Void) {
+        RestServices.shared.registerFCMContact(urn: urn, name: name, fcmToken: fcmToken, contactUuid: contactUuid, completion: completion)
     }
 
     // MARK: - Language

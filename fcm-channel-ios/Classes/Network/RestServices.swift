@@ -86,7 +86,6 @@ class RestServices {
             ]
 
             let url = "\(handlerUrl)/receive/\(channel)/"
-
             Alamofire.request(url, method: .post, parameters: params).responseString { (response) in
 
                 switch response.result {
@@ -233,23 +232,17 @@ class RestServices {
         }
     }
 
-    func registerFCMContact(_ contact: FCMChannelContact, completion: @escaping (_ uuid: String?, _ error: Error?) -> Void) {
-
-        guard
-//            let uid = contact.uuid,
-            let urn = contact.urns.first,
-            let token = contact.fcmToken else {
-                completion(nil, nil)
-                return
-        }
+    func registerFCMContact(urn: String, name: String, fcmToken: String, contactUuid: String? = nil, completion: @escaping (_ uuid: String?, _ error: Error?) -> Void) {
 
         let url = "\(FCMChannelSettings.shared.handlerURL)/register/\(FCMChannelSettings.shared.channel)/"
 
-        let name = contact.name ?? ""
-        let params = [//"contact_uuid": nil,
-                      "urn": urn,
+        var params = ["urn": urn.replacingOccurrences(of: "fcm:", with: ""),
                       "name": name,
-                      "fcm_token": token] as [String: Any]
+                      "fcm_token": fcmToken] as [String: Any]
+
+        if let contactUuid = contactUuid {
+            params["contact_uuid"] = contactUuid
+        }
 
         Alamofire.request(url, method: .post, parameters: params).responseJSON( completionHandler: { response in
 

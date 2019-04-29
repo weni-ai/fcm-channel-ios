@@ -87,14 +87,14 @@ open class FCMChannelContact: NSObject, Mappable {
                                             fcmToken: String,
                                             completion: @escaping (_ contact: FCMChannelContact?, _ error: Error?) -> Void) {
         
-        let contact = FCMChannelContact(uuid: uuid, urn: urn, name: name, fcmToken: fcmToken)
-        FCMClient.registerFCMContact(contact) { uuid, error in
-            if let uuid = uuid {
-                contact.uuid = uuid
-                setActive(contact: contact)
-            }
-
-            completion(contact, error)
-        }
+//        let contact = FCMChannelContact(uuid: uuid, urn: urn, name: name, fcmToken: fcmToken)
+//        FCMClient.registerFCMContact(contact) { uuid, error in
+//            if let uuid = uuid {
+//                contact.uuid = uuid
+//                setActive(contact: contact)
+//            }
+//
+//            completion(contact, error)
+//        }
     }
 }

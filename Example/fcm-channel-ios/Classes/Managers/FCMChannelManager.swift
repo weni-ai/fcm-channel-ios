@@ -14,8 +14,8 @@ class FCMChannelManager {
     static let keyFCMToken = "KEY_FCM_TOKEN"
     
     static var apiPrefix = "https://push.ilhasoft.mobi/api/"
-    static var token = "4d7fb919d9a0bc4fbd2af61d6b9feca00cd4cdb0"
-    static var channel = "7e464e15-1a20-4668-8792-7c785118bb71"
+    static var token = "a1a1428ce1a6bd748a70d6c888c17e5840939299"
+    static var channel = "303bb2f6-8819-42a2-879c-cf659665f978" //7e464e15-1a20-4668-8792-7c785118bb71"
     static var handlerUrl = "https://push.ilhasoft.mobi/handlers/fcm/"
     
     static func setup() {
@@ -47,24 +47,24 @@ class FCMChannelManager {
     }
     
     static func createContact(completion: @escaping (_ success: Bool) -> Void) {
-        guard let key = User.current.key,
-            let fcmToken = User.current.fcmToken else { return }
-
-        let contact = FCMChannelContact(urn: key, name: User.current.name, fcmToken: fcmToken)
-        FCMClient.registerFCMContact(contact) { uuid, error  in
-
-            if let uuid = uuid, error == nil {
-                User.current.contact_uid = uuid
-                contact.uuid = uuid
-                contact.fcmToken = User.current.fcmToken
-                contact.urn = key
-                User.current.contact = contact
-                completion(true)
-            } else {
-                print("Error: User couldn't register to channel.")
-                completion(false)
-            }
-        }
+//        guard let key = User.current.key,
+//            let fcmToken = User.current.fcmToken else { return }
+//
+//        let contact = FCMChannelContact(urn: key, name: User.current.name, fcmToken: fcmToken)
+//        FCMClient.registerFCMContact(contact) { uuid, error  in
+//
+//            if let uuid = uuid, error == nil {
+//                User.current.contact_uid = uuid
+//                contact.uuid = uuid
+//                contact.fcmToken = User.current.fcmToken
+//                contact.urn = key
+//                User.current.contact = contact
+//                completion(true)
+//            } else {
+//                print("Error: User couldn't register to channel.")
+//                completion(false)
+//            }
+//        }
     }
     
     class func loadContact(urn: String, completion: @escaping (FCMChannelContact?) -> Void) {

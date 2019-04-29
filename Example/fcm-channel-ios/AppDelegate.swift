@@ -18,10 +18,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
+//        UNUserNotificationCenter.current().delegate = self
+        requestPermissionForPushNotification(application)
         FirebaseApp.configure()
         Messaging.messaging().delegate = self
-        requestPermissionForPushNotification(application)
         FCMChannelManager.setup()
+        Messaging.messaging().shouldEstablishDirectChannel = true
+        Messaging.messaging().useMessagingDelegateForDirectChannel = true
 
         self.window = UIWindow(frame: UIScreen.main.bounds)
         self.window?.backgroundColor = UIColor.white
@@ -39,18 +42,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func requestPermissionForPushNotification(_ application:UIApplication) {
         
         if #available(iOS 10.0, *) {
-            let center  = UNUserNotificationCenter.current()
-            center.delegate = self
-            center.requestAuthorization(options: [.sound,.alert,.badge], completionHandler: { (success, error) in
-                if let error = error {
-                    print(error.localizedDescription)
-                } else {
-                    print("success: \(success)")
-                    DispatchQueue.main.async {
-                        application.registerForRemoteNotifications()
+            UNUserNotificationCenter.current().requestAuthorization(
+                options: [.alert, .badge, .sound],
+                completionHandler: { (granted: Bool, _: Error?) in
+                    guard granted else { return }
+                    UNUserNotificationCenter.current().getNotificationSettings { (settings) in
+                        guard settings.authorizationStatus == .authorized else { return }
+                        DispatchQueue.main.async {
+                            UIApplication.shared.registerForRemoteNotifications()
+                        }
                     }
-                }
-            })
+            }
+            )
         } else {
             let types:UIUserNotificationType = ([.alert, .badge, .sound])
             let settings:UIUserNotificationSettings = UIUserNotificationSettings(types: types, categories: nil)
@@ -73,15 +76,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         //Enter on touch notification
         let userInfo = response.notification.request.content.userInfo
-        
+        print(userInfo)
         if User.activeUser() != nil {
             openNotification(userInfo)
         }
     }
-    
+
     @available(iOS 10.0, *)
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         let userInfo = notification.request.content.userInfo
+        print(userInfo)
         if User.activeUser() != nil {
             openNotification(userInfo)
         }
@@ -117,6 +121,12 @@ extension AppDelegate: MessagingDelegate {
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
         print("Firebase registration token was refreshed: \(fcmToken)")
         FCMChannelManager.saveFCMToken(fcmToken: fcmToken)
+    }
+
+    func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingRemoteMessage) {
+        let userInfo = remoteMessage.appData
+        print(userInfo)
+        openNotification(userInfo)
     }
 }
 
