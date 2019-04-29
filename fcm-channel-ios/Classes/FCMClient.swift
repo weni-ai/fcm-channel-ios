@@ -8,33 +8,32 @@
 
 import UIKit
 
-
 public class FCMClient: NSObject {
 
     static var sendingAnswers: Bool = false
 
-    open class func setup(_ token:String,
-                      channel:String,
-                      url: String = "https://push.ilhasoft.mobi/api/") {
+    open class func setup(_ token: String,
+                          channel: String,
+                          url: String = "https://push.ilhasoft.mobi/api/") {
         FCMChannelSettings.setup(token, channel: channel, url: url)
     }
 
     // MARK: - Flow
-    open class func getFlowDefinition(_ flowUuid: String, completion: @escaping (FCMChannelFlowDefinition?) -> Void) {
-        RestServices.shared.getFlowDefinition(flowUuid, completion: completion)
+    open class func getFlowDefinition(flowUuid: String, completion: @escaping (FCMChannelFlowDefinition?) -> Void) {
+        RestServices.shared.getFlowDefinition(flowUuid: flowUuid, completion: completion)
     }
 
-    open class func getFlowRuns(_ contact: FCMChannelContact, completion: @escaping ([FCMChannelFlowRun]?) -> Void) {
-        RestServices.shared.getFlowRuns(contact, completion: completion)
+    open class func getFlowRuns(contactId: String, completion: @escaping ([FCMChannelFlowRun]?) -> Void) {
+        RestServices.shared.getFlowRuns(contactId: contactId, completion: completion)
     }
 
     // MARK: - Messages
-    open class func sendReceivedMessage(_ contact: FCMChannelContact, message: String, completion: @escaping (_ success: Bool) -> Void) {
-         RestServices.shared.sendReceivedMessage(contact, message: message, completion: completion)
+    open class func sendReceivedMessage(urn: String, token: String, message: String, completion: @escaping (_ success: Bool) -> Void) {
+        RestServices.shared.sendReceivedMessage(urn: urn, token: token, message: message, completion: completion)
     }
 
-    open class func loadMessages(contact: FCMChannelContact, completion: @escaping (_ messages:[FCMChannelMessage]?) -> Void ) {
-        RestServices.shared.loadMessages(contact: contact, completion: completion)
+    open class func loadMessages(contactId: String, completion: @escaping (_ messages: [FCMChannelMessage]?) -> Void ) {
+        RestServices.shared.loadMessages(contactId: contactId, completion: completion)
     }
 
     open class func loadMessageByID(_ messageID: Int, completion: @escaping (_ message: FCMChannelMessage?) -> Void ) {
@@ -59,7 +58,7 @@ public class FCMClient: NSObject {
     }
 
     // MARK: - Language
-    open class func savePreferedLanguage(_ language:String) {
+    open class func savePreferedLanguage(_ language: String) {
         FCMChannelSettings.shared.savePreferedLanguage(language)
     }
 

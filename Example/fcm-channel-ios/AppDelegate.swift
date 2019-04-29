@@ -18,13 +18,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
-//        UNUserNotificationCenter.current().delegate = self
         requestPermissionForPushNotification(application)
         FirebaseApp.configure()
         Messaging.messaging().delegate = self
         FCMChannelManager.setup()
         Messaging.messaging().shouldEstablishDirectChannel = true
-        Messaging.messaging().useMessagingDelegateForDirectChannel = true
 
         self.window = UIWindow(frame: UIScreen.main.bounds)
         self.window?.backgroundColor = UIColor.white

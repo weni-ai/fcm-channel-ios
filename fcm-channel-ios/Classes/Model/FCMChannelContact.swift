@@ -11,7 +11,7 @@ import ObjectMapper
 
 open class FCMChannelContact: NSObject, Mappable {
    
-    open var uuid: String?
+    open var uuid: String!
     open var urn: String?
     open var urns: [String] = []
     open var name: String?
@@ -27,7 +27,7 @@ open class FCMChannelContact: NSObject, Mappable {
     open var fields: [String: Any]?
     open var groups: [FCMChannelGroup] = []
     
-    public init(uuid: String? = nil, urn: String, name: String?, fcmToken: String) {
+    public init(uuid: String, urn: String, name: String?, fcmToken: String) {
         self.uuid = uuid
         self.urns = [urn]
         self.name = name

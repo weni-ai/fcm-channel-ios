@@ -13,6 +13,7 @@ import fcm_channel_ios
 
 class LoginViewController: UIViewController {
 
+    @IBOutlet weak var tfURN: UITextField!
     @IBOutlet weak var loginBtn: UIButton!
     
     override func viewDidLoad() {
@@ -26,9 +27,23 @@ class LoginViewController: UIViewController {
 
     @IBAction func loginBtnPressed(_ sender: Any) {
 
-        FCMClient.loadContact(fromUrn: "fcm:7777") { contact in
+        guard let urn = tfURN.text else {
+            let alert = UIAlertController(title: "Erro", message: "URN vazia", preferredStyle: .alert)
+            let action = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+            alert.addAction(action)
+            self.present(alert, animated: true)
+            return
+        }
 
-            guard let contact = contact else { return }
+        FCMClient.loadContact(fromUrn: urn) { contact in
+
+            guard let contact = contact else {
+                let alert = UIAlertController(title: "Erro", message: "Não foi possível carregar contato", preferredStyle: .alert)
+                let action = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                alert.addAction(action)
+                self.present(alert, animated: true)
+                return
+            }
             contact.fcmToken = FCMChannelManager.getFCMToken()
 
             if let name = contact.name, let urn = contact.urns.first, let token = contact.fcmToken {
