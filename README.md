@@ -74,7 +74,6 @@ Add this to your MessagingDelegate class:
 ### Configure contact:
 
 When Firebase returns a refreshed FCM token, you'll need to update this on your Push contact.
-
 Call function:
 
 ~~~~
@@ -92,26 +91,26 @@ These methods can be called from FCMClient.
 
 ### Flow
 
-`open class func getFlowDefinition(_ flowUuid: String, completion: @escaping (FCMChannelFlowDefinition?) -> Void)`
+`getFlowDefinition(flowUuid: String, completion: @escaping (FCMChannelFlowDefinition?) -> Void)`
 
-`open class func getFlowRuns(_ contact: FCMChannelContact, completion: @escaping ([FCMChannelFlowRun]?) -> Void)`
+`getFlowRuns(contactId: String, completion: @escaping ([FCMChannelFlowRun]?) -> Void)`
 
 ### Messages
-`open class func sendReceivedMessage(_ contact: FCMChannelContact, message: String, completion: @escaping (_ success: Bool) -> Void)`
+`sendReceivedMessage(urn: String, token: String, message: String, completion: @escaping (_ success: Bool) -> Void)`
 
-`open class func loadMessages(contact: FCMChannelContact, completion: @escaping (_ messages:[FCMChannelMessage]?) -> Void )`
+`loadMessages(contactId: String, completion: @escaping (_ messages: [FCMChannelMessage]?) -> Void )`
 
-`open class func loadMessageByID(_ messageID: Int, completion: @escaping (_ message: FCMChannelMessage?) -> Void ) `
+`loadMessageByID(_ messageID: Int, completion: @escaping (_ message: FCMChannelMessage?) -> Void )`
 
 ### Contact
-`open class func loadContact(fromUrn urn: String, completion: @escaping (_ contact: FCMChannelContact?) -> Void) `
+`loadContact(fromUrn urn: String, completion: @escaping (_ contact: FCMChannelContact?) -> Void)`
 
-`open class func fetchContact(completion: @escaping (_ success: Bool, _ error: Error?) -> Void) `
+`loadContact(fromUUID uuid: String, completion: @escaping (_ contact: FCMChannelContact?) -> Void)`
 
-`open class func func registerFCMContact(urn: String, name: String, fcmToken: String, contactUuid: String? = nil, completion: @escaping (_ uuid: String?, _ error: Error?) -> Void) `
+`registerFCMContact(urn: String, name: String, fcmToken: String, contactUuid: String? = nil, completion: @escaping (_ uuid: String?, _ error: Error?) -> Void)`
 
-`open class func savePreferedLanguage(_ language:String) `
+`savePreferedLanguage(_ language: String)`
 
-`open class func getPreferedLanguage() -> String`
+`getPreferedLanguage() -> String`
 
 

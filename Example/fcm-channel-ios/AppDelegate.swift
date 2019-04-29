@@ -39,25 +39,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     func requestPermissionForPushNotification(_ application:UIApplication) {
         
-        if #available(iOS 10.0, *) {
-            UNUserNotificationCenter.current().requestAuthorization(
-                options: [.alert, .badge, .sound],
-                completionHandler: { (granted: Bool, _: Error?) in
-                    guard granted else { return }
-                    UNUserNotificationCenter.current().getNotificationSettings { (settings) in
-                        guard settings.authorizationStatus == .authorized else { return }
-                        DispatchQueue.main.async {
-                            UIApplication.shared.registerForRemoteNotifications()
-                        }
-                    }
-            }
-            )
-        } else {
-            let types:UIUserNotificationType = ([.alert, .badge, .sound])
-            let settings:UIUserNotificationSettings = UIUserNotificationSettings(types: types, categories: nil)
-            application.registerUserNotificationSettings(settings)
-            application.registerForRemoteNotifications()
-        }
+//        if #available(iOS 10.0, *) {
+//            UNUserNotificationCenter.current().requestAuthorization(
+//                options: [.alert, .badge, .sound],
+//                completionHandler: { (granted: Bool, _: Error?) in
+//                    guard granted else { return }
+//                    UNUserNotificationCenter.current().getNotificationSettings { (settings) in
+//                        guard settings.authorizationStatus == .authorized else { return }
+//                        DispatchQueue.main.async {
+//                            UIApplication.shared.registerForRemoteNotifications()
+//                        }
+//                    }
+//            }
+//            )
+//        } else {
+//            let types:UIUserNotificationType = ([.alert, .badge, .sound])
+//            let settings:UIUserNotificationSettings = UIUserNotificationSettings(types: types, categories: nil)
+//            application.registerUserNotificationSettings(settings)
+//            application.registerForRemoteNotifications()
+//        }
     }
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
