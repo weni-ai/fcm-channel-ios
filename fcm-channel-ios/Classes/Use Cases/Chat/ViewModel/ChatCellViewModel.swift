@@ -8,9 +8,9 @@
 import Foundation
 
 public struct ChatCellViewModel {
-    let msgColor: UIColor
-    let bubbleColor: UIColor
-    let userName: String?
-    let text: String?
-    let fromUser: Bool
+    public let msgColor: UIColor
+    public let bubbleColor: UIColor
+    public let userName: String?
+    public let text: String?
+    public let fromUser: Bool
 }
