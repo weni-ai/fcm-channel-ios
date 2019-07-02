@@ -22,8 +22,6 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
     @IBOutlet public var tableView: UITableView!
     @IBOutlet open var viewSend: UIView!
     @IBOutlet public var scrollViewPage: ISScrollViewPage!
-    
-//    fileprivate var isSendingAnswer = false
 
     var defaultFieldBottonHeight: CGFloat
     var choiceAnswerBorderColor: CGColor
@@ -35,7 +33,7 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
     public var defaultViewSendHeight = CGFloat(0)
 
     private var presenter: ChatPresenter?
-    private(set) var messages: [ChatCellViewModel] = []
+    open private(set) var messages: [ChatCellViewModel] = []
     
     public init( contact: FCMChannelContact,
                  incomingBubleMsgColor: UIColor = UIColor(with: "#2F97F8"),
