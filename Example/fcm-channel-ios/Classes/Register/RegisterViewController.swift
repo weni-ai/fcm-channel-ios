@@ -35,13 +35,17 @@ class RegisterViewController: UIViewController {
                 return
             }
 
-            FCMClient.loadContact(fromUUID: uuid) { contact in
+            FCMClient.loadContact(fromUUID: uuid) { (contact, error) in
 
-                guard let contact = contact else {
-                    let alert = UIAlertController(title: "Erro", message: "Não foi possível carregar contato", preferredStyle: .alert)
+                if let error = error {
+                    let alert = UIAlertController(title: "Erro", message: error.localizedDescription, preferredStyle: .alert)
                     let action = UIAlertAction(title: "OK", style: .cancel, handler: nil)
                     alert.addAction(action)
                     self.present(alert, animated: true)
+                    return
+                }
+
+                guard let contact = contact else {
                     return
                 }
 

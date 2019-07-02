@@ -22,7 +22,7 @@ class RestServices {
    private init() {}
 
     // MARK: - Flow
-   func getFlowDefinition(flowUuid: String, completion: @escaping (FCMChannelFlowDefinition?) -> Void) {
+   func getFlowDefinition(flowUuid: String, completion: @escaping (FCMChannelFlowDefinition?, _ error: Error?) -> Void) {
 
         let url = "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.shared.V2)definitions.json?flow=\(flowUuid)"
 
@@ -34,18 +34,18 @@ class RestServices {
 
             case .failure(let error):
                 print(error.localizedDescription)
-                completion(nil)
+                completion(nil, error)
 
             case .success(let value):
-                completion(value)
+                completion(value, nil)
             }
         }
     }
 
-    func getFlowRuns(contactId: String, completion: @escaping ([FCMChannelFlowRun]?) -> Void) {
+    func getFlowRuns(contactId: String, completion: @escaping ([FCMChannelFlowRun]?, _ error: Error?) -> Void) {
 
         guard let minimumDate = getMinimumDate() else {
-            completion(nil)
+            completion(nil, FCMChannelError.defaultError(message: "Data não encontrada"))
             return
         }
 
@@ -61,20 +61,20 @@ class RestServices {
 
                             case .failure(let error):
                                 print(error.localizedDescription)
-                                completion(nil)
+                                completion(nil, error)
 
                             case .success(let value):
                                 if let results = value.results, !results.isEmpty {
-                                    completion(value.results)
+                                    completion(value.results, nil)
                                 } else {
-                                    completion(nil)
+                                    completion(nil, FCMChannelError.defaultError(message: nil))
                                 }
                             }
         }
     }
 
     // MARK: - Messages
-    func sendReceivedMessage(urn: String, token: String, message: String, completion:@escaping (_ success: Bool) -> Void) {
+    func sendReceivedMessage(urn: String, token: String, message: String, completion:@escaping (_ error: Error?) -> Void) {
         let handlerUrl = FCMChannelSettings.shared.handlerURL
         let channel = FCMChannelSettings.shared.channel
 
@@ -96,16 +96,16 @@ class RestServices {
 
             case .failure(let error):
                 print("error \(String(describing: error.localizedDescription))")
-                completion(false)
+                completion(error)
 
             case .success(let value):
                 print(value)
-                completion(true)
+                completion(nil)
             }
         }
     }
 
-    func loadMessages(contactId: String, completion: @escaping (_ messages: [FCMChannelMessage]?) -> Void ) {
+    func loadMessages(contactId: String, completion: @escaping (_ messages: [FCMChannelMessage]?, _ error: Error?) -> Void ) {
 
         let url = "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.shared.V2)messages.json?contact=\(contactId)"
 
@@ -117,19 +117,19 @@ class RestServices {
 
                     case .failure(let error):
                         print(error.localizedDescription)
-                        completion(nil)
+                        completion(nil, error)
 
                     case .success(let value):
                         if let results = value.results, !results.isEmpty {
-                            completion(value.results)
+                            completion(value.results, nil)
                         } else {
-                            completion(nil)
+                            completion(nil, FCMChannelError.defaultError(message: nil))
                         }
                     }
         }
     }
 
-    func loadMessageByID(_ messageID: Int, completion: @escaping (_ message: FCMChannelMessage?) -> Void ) {
+    func loadMessageByID(_ messageID: Int, completion: @escaping (_ message: FCMChannelMessage?, _ error: Error?) -> Void ) {
 
         let url = "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.shared.V2)messages.json?id=\(messageID)"
 
@@ -139,13 +139,13 @@ class RestServices {
 
             case .failure(let error):
                 print(error.localizedDescription)
-                completion(nil)
+                completion(nil, error)
 
             case .success(let value):
                 if let results = value.results, !results.isEmpty {
-                    completion(results.first)
+                    completion(results.first, nil)
                 } else {
-                    completion(nil)
+                    completion(nil, FCMChannelError.notFound(message: "Não foi possível encontrar mensagem"))
                 }
             }
         }
@@ -153,7 +153,7 @@ class RestServices {
 
     // MARK: - Contact
 
-    private func loadContact(fromURL url: URL, completion: @escaping (_ contact: FCMChannelContact?) -> Void) {
+    private func loadContact(fromURL url: URL, completion: @escaping (_ contact: FCMChannelContact?, _ error: Error?) -> Void) {
         let request = Alamofire.request(url,
                                         method: .get,
                                         encoding: URLEncoding.default,
@@ -162,34 +162,39 @@ class RestServices {
 
                 if let response = response.result.value as? [String: Any] {
                     guard let result = (response["results"] as? [[String: Any]])?.first else {
-                        completion(nil)
+                        completion(nil, FCMChannelError.notFound(message: response["detail"] as? String))
                         return
                     }
 
                     let contact = Mapper<FCMChannelContact>().map(JSON: result)
-                    if contact?.fcmToken == nil {
-                        contact?.fcmToken = ""
+
+                    if let contact = contact {
+                        if contact.fcmToken == nil {
+                            contact.fcmToken = ""
+                        }
+                        completion(contact, nil)
+                    } else {
+                        completion(contact, FCMChannelError.mappingError)
                     }
-                    completion(contact)
                 }
         }
 
         debugPrint(request)
     }
 
-    func loadContact(fromUUID uuid: String, completion: @escaping (_ contact: FCMChannelContact?) -> Void) {
+    func loadContact(fromUUID uuid: String, completion: @escaping (_ contact: FCMChannelContact?, _ error: Error?) -> Void) {
         let url: URL! = URL(string: "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.shared.V2)contacts.json?uuid=\(uuid)")
         loadContact(fromURL: url, completion: completion)
     }
 
-    func loadContact(fromUrn urn: String, completion: @escaping (_ contact: FCMChannelContact?) -> Void) {
+    func loadContact(fromUrn urn: String, completion: @escaping (_ contact: FCMChannelContact?, _ error: Error?) -> Void) {
         let url: URL! = URL(string: "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.shared.V2)contacts.json?urn=\(urn)")
         loadContact(fromURL: url, completion: completion)
     }
 
-    func fetchContact(completion: @escaping (_ success: Bool, _ error: Error?) -> Void) {
+    func fetchContact(completion: @escaping (_ error: Error?) -> Void) {
         guard let contact = FCMChannelContact.current(), let urn = contact.urn else {
-            completion(false, nil)
+            completion(FCMChannelError.noContact)
             return
         }
 
@@ -199,12 +204,12 @@ class RestServices {
 
             if let responseValue = response.result.value as? [String: Any] {
                 guard let results = responseValue["results"] as? [[String: Any]], results.count > 0 else {
-                    completion(false, nil)
+                    completion(FCMChannelError.notFound(message: (response.result.value as? [String: String])?["detail"]))
                     return
                 }
 
                 guard let data = results.first else {
-                    completion(false, nil)
+                    completion(FCMChannelError.notFound(message: "Nenhum contato encontrado"))
                     return
                 }
 
@@ -217,15 +222,15 @@ class RestServices {
                 }
 
                 guard let contact = Mapper<FCMChannelContact>().map(JSONObject: data) else {
-                    completion(false, response.result.error)
+                    completion(response.result.error)
                     return
                 }
                 contact.urn = fcmToken
 
                 FCMChannelContact.setActive(contact: contact)
-                completion(true, nil)
+                completion(nil)
             } else if let error = response.result.error {
-                completion(false, error)
+                completion(error)
             }
         }
     }

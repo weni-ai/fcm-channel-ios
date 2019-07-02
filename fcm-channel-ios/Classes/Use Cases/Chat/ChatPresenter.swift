@@ -56,8 +56,8 @@ class ChatPresenter {
         self.messageList.append(FCMChannelMessage(msg: text))
         self.loadCurrentRulesetDelayed(delay: 3)
 
-        FCMClient.sendReceivedMessage(urn: urn, token: fcmToken, message: text, completion: { success in
-            if success {}
+        FCMClient.sendReceivedMessage(urn: urn, token: fcmToken, message: text, completion: { error in
+            if error != nil {}
         })
 
         didUpdateMessages()
@@ -115,7 +115,7 @@ class ChatPresenter {
 
     private func loadFlow(flowRun: FCMChannelFlowRun, latestFlowStep: FCMChannelFlowStep) {
         if let uuid = flowRun.flow.uuid {
-            FCMClient.getFlowDefinition(flowUuid: uuid) { flowDefinition in
+            FCMClient.getFlowDefinition(flowUuid: uuid) { flowDefinition, error in
                 if let lastFlow = flowDefinition?.flows?.last {
                     self.getRulesetFor(flow: lastFlow, flowStep: latestFlowStep)
                 }
@@ -138,7 +138,7 @@ class ChatPresenter {
     private func loadData() {
 
         view?.setLoading(to: true)
-        FCMClient.loadMessages(contactId: contact.uuid) { (messages) in
+        FCMClient.loadMessages(contactId: contact.uuid) { (messages, error) in
             self.view?.setLoading(to: false)
             guard let messages = messages else { return }
             self.messageList = messages.reversed()
@@ -157,7 +157,7 @@ class ChatPresenter {
         } else {
 
             DispatchQueue.main.async { //After(deadline: .now() + Double(delay!)) {
-                FCMClient.getFlowRuns(contactId: self.contact.uuid) { (flowRuns: [FCMChannelFlowRun]?) -> Void in
+                FCMClient.getFlowRuns(contactId: self.contact.uuid) { (flowRuns: [FCMChannelFlowRun]?, error: Error?) -> Void in
                     if let flowRun = flowRuns?.first {
                         self.getLastRuleset(from: flowRun)
                     }

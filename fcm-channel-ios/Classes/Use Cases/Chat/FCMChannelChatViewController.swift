@@ -35,7 +35,7 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
     public var defaultViewSendHeight = CGFloat(0)
 
     private var presenter: ChatPresenter?
-    private var messages: [ChatCellViewModel] = []
+    private(set) var messages: [ChatCellViewModel] = []
     
     public init( contact: FCMChannelContact,
                  incomingBubleMsgColor: UIColor = UIColor(with: "#2F97F8"),

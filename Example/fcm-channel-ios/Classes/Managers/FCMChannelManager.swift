@@ -68,7 +68,7 @@ class FCMChannelManager {
     }
     
     class func loadContact(urn: String, completion: @escaping (FCMChannelContact?) -> Void) {
-        FCMClient.loadContact(fromUrn: urn) { contact in
+        FCMClient.loadContact(fromUrn: urn) { contact, error in
             completion(contact)
         }
     }
