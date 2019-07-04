@@ -80,7 +80,7 @@ class RestServices {
 
         var formattedUrn = urn
         if urn.starts(with: "fcm:") {
-            formattedUrn = String(formattedUrn.dropFirst())
+            formattedUrn = String(formattedUrn.dropFirst(4))
         }
 
         let params = [
