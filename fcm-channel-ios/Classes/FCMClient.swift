@@ -14,7 +14,7 @@ public class FCMClient: NSObject {
 
     open class func setup(_ token: String,
                           channel: String,
-                          url: String = "https://push.ilhasoft.mobi/api/") {
+                          url: String = "https://push.ilhasoft.mobi/c/fcm/") {
         FCMChannelSettings.setup(token, channel: channel, url: url)
     }
 
