@@ -120,8 +120,8 @@ class RestServices {
                         completion(nil, error)
 
                     case .success(let value):
-                        if let results = value.results, !results.isEmpty {
-                            completion(value.results, nil)
+                        if let results = value.results {
+                            completion(results, nil)
                         } else {
                             completion(nil, FCMChannelError.defaultError(message: nil))
                         }
