@@ -15,13 +15,13 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
     
     private var refreshControl: UIRefreshControl!
     
-    @IBOutlet public var txtMessage: UITextField!
-    @IBOutlet public var btSend: UIButton!
-    @IBOutlet public var viewSendHeight: NSLayoutConstraint!
-    @IBOutlet var viewSendBottom: NSLayoutConstraint!
-    @IBOutlet public var tableView: UITableView!
-    @IBOutlet open var viewSend: UIView!
-    @IBOutlet public var scrollViewPage: ISScrollViewPage!
+    @IBOutlet weak public var txtMessage: UITextField!
+    @IBOutlet weak public var btSend: UIButton!
+    @IBOutlet weak public var viewSendHeight: NSLayoutConstraint!
+    @IBOutlet weak var viewSendBottom: NSLayoutConstraint!
+    @IBOutlet weak public var tableView: UITableView!
+    @IBOutlet weak open var viewSend: UIView!
+    @IBOutlet weak public var scrollViewPage: ISScrollViewPage!
 
     var defaultFieldBottonHeight: CGFloat
     var choiceAnswerBorderColor: CGColor
