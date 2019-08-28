@@ -54,7 +54,7 @@ class ChatPresenter {
         }
 
         self.messageList.append(FCMChannelMessage(msg: text))
-        self.loadCurrentRulesetDelayed(delay: 3)
+        self.loadCurrentRuleset()
 
         FCMClient.sendReceivedMessage(urn: urn, token: fcmToken, message: text, completion: { error in
             if error != nil {}
@@ -66,18 +66,17 @@ class ChatPresenter {
     func onViewDidLoad() {
         if loadMessagesOnInit {
             loadData()
-            loadCurrentRulesetDelayed()
         }
 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(newMessageReceived),
-                                               name:NSNotification.Name(rawValue: "newMessageReceived"),
+                                               name: NSNotification.Name(rawValue: "newMessageReceived"),
                                                object: nil)
     }
 
     func onReload() {
         loadData()
-        loadCurrentRulesetDelayed()
+        loadCurrentRuleset()
     }
 
     // MARK: - Data
@@ -104,7 +103,7 @@ class ChatPresenter {
         messageList.append(message)
         didUpdateMessages()
         FCMChannelMessage.addLastMessage(message: message)
-        loadCurrentRulesetDelayed(delay: 1)
+        loadCurrentRuleset()
     }
 
     private func getLastRuleset(from flowRun: FCMChannelFlowRun) {
@@ -140,27 +139,28 @@ class ChatPresenter {
         view?.setLoading(to: true)
         FCMClient.loadMessages(contactId: contact.uuid) { (messages, error) in
             self.view?.setLoading(to: false)
-            guard let messages = messages else { return }
-            self.messageList = messages.reversed()
+
+            if let error = error {
+                self.view?.showError(message: error.localizedDescription)
+            }
+            self.messageList = (messages ?? []).reversed()
             self.didUpdateMessages()
+            self.loadCurrentRuleset()
         }
     }
 
-    private func loadCurrentRulesetDelayed(delay: Int? = 2) {
+    private func loadCurrentRuleset() {
 
-        if let message = FCMChannelMessage.lastMessage() {
-            DispatchQueue.main.async { //asyncAfter(deadline: .now() + Double(delay!)) {
+        if let message = FCMChannelMessage.lastMessage(), message.id == messageList.last?.id {
+            DispatchQueue.main.async { [weak self] in
                 if let quickReplies = message.quickReplies {
-                    self.view?.addQuickRepliesOptions(quickReplies)
+                    self?.view?.addQuickRepliesOptions(quickReplies)
                 }
             }
         } else {
-
-            DispatchQueue.main.async { //After(deadline: .now() + Double(delay!)) {
-                FCMClient.getFlowRuns(contactId: self.contact.uuid) { (flowRuns: [FCMChannelFlowRun]?, error: Error?) -> Void in
-                    if let flowRun = flowRuns?.first {
-                        self.getLastRuleset(from: flowRun)
-                    }
+            FCMClient.getFlowRuns(contactId: self.contact.uuid) { (flowRuns: [FCMChannelFlowRun]?, error: Error?) in
+                if error == nil, let flowRun = flowRuns?.first {
+                    self.getLastRuleset(from: flowRun)
                 }
             }
         }
@@ -209,15 +209,10 @@ class ChatPresenter {
     }
 
     private func isFlowActive(flowRun: FCMChannelFlowRun) -> Bool {
-        guard let exit_type = flowRun.exitType else {
+        guard flowRun.exitType != nil else {
             return true
         }
 
-        //        let exitType = !(exit_type == "completed" || exit_type == "expired")
-
-        if flowRun.path != nil && !flowRun.path.isEmpty {
-            return true
-        }
-        return false
+        return flowRun.path != nil && !flowRun.path.isEmpty
     }
 }

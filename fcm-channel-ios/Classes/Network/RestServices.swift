@@ -213,21 +213,11 @@ class RestServices {
                     return
                 }
 
-                var fcmToken = ""
-                if let urns = data["urns"] as? [String] {
-                    let filtered = urns.filter {($0.hasPrefix("fcm:"))}
-                    if !filtered.isEmpty {
-                        fcmToken = String(filtered.first?.dropFirst(4) ?? "")
-                    }
-                }
-
                 guard let contact = Mapper<FCMChannelContact>().map(JSONObject: data) else {
                     completion(response.result.error)
                     return
                 }
-
-                // contact.fcmToken = fcmToken
-
+                
                 FCMChannelContact.setActive(contact: contact)
                 completion(nil)
             } else if let error = response.result.error {

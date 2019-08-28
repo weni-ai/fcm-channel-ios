@@ -293,6 +293,14 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
 
 extension FCMChannelChatViewController: ChatViewContract {
 
+    func showError(message: String) {
+        let alertController = UIAlertController(title: "Erro", message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+        okAction.setValue(UIColor.black, forKey: "titleTextColor")
+        alertController.addAction(okAction)
+        present(alertController, animated: true)
+    }
+
     func addRow() {
         addRow(scroll: nil)
     }
