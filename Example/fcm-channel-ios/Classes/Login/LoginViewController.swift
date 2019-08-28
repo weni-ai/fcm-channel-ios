@@ -35,7 +35,7 @@ class LoginViewController: UIViewController {
             return
         }
 
-        FCMClient.loadContact(fromUrn: urn) { contact, error in
+        FCMClient.loadContact(fromUrn: "fcm:\(urn)") { contact, error in
 
             if let error = error {
                 let alert = UIAlertController(title: "Erro", message: error.localizedDescription, preferredStyle: .alert)
@@ -51,7 +51,7 @@ class LoginViewController: UIViewController {
 
             contact.fcmToken = FCMChannelManager.getFCMToken()
 
-            if let name = contact.name, let urn = contact.urns.first, let token = contact.fcmToken {
+            if let name = contact.name, let urn = contact.urn, let token = contact.fcmToken {
                 FCMClient.registerFCMContact(urn: urn, name: name, fcmToken: token, contactUuid: contact.uuid) { _, _ in}
             }
 

@@ -43,7 +43,7 @@ class ChatPresenter {
     // MARK: - Action
     func onSendMessage(with text: String) {
 
-        guard let urn = contact.urns.first else {
+        guard let urn = contact.urn else {
             print("FCMChannel Error: Missing contact urn")
             return
         }

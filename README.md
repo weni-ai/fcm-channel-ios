@@ -29,6 +29,8 @@ fcm-channel-ios is available under the AGPL-3.0 license. See the LICENSE file fo
 
 ## How to use
 
+### Firebase Notifications Config:
+Make sure that you have a working Firebase project and that your app is setup correctly to receive notifications via FCM. More information can be found [here](https://firebase.google.com/docs/cloud-messaging/ios/client)
 
 ### Configure Messages:
 Before making any Push calls or using the chat view, configure the fcm-channel by calling:
@@ -91,21 +93,23 @@ These methods can be called from FCMClient.
 
 ### Flow
 
-`getFlowDefinition(flowUuid: String, completion: @escaping (FCMChannelFlowDefinition?) -> Void)`
+`getFlowDefinition(flowUuid: String, completion: @escaping (FCMChannelFlowDefinition?, _ error: Error?) -> Void)`
 
-`getFlowRuns(contactId: String, completion: @escaping ([FCMChannelFlowRun]?) -> Void)`
+`getFlowRuns(contactId: String, completion: @escaping ([FCMChannelFlowRun]?, _ error: Error?) -> Void)`
 
 ### Messages
-`sendReceivedMessage(urn: String, token: String, message: String, completion: @escaping (_ success: Bool) -> Void)`
 
-`loadMessages(contactId: String, completion: @escaping (_ messages: [FCMChannelMessage]?) -> Void )`
+`sendReceivedMessage(urn: String, token: String, message: String, completion: @escaping (_ error: Error?) -> Void)`
 
-`loadMessageByID(_ messageID: Int, completion: @escaping (_ message: FCMChannelMessage?) -> Void )`
+`loadMessages(contactId: String, completion: @escaping (_ messages: [FCMChannelMessage]?, _ error: Error?) -> Void )`
+
+`loadMessageByID(_ messageID: Int, completion: @escaping (_ message: FCMChannelMessage?, _ error: Error?) -> Void )`
 
 ### Contact
-`loadContact(fromUrn urn: String, completion: @escaping (_ contact: FCMChannelContact?) -> Void)`
 
-`loadContact(fromUUID uuid: String, completion: @escaping (_ contact: FCMChannelContact?) -> Void)`
+`loadContact(fromUrn urn: String, completion: @escaping (_ contact: FCMChannelContact?, _ error: Error?) -> Void)`
+
+`loadContact(fromUUID uuid: String, completion: @escaping (_ contact: FCMChannelContact?, _ error: Error?) -> Void)`
 
 `registerFCMContact(urn: String, name: String, fcmToken: String, contactUuid: String? = nil, completion: @escaping (_ uuid: String?, _ error: Error?) -> Void)`
 

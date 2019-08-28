@@ -215,7 +215,7 @@ class RestServices {
 
                 var fcmToken = ""
                 if let urns = data["urns"] as? [String] {
-                    let filtered = urns.filter {($0.contains("fcm"))}
+                    let filtered = urns.filter {($0.hasPrefix("fcm:"))}
                     if !filtered.isEmpty {
                         fcmToken = String(filtered.first?.dropFirst(4) ?? "")
                     }
@@ -225,7 +225,8 @@ class RestServices {
                     completion(response.result.error)
                     return
                 }
-                contact.urn = fcmToken
+
+                // contact.fcmToken = fcmToken
 
                 FCMChannelContact.setActive(contact: contact)
                 completion(nil)
@@ -239,7 +240,13 @@ class RestServices {
 
         let url = "\(FCMChannelSettings.shared.handlerURL)\(FCMChannelSettings.shared.channel)/register/"
 
-        var params = ["urn": urn.replacingOccurrences(of: "fcm:", with: ""),
+        var filteredUrn = urn
+
+        if filteredUrn.hasPrefix("fcm:") {
+            filteredUrn = String(filteredUrn.dropFirst(4))
+        }
+
+        var params = ["urn": filteredUrn,
                       "name": name,
                       "fcm_token": fcmToken] as [String: Any]
 

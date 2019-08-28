@@ -15,7 +15,7 @@ class APIResponse<T: Mappable>: Mappable {
     var next: String?
     var results: [T]?
 
-    required init?(map: Map){}
+    required init?(map: Map) {}
 
     func mapping(map: Map) {
         self.previous <- map["previous"]

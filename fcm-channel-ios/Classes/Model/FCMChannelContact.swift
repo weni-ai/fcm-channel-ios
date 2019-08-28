@@ -12,8 +12,10 @@ import ObjectMapper
 open class FCMChannelContact: NSObject, Mappable {
    
     open var uuid: String!
-    open var urn: String?
-    open var urns: [String] = []
+    open var urn: String? {
+        return urns.first(where: { $0.hasPrefix("fcm:")})
+    }
+    private var urns: [String] = []
     open var name: String?
     open var phoneNumber: String?
     open var email: String?

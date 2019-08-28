@@ -46,27 +46,6 @@ class FCMChannelManager {
         FCMClient.setup(token, channel: channel, url: apiPrefix)
     }
     
-    static func createContact(completion: @escaping (_ success: Bool) -> Void) {
-//        guard let key = User.current.key,
-//            let fcmToken = User.current.fcmToken else { return }
-//
-//        let contact = FCMChannelContact(urn: key, name: User.current.name, fcmToken: fcmToken)
-//        FCMClient.registerFCMContact(contact) { uuid, error  in
-//
-//            if let uuid = uuid, error == nil {
-//                User.current.contact_uid = uuid
-//                contact.uuid = uuid
-//                contact.fcmToken = User.current.fcmToken
-//                contact.urn = key
-//                User.current.contact = contact
-//                completion(true)
-//            } else {
-//                print("Error: User couldn't register to channel.")
-//                completion(false)
-//            }
-//        }
-    }
-    
     class func loadContact(urn: String, completion: @escaping (FCMChannelContact?) -> Void) {
         FCMClient.loadContact(fromUrn: urn) { contact, error in
             completion(contact)
