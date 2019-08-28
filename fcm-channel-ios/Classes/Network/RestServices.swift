@@ -154,10 +154,10 @@ class RestServices {
     // MARK: - Contact
 
     private func loadContact(fromURL url: URL, completion: @escaping (_ contact: FCMChannelContact?, _ error: Error?) -> Void) {
-        let request = Alamofire.request(url,
-                                        method: .get,
-                                        encoding: URLEncoding.default,
-                                        headers: headers)
+        Alamofire.request(url,
+                          method: .get,
+                          encoding: URLEncoding.default,
+                          headers: headers)
             .responseJSON { (response: DataResponse<Any>) in
 
                 if let response = response.result.value as? [String: Any] {
@@ -178,8 +178,6 @@ class RestServices {
                     }
                 }
         }
-
-        debugPrint(request)
     }
 
     func loadContact(fromUUID uuid: String, completion: @escaping (_ contact: FCMChannelContact?, _ error: Error?) -> Void) {
@@ -198,7 +196,7 @@ class RestServices {
             return
         }
 
-        let url = "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.shared.V2)contacts.json?urn=fcm:\(urn)"
+        let url = "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.shared.V2)contacts.json?urn=\(urn)"
 
         Alamofire.request(url, method: .get, headers: headers).responseJSON { (response: DataResponse<Any>) in
 
@@ -217,7 +215,7 @@ class RestServices {
                     completion(response.result.error)
                     return
                 }
-                
+
                 FCMChannelContact.setActive(contact: contact)
                 completion(nil)
             } else if let error = response.result.error {
