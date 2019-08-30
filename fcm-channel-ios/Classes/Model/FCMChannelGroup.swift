@@ -16,7 +16,7 @@ open class FCMChannelGroup: NSObject, Mappable {
     var name: String?
 
     open func mapping(map: Map) {
-        self.uuid           <- map["uuid"]
-        self.name           <- map["name"]
+        self.uuid <- map["uuid"]
+        self.name <- map["name"]
     }
 }

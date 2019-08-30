@@ -113,8 +113,8 @@ These methods can be called from FCMClient.
 
 `registerFCMContact(urn: String, name: String, fcmToken: String, contactUuid: String? = nil, completion: @escaping (_ uuid: String?, _ error: Error?) -> Void)`
 
-`savePreferedLanguage(_ language: String)`
+`savePreferredLanguage(_ language: String)`
 
-`getPreferedLanguage() -> String`
+`getPreferredLanguage() -> String`
 
 
