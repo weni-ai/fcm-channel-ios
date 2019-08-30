@@ -105,12 +105,12 @@ class RestServices {
         }
     }
 
-    func loadMessages(contactId: String, nextPageToken: String? = nil, completion: @escaping (_ messages: APIResponse<FCMChannelMessage>?, _ error: Error?) -> Void ) {
+    func loadMessages(contactId: String, pageToken: String? = nil, completion: @escaping (_ messages: APIResponse<FCMChannelMessage>?, _ error: Error?) -> Void ) {
 
         var url = "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.shared.V2)messages.json?contact=\(contactId)"
 
-        if let nextpageToken = nextPageToken {
-            url = "\(url)&cursor=\(nextPageToken)"
+        if let pageToken = pageToken {
+            url = "\(url)&cursor=\(pageToken)"
         }
 
         Alamofire.request(url, method: .get,

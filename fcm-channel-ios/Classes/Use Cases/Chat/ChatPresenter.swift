@@ -145,7 +145,7 @@ class ChatPresenter {
 
     private func loadData(replace: Bool = false) {
         view?.setLoading(to: true)
-        FCMClient.loadMessages(contactId: contact.uuid, nextPageToken: nextPageToken) { (response, error) in
+        FCMClient.loadMessages(contactId: contact.uuid, pageToken: nextPageToken) { (response, error) in
             self.view?.setLoading(to: false)
 
             if let error = error {
@@ -153,11 +153,11 @@ class ChatPresenter {
             }
 
             if replace {
-                self.messageList = response?.results?.reversed() ?? []
+                self.messageList = response?.results ?? []
             } else {
                 for message in response?.results ?? []  where
-                    !self.messageList.contains(where: { $0.id == message.id }) {
-                        self.messageList.append(message)
+                    !self.messageList.reversed().contains(where: { $0.id == message.id }) {
+                        self.messageList.insert(message, at: 0)
                 }
             }
 

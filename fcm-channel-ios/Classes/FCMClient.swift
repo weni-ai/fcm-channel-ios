@@ -11,7 +11,7 @@ import UIKit
 public class FCMClient: NSObject {
 
     static var sendingAnswers: Bool = false
-    static var dataSource: RestServices = LocalRestServices()
+    static var dataSource: RestServices = RestServices()
 
     open class func setup(_ token: String,
                           channel: String,
@@ -39,8 +39,8 @@ public class FCMClient: NSObject {
     }
 
     // Fetches and returns asynchronously all messsages between the user with contactId and the channel
-    open class func loadMessages(contactId: String, nextPageToken: String? = nil, completion: @escaping (_ messages: APIResponse<FCMChannelMessage>?, _ error: Error?) -> Void ) {
-        dataSource.loadMessages(contactId: contactId, nextPageToken: nextPageToken, completion: completion)
+    open class func loadMessages(contactId: String, pageToken: String? = nil, completion: @escaping (_ messages: APIResponse<FCMChannelMessage>?, _ error: Error?) -> Void ) {
+        dataSource.loadMessages(contactId: contactId, pageToken: pageToken, completion: completion)
     }
 
     // Fetches and returns asynchronously the message with the especified messageId
