@@ -43,19 +43,19 @@ public class FCMClient: NSObject {
         dataSource.loadMessages(contactId: contactId, pageToken: pageToken, completion: completion)
     }
 
-    // Fetches and returns asynchronously the message with the especified messageId
+    // Fetches and returns asynchronously the message with the specified messageId
     open class func loadMessageByID(_ messageID: Int, completion: @escaping (_ message: FCMChannelMessage?, _ error: Error?) -> Void) {
         dataSource.loadMessageByID(messageID, completion: completion)
     }
 
     // MARK: - Contact
 
-    // Fetches and returns asynchronously the message with the especified messageId
+    // Fetches and returns asynchronously the message with the specified messageId
     open class func loadContact(fromUrn urn: String, completion: @escaping (_ contact: FCMChannelContact?, _ error: Error?) -> Void) {
         dataSource.loadContact(fromUrn: urn, completion: completion)
     }
 
-    // Fetches and returns asynchronously the contact with the especified uuid
+    // Fetches and returns asynchronously the contact with the specified uuid
     open class func loadContact(fromUUID uuid: String, completion: @escaping (_ contact: FCMChannelContact?, _ error: Error?) -> Void) {
         dataSource.loadContact(fromUUID: uuid, completion: completion)
     }
