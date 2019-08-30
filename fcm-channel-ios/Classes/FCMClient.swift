@@ -38,7 +38,7 @@ public class FCMClient: NSObject {
         dataSource.sendReceivedMessage(urn: urn, token: token, message: message, completion: completion)
     }
 
-    // Fetches and returns asynchronously all messsages between the user with contactId and the channel
+    // Fetches and returns asynchronously messsages between the user with contactId and the channel, paginated with pageToken
     open class func loadMessages(contactId: String, pageToken: String? = nil, completion: @escaping (_ messages: APIResponse<FCMChannelMessage>?, _ error: Error?) -> Void ) {
         dataSource.loadMessages(contactId: contactId, pageToken: pageToken, completion: completion)
     }

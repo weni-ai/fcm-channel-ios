@@ -101,7 +101,7 @@ These methods can be called from FCMClient.
 
 `sendReceivedMessage(urn: String, token: String, message: String, completion: @escaping (_ error: Error?) -> Void)`
 
-`loadMessages(contactId: String, completion: @escaping (_ messages: [FCMChannelMessage]?, _ error: Error?) -> Void )`
+`loadMessages(contactId: String, pageToken: String?=nil, completion: @escaping (_ messages: [FCMChannelMessage]?, _ error: Error?) -> Void )`
 
 `loadMessageByID(_ messageID: Int, completion: @escaping (_ message: FCMChannelMessage?, _ error: Error?) -> Void )`
 
