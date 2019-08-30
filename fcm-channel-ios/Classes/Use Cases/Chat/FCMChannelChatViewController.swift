@@ -216,6 +216,12 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
     open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return messages.count
     }
+
+    open func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard indexPath.row == 0 else { return }
+
+        presenter?.onReachTop()
+    }
     
     open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         

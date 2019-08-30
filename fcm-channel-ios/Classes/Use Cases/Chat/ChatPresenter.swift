@@ -20,6 +20,7 @@ class ChatPresenter {
     open var outgoingBubleMsgColor: UIColor
     open var outgoingLabelMsgColor: UIColor
     open var botName: String
+    private var nextPageToken: String?
 
     init(view: ChatViewContract,
          contact: FCMChannelContact,
@@ -41,6 +42,13 @@ class ChatPresenter {
     }
 
     // MARK: - Action
+
+    func onReachTop() {
+        if nextPageToken != nil {
+            loadData()
+        }
+    }
+
     func onSendMessage(with text: String) {
 
         guard let urn = contact.urn else {
@@ -75,7 +83,8 @@ class ChatPresenter {
     }
 
     func onReload() {
-        loadData()
+        nextPageToken = nil
+        loadData(replace: true)
         loadCurrentRuleset()
     }
 
@@ -134,16 +143,26 @@ class ChatPresenter {
         }
     }
 
-    private func loadData() {
-
+    private func loadData(replace: Bool = false) {
         view?.setLoading(to: true)
-        FCMClient.loadMessages(contactId: contact.uuid) { (messages, error) in
+        FCMClient.loadMessages(contactId: contact.uuid, nextPageToken: nextPageToken) { (response, error) in
             self.view?.setLoading(to: false)
 
             if let error = error {
                 self.view?.showError(message: error.localizedDescription)
             }
-            self.messageList = (messages ?? []).reversed()
+
+            if replace {
+                self.messageList = response?.results?.reversed() ?? []
+            } else {
+                for message in response?.results ?? []  where
+                    !self.messageList.contains(where: { $0.id == message.id }) {
+                        self.messageList.append(message)
+                }
+            }
+
+            self.nextPageToken = response?.next
+
             self.didUpdateMessages()
             self.loadCurrentRuleset()
         }

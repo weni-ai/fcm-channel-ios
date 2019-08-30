@@ -19,7 +19,7 @@ class RestServices {
             "Accept": "application/json"]
     }
 
-   private init() {}
+   init() {}
 
     // MARK: - Flow
    func getFlowDefinition(flowUuid: String, completion: @escaping (FCMChannelFlowDefinition?, _ error: Error?) -> Void) {
@@ -105,9 +105,13 @@ class RestServices {
         }
     }
 
-    func loadMessages(contactId: String, completion: @escaping (_ messages: [FCMChannelMessage]?, _ error: Error?) -> Void ) {
+    func loadMessages(contactId: String, nextPageToken: String? = nil, completion: @escaping (_ messages: APIResponse<FCMChannelMessage>?, _ error: Error?) -> Void ) {
 
-        let url = "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.shared.V2)messages.json?contact=\(contactId)"
+        var url = "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.shared.V2)messages.json?contact=\(contactId)"
+
+        if let nextpageToken = nextPageToken {
+            url = "\(url)&cursor=\(nextPageToken)"
+        }
 
         Alamofire.request(url, method: .get,
                    encoding: JSONEncoding.default,
@@ -120,11 +124,7 @@ class RestServices {
                         completion(nil, error)
 
                     case .success(let value):
-                        if let results = value.results {
-                            completion(results, nil)
-                        } else {
-                            completion(nil, FCMChannelError.defaultError(message: nil))
-                        }
+                        completion(value, nil)
                     }
         }
     }

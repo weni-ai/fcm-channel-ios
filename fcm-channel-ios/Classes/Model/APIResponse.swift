@@ -10,14 +10,18 @@ import Alamofire
 import AlamofireObjectMapper
 import ObjectMapper
 
-class APIResponse<T: Mappable>: Mappable {
-    var previous: String?
-    var next: String?
-    var results: [T]?
+open class APIResponse<T: Mappable>: Mappable {
+    open var previous: String?
+    open var next: String?
+    open var results: [T]?
 
-    required init?(map: Map) {}
+    required public init?(map: Map) {}
 
-    func mapping(map: Map) {
+    public init(results: [T]) {
+        self.results = results
+    }
+
+    public func mapping(map: Map) {
         self.previous <- map["previous"]
         self.next <- map["next"]
         self.results  <- map["results"]
