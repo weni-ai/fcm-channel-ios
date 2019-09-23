@@ -87,6 +87,23 @@ with the correct contact info including contact uuid and the refreshed token.
 
 This will notify FCMChannel library when messages from RapidPro arrive.
 
+## FCMChannelChatViewController
+You can connect directly to the message stream with our customizable class FCMChannelChatViewController using these parameters:
+
+| Parameter               | Type              | Description                                            |
+|-------------------------|-------------------|--------------------------------------------------------|
+| contact                 | FCMChannelContact | The contact that will connect to the chat. Required.   |
+| incomingBubleMsgColor   | UIColor           | Color of the chat bubble from messages from the server |
+| incomingLabelMsgColor   | UIColor           | Color of the text from messages from the server        |
+| botName                 | String            | Name to appear on messages from the server. Required.  |
+| outgoingBubleMsgColor   | UIColor           | Color of the chat bubble from messages from the user   |
+| outgoingLabelMsgColor   | UIColor           | Color of the text from messages from the user          |
+| choiceAnswerButtonColor | UIColor           | Color of quick reply bubbles                           |
+| choiceAnswerBorderColor | UIColor           | Color of quick reply bubbles' border                   |
+| buttonHeight            | CGFloat           | Height of quick reply bubble                           |
+
+Use this class as you would with any other UIViewController.
+
 ## API call methods:
 
 These methods can be called from FCMClient.
@@ -101,7 +118,7 @@ These methods can be called from FCMClient.
 
 `sendReceivedMessage(urn: String, token: String, message: String, completion: @escaping (_ error: Error?) -> Void)`
 
-`loadMessages(contactId: String, pageToken: String?=nil, completion: @escaping (_ messages: [FCMChannelMessage]?, _ error: Error?) -> Void )`
+`loadMessages(contactId: String, pageToken: String?=nil, completion: @escaping (_ messages: APIResponse<FCMChannelMessage>?, _ error: Error?) -> Void )`
 
 `loadMessageByID(_ messageID: Int, completion: @escaping (_ message: FCMChannelMessage?, _ error: Error?) -> Void )`
 
