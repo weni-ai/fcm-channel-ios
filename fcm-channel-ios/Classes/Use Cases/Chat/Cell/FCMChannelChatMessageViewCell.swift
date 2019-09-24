@@ -11,12 +11,12 @@ import MDHTMLLabel
 
 open class FCMChannelChatMessageViewCell: UITableViewCell, MDHTMLLabelDelegate {
     
-    @IBOutlet public var baloonView: UIView!
-    @IBOutlet var lbMessage: MDHTMLLabel!
-    @IBOutlet var imgUser: UIImageView?
-    @IBOutlet var lbUserName: UILabel?
-    @IBOutlet var lbSentTime: UILabel!
-    @IBOutlet public var contentMediaView: UIView!
+    @IBOutlet weak public var baloonView: UIView!
+    @IBOutlet weak var lbMessage: MDHTMLLabel!
+    @IBOutlet weak var imgUser: UIImageView?
+    @IBOutlet weak var lbUserName: UILabel?
+    @IBOutlet weak var lbSentTime: UILabel!
+    @IBOutlet weak public var contentMediaView: UIView!
     
 //    var msgColor: UIColor!
 //    var bubbleColor: UIColor!

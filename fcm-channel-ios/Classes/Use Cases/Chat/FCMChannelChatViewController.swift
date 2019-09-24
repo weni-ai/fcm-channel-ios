@@ -15,15 +15,13 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
     
     private var refreshControl: UIRefreshControl!
     
-    @IBOutlet public var txtMessage: UITextField!
-    @IBOutlet public var btSend: UIButton!
-    @IBOutlet public var viewSendHeight: NSLayoutConstraint!
-    @IBOutlet var viewSendBottom: NSLayoutConstraint!
-    @IBOutlet public var tableView: UITableView!
-    @IBOutlet open var viewSend: UIView!
-    @IBOutlet public var scrollViewPage: ISScrollViewPage!
-    
-//    fileprivate var isSendingAnswer = false
+    @IBOutlet weak public var txtMessage: UITextField!
+    @IBOutlet weak public var btSend: UIButton!
+    @IBOutlet weak public var viewSendHeight: NSLayoutConstraint!
+    @IBOutlet weak var viewSendBottom: NSLayoutConstraint!
+    @IBOutlet weak public var tableView: UITableView!
+    @IBOutlet weak open var viewSend: UIView!
+    @IBOutlet weak public var scrollViewPage: ISScrollViewPage!
 
     var defaultFieldBottonHeight: CGFloat
     var choiceAnswerBorderColor: CGColor
@@ -35,7 +33,7 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
     public var defaultViewSendHeight = CGFloat(0)
 
     private var presenter: ChatPresenter?
-    private var messages: [ChatCellViewModel] = []
+    open private(set) var messages: [ChatCellViewModel] = []
     
     public init( contact: FCMChannelContact,
                  incomingBubleMsgColor: UIColor = UIColor(with: "#2F97F8"),
@@ -218,6 +216,12 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
     open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return messages.count
     }
+
+    open func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard indexPath.row == 0 else { return }
+
+        presenter?.onReachTop()
+    }
     
     open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
@@ -294,6 +298,14 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
 }
 
 extension FCMChannelChatViewController: ChatViewContract {
+
+    func showError(message: String) {
+        let alertController = UIAlertController(title: "Erro", message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+        okAction.setValue(UIColor.black, forKey: "titleTextColor")
+        alertController.addAction(okAction)
+        present(alertController, animated: true)
+    }
 
     func addRow() {
         addRow(scroll: nil)

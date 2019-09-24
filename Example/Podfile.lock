@@ -1,7 +1,7 @@
 PODS:
-  - Alamofire (5.0.0-beta.3)
-  - AlamofireObjectMapper (6.0.0):
-    - Alamofire (~> 5.0.0-beta.2)
+  - Alamofire (4.8.1)
+  - AlamofireObjectMapper (5.2.0):
+    - Alamofire (~> 4.7)
     - ObjectMapper (~> 3.4)
   - Bolts (1.9.0):
     - Bolts/AppLinks (= 1.9.0)
@@ -14,8 +14,8 @@ PODS:
   - FBSDKLoginKit (4.23.0):
     - FBSDKCoreKit
   - fcm-channel-ios (0.3.0):
-    - Alamofire
-    - AlamofireObjectMapper (= 6.0.0)
+    - Alamofire (= 4.8.1)
+    - AlamofireObjectMapper (= 5.2.0)
     - IGListKit (= 3.4.0)
     - ISScrollViewPageSwift (= 1.0.0)
     - MBProgressHUD (= 1.1.0)
@@ -121,8 +121,8 @@ PODS:
   - TPKeyboardAvoiding (1.3.2)
 
 DEPENDENCIES:
-  - Alamofire (= 5.0.0-beta.3)
-  - AlamofireObjectMapper (= 6.0.0)
+  - Alamofire (= 4.8.1)
+  - AlamofireObjectMapper (= 5.2.0)
   - FBSDKCoreKit (= 4.23.0)
   - FBSDKLoginKit (= 4.23.0)
   - fcm-channel-ios (from `../`)
@@ -172,12 +172,12 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Alamofire: 50d6fa7e8cbe7f84559e86ab641ffd029db655f8
-  AlamofireObjectMapper: 8cf0e01a1b36b485877033f8f6aa733977488da3
+  Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
+  AlamofireObjectMapper: 92b6ce2423a9d159e686f6a1d514a009bf903ddc
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   FBSDKCoreKit: d7829f5a69901cd7296105328e4c3c3fc7da6518
   FBSDKLoginKit: 6b92bd65f319d669d2b0730e49db495ef1660566
-  fcm-channel-ios: 53a03ef725ca22d24b2416e0699e39e92f83de66
+  fcm-channel-ios: 25ee09d7556d4443449f60e78df747edfbd87109
   Firebase: 0c8cf33f266410c61ab3e2265cfa412200351d9c
   FirebaseAnalytics: ece1aa57a4f43c64d53a648b5a5e05151aae947b
   FirebaseAnalyticsInterop: efbe45c8385ec626e29f9525e5ebd38520dfb6c1
@@ -202,6 +202,6 @@ SPEC CHECKSUMS:
   SwiftLint: 7a0227733d786395817373b2d0ca799fd0093ff3
   TPKeyboardAvoiding: cb69d5ddbe90ce0170e4bc2db1e5e41d4a3ad9a4
 
-PODFILE CHECKSUM: 64272b8fd2a109d5949518cc1bab3ccd80e495c7
+PODFILE CHECKSUM: e13317ca92b083bcb1503109b3e0423678162ae0
 
-COCOAPODS: 1.6.1
+COCOAPODS: 1.7.0.rc.1

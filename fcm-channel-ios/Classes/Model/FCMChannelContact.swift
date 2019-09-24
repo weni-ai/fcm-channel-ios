@@ -11,9 +11,11 @@ import ObjectMapper
 
 open class FCMChannelContact: NSObject, Mappable {
    
-    open var uuid: String?
-    open var urn: String?
-    open var urns: String?
+    open var uuid: String!
+    open var urn: String? {
+        return urns.first(where: { $0.hasPrefix("fcm:")})
+    }
+    private var urns: [String] = []
     open var name: String?
     open var phoneNumber: String?
     open var email: String?
@@ -27,9 +29,9 @@ open class FCMChannelContact: NSObject, Mappable {
     open var fields: [String: Any]?
     open var groups: [FCMChannelGroup] = []
     
-    public init(uuid: String? = nil, urn: String, name: String?, fcmToken: String) {
+    public init(uuid: String, urn: String, name: String?, fcmToken: String) {
         self.uuid = uuid
-        self.urn = urn
+        self.urns = [urn]
         self.name = name
         self.fcmToken = fcmToken
     }
@@ -79,22 +81,5 @@ open class FCMChannelContact: NSObject, Mappable {
         let encodedObject: Data = NSKeyedArchiver.archivedData(withRootObject: contact.toJSONString() as Any)
         defaults.set(encodedObject, forKey: "fcmchannelcontact")
         defaults.synchronize()
-    }
-    
-    public static func createContactAndSave(name: String,
-                                            uuid: String?,
-                                            urn: String,
-                                            fcmToken: String,
-                                            completion: @escaping (_ contact: FCMChannelContact?, _ error: Error?) -> Void) {
-        
-        let contact = FCMChannelContact(uuid: uuid, urn: urn, name: name, fcmToken: fcmToken)
-        FCMClient.registerFCMContact(contact) { uuid, error in
-            if let uuid = uuid {
-                contact.uuid = uuid
-                setActive(contact: contact)
-            }
-
-            completion(contact, error)
-        }
     }
 }

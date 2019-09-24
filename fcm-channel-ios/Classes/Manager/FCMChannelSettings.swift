@@ -13,7 +13,7 @@ class FCMChannelSettings: NSObject {
     var token: String = ""
     var channel: String = ""
     var url: String = ""
-    var handlerURL: String = "https://push.ilhasoft.mobi/handlers/fcm"
+    var handlerURL: String = "https://push.ilhasoft.mobi/c/fcm/"
 
     let preferedLanguageKey = "language"
     let defaultLanguage = "en"

@@ -53,10 +53,7 @@ class LoginViewModel {
                                 User.current.name = displayName
                                 User.current.key = uid
                                 User.current.fcmToken = FCMChannelManager.getFCMToken()
-                                User.current.save() {
-                                    success in
-                                    completion(success, nil)
-                                }
+                                completion(success, nil)
                             } else {
                                 completion(false, nil)
                             }
