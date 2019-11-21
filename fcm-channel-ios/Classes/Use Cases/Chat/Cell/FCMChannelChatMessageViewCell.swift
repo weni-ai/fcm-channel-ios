@@ -50,6 +50,10 @@ open class FCMChannelChatMessageViewCell: UITableViewCell, MDHTMLLabelDelegate {
     //MARK: MDHTMLLabelDelegate
     
     open func htmlLabel(_ label: MDHTMLLabel!, didSelectLinkWith URL: Foundation.URL!) {
-        UIApplication.shared.open(URL, options: [:], completionHandler: nil)
+        if #available(iOS 10.0, *) {
+            UIApplication.shared.open(URL, options: [:], completionHandler: nil)
+        } else {
+            UIApplication.shared.openURL(URL)
+        }
     }
 }
