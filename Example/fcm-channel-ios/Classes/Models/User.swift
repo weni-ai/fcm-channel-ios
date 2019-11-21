@@ -25,13 +25,6 @@ class User: Serializable {
         super.init()
     }
     
-    func save(completion: @escaping (_ success: Bool) -> ()) {
-        FCMChannelManager.createContact() {
-            success in
-            completion(success)
-        }
-    }
-    
     static func getUser(by key: String, completion: @escaping (_ success: Bool) -> ()) {
 
         FCMChannelManager.loadContact(urn: key) { (contact) in
@@ -42,7 +35,6 @@ class User: Serializable {
                 User.current.contact = contact
                 User.current.fcmToken = FCMChannelManager.getFCMToken()
                 User.current.contact?.fcmToken = User.current.fcmToken
-                User.current.contact?.urn = key
                 completion(true)
             } else {
                 completion(false)

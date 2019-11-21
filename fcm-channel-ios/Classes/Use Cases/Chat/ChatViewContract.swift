@@ -12,4 +12,5 @@ protocol ChatViewContract: AnyObject {
     func addQuickRepliesOptions(_ quickReplies: [FCMChannelQuickReply])
     func update(with models: [ChatCellViewModel])
     func setCurrentRulesets(rulesets: FCMChannelFlowRuleset)
+    func showError(message: String)
 }

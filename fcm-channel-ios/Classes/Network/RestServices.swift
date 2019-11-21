@@ -19,14 +19,14 @@ class RestServices {
             "Accept": "application/json"]
     }
 
-   private init() {}
+   init() {}
 
     // MARK: - Flow
-   func getFlowDefinition(_ flowUuid: String, completion: @escaping (FCMChannelFlowDefinition?) -> Void) {
+   func getFlowDefinition(flowUuid: String, completion: @escaping (FCMChannelFlowDefinition?, _ error: Error?) -> Void) {
 
         let url = "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.shared.V2)definitions.json?flow=\(flowUuid)"
 
-        AF.request(url, method: .get,
+        Alamofire.request(url, method: .get,
                    encoding: JSONEncoding.default,
                    headers: headers).responseObject { (response: DataResponse<FCMChannelFlowDefinition>) in
 
@@ -34,85 +34,86 @@ class RestServices {
 
             case .failure(let error):
                 print(error.localizedDescription)
-                completion(nil)
+                completion(nil, error)
 
             case .success(let value):
-                completion(value)
+                completion(value, nil)
             }
         }
     }
 
-    func getFlowRuns(_ contact: FCMChannelContact, completion: @escaping ([FCMChannelFlowRun]?) -> Void) {
+    func getFlowRuns(contactId: String, completion: @escaping ([FCMChannelFlowRun]?, _ error: Error?) -> Void) {
 
-        guard let contactId = contact.uuid, let minimumDate = getMinimumDate() else {
-            completion(nil)
+        guard let minimumDate = getMinimumDate() else {
+            completion(nil, FCMChannelError.defaultError(message: "Data não encontrada"))
             return
         }
 
         let afterDate = FCMChannelDateUtil.dateFormatter(minimumDate)
         let url = "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.shared.V2)runs.json?contact=\(contactId)&after=\(afterDate)"
 
-        AF.request(url,
-                   method: .get,
-                   encoding: JSONEncoding.default,
-                   headers: headers).responseObject { (response: DataResponse<APIResponse<FCMChannelFlowRun>>) in
+        Alamofire.request(url,
+                          method: .get,
+                          encoding: JSONEncoding.default,
+                          headers: headers).responseObject { (response: DataResponse<APIResponse<FCMChannelFlowRun>>) in
 
-                    switch response.result {
+                            switch response.result {
 
-                    case .failure(let error):
-                        print(error.localizedDescription)
-                        completion(nil)
+                            case .failure(let error):
+                                print(error.localizedDescription)
+                                completion(nil, error)
 
-                    case .success(let value):
-                        if let results = value.results, !results.isEmpty {
-                            completion(value.results)
-                        } else {
-                            completion(nil)
-                        }
-                    }
+                            case .success(let value):
+                                if let results = value.results, !results.isEmpty {
+                                    completion(value.results, nil)
+                                } else {
+                                    completion(nil, FCMChannelError.defaultError(message: nil))
+                                }
+                            }
         }
     }
 
     // MARK: - Messages
-    func sendReceivedMessage(_ contact: FCMChannelContact, message: String, completion:@escaping (_ success: Bool) -> Void) {
-        if let token = contact.fcmToken, let urn = contact.urn {
-            let handlerUrl = FCMChannelSettings.shared.handlerURL
-            let channel = FCMChannelSettings.shared.channel
+    func sendReceivedMessage(urn: String, token: String, message: String, completion:@escaping (_ error: Error?) -> Void) {
+        let handlerUrl = FCMChannelSettings.shared.handlerURL
+        let channel = FCMChannelSettings.shared.channel
 
-            let params = [
-                "from": urn,
-                "msg": message,
-                "fcm_token": token
-            ]
+        var formattedUrn = urn
+        if urn.starts(with: "fcm:") {
+            formattedUrn = String(formattedUrn.dropFirst(4))
+        }
 
-            let url = "\(handlerUrl)/receive/\(channel)/"
+        let params = [
+            "from": formattedUrn,
+            "msg": message,
+            "fcm_token": token
+        ]
 
-            AF.request(url, method: .post, parameters: params).responseString { (response) in
+        let url = "\(handlerUrl)\(channel)/receive/"
+        Alamofire.request(url, method: .post, parameters: params).responseString { (response) in
 
-                switch response.result {
+            switch response.result {
 
-                case .failure(let error):
-                    print("error \(String(describing: error.localizedDescription))")
-                    completion(false)
+            case .failure(let error):
+                print("error \(String(describing: error.localizedDescription))")
+                completion(error)
 
-                case .success(let value):
-                    print(value)
-                    completion(true)
-                }
+            case .success(let value):
+                print(value)
+                completion(nil)
             }
         }
     }
 
-    func loadMessages(contact: FCMChannelContact, completion: @escaping (_ messages: [FCMChannelMessage]?) -> Void ) {
+    func loadMessages(contactId: String, pageToken: String? = nil, completion: @escaping (_ messages: APIResponse<FCMChannelMessage>?, _ error: Error?) -> Void ) {
 
-        guard let contactId = contact.uuid else {
-            completion(nil)
-            return
+        var url = "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.shared.V2)messages.json?contact=\(contactId)"
+
+        if let pageToken = pageToken {
+            url = "\(url)&cursor=\(pageToken)"
         }
 
-        let url = "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.shared.V2)messages.json?contact=\(contactId)"
-
-        AF.request(url, method: .get,
+        Alamofire.request(url, method: .get,
                    encoding: JSONEncoding.default,
                    headers: headers).responseObject { (response: DataResponse<APIResponse<FCMChannelMessage>>) in
 
@@ -120,35 +121,31 @@ class RestServices {
 
                     case .failure(let error):
                         print(error.localizedDescription)
-                        completion(nil)
+                        completion(nil, error)
 
                     case .success(let value):
-                        if let results = value.results, !results.isEmpty {
-                            completion(value.results)
-                        } else {
-                            completion(nil)
-                        }
+                        completion(value, nil)
                     }
         }
     }
 
-    func loadMessageByID(_ messageID: Int, completion: @escaping (_ message: FCMChannelMessage?) -> Void ) {
+    func loadMessageByID(_ messageID: Int, completion: @escaping (_ message: FCMChannelMessage?, _ error: Error?) -> Void ) {
 
         let url = "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.shared.V2)messages.json?id=\(messageID)"
 
-        AF.request(url, method: .get, encoding: JSONEncoding.default, headers: headers).responseObject { (response: DataResponse<APIResponse<FCMChannelMessage>>) in
+        Alamofire.request(url, method: .get, encoding: JSONEncoding.default, headers: headers).responseObject { (response: DataResponse<APIResponse<FCMChannelMessage>>) in
 
             switch response.result {
 
             case .failure(let error):
                 print(error.localizedDescription)
-                completion(nil)
+                completion(nil, error)
 
             case .success(let value):
                 if let results = value.results, !results.isEmpty {
-                    completion(results.first)
+                    completion(results.first, nil)
                 } else {
-                    completion(nil)
+                    completion(nil, FCMChannelError.notFound(message: "Não foi possível encontrar mensagem"))
                 }
             }
         }
@@ -156,92 +153,96 @@ class RestServices {
 
     // MARK: - Contact
 
-    func loadContact(fromUrn urn: String, completion: @escaping (_ contact: FCMChannelContact?) -> Void) {
-
-        let url: URL! = URL(string: "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.shared.V2)contacts.json?urns=\(urn)")
-
-        let request = AF.request(url,
-                                 method: .get,
-                                 encoding: URLEncoding.default,
-                                 headers: headers)
+    private func loadContact(fromURL url: URL, completion: @escaping (_ contact: FCMChannelContact?, _ error: Error?) -> Void) {
+        Alamofire.request(url,
+                          method: .get,
+                          encoding: URLEncoding.default,
+                          headers: headers)
             .responseJSON { (response: DataResponse<Any>) in
 
                 if let response = response.result.value as? [String: Any] {
                     guard let result = (response["results"] as? [[String: Any]])?.first else {
-                        completion(nil)
+                        completion(nil, FCMChannelError.notFound(message: response["detail"] as? String))
                         return
                     }
 
                     let contact = Mapper<FCMChannelContact>().map(JSON: result)
-                    if contact?.fcmToken == nil {
-                        contact?.fcmToken = ""
+
+                    if let contact = contact {
+                        if contact.fcmToken == nil {
+                            contact.fcmToken = ""
+                        }
+                        completion(contact, nil)
+                    } else {
+                        completion(contact, FCMChannelError.mappingError)
                     }
-                    completion(contact)
                 }
         }
-
-        debugPrint(request)
     }
 
-    func fetchContact(completion: @escaping (_ success: Bool, _ error: Error?) -> Void) {
+    func loadContact(fromUUID uuid: String, completion: @escaping (_ contact: FCMChannelContact?, _ error: Error?) -> Void) {
+        let url: URL! = URL(string: "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.shared.V2)contacts.json?uuid=\(uuid)")
+        loadContact(fromURL: url, completion: completion)
+    }
+
+    func loadContact(fromUrn urn: String, completion: @escaping (_ contact: FCMChannelContact?, _ error: Error?) -> Void) {
+        let url: URL! = URL(string: "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.shared.V2)contacts.json?urn=\(urn)")
+        loadContact(fromURL: url, completion: completion)
+    }
+
+    func fetchContact(completion: @escaping (_ error: Error?) -> Void) {
         guard let contact = FCMChannelContact.current(), let urn = contact.urn else {
-            completion(false, nil)
+            completion(FCMChannelError.noContact)
             return
         }
 
-        let url = "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.shared.V2)contacts.json?urn=fcm:\(urn)"
+        let url = "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.shared.V2)contacts.json?urn=\(urn)"
 
-        AF.request(url, method: .get, headers: headers).responseJSON { (response: DataResponse<Any>) in
+        Alamofire.request(url, method: .get, headers: headers).responseJSON { (response: DataResponse<Any>) in
 
             if let responseValue = response.result.value as? [String: Any] {
                 guard let results = responseValue["results"] as? [[String: Any]], results.count > 0 else {
-                    completion(false, nil)
+                    completion(FCMChannelError.notFound(message: (response.result.value as? [String: String])?["detail"]))
                     return
                 }
 
                 guard let data = results.first else {
-                    completion(false, nil)
+                    completion(FCMChannelError.notFound(message: "Nenhum contato encontrado"))
                     return
-                }
-
-                var fcmToken = ""
-                if let urns = data["urns"] as? [String] {
-                    let filtered = urns.filter {($0.contains("fcm"))}
-                    if !filtered.isEmpty {
-                        fcmToken = String(filtered.first?.dropFirst(4) ?? "")
-                    }
                 }
 
                 guard let contact = Mapper<FCMChannelContact>().map(JSONObject: data) else {
-                    completion(false, response.result.error)
+                    completion(response.result.error)
                     return
                 }
-                contact.urn = fcmToken
 
                 FCMChannelContact.setActive(contact: contact)
-                completion(true, nil)
+                completion(nil)
             } else if let error = response.result.error {
-                completion(false, error)
+                completion(error)
             }
         }
     }
 
-    func registerFCMContact(_ contact: FCMChannelContact, completion: @escaping (_ uuid: String?, _ error: Error?) -> Void) {
+    func registerFCMContact(urn: String, name: String, fcmToken: String, contactUuid: String? = nil, completion: @escaping (_ uuid: String?, _ error: Error?) -> Void) {
 
-        guard let uid = contact.uuid,
-            let urn = contact.urn,
-            let token = contact.fcmToken else {
-                completion(nil, nil)
-                return
+        let url = "\(FCMChannelSettings.shared.handlerURL)\(FCMChannelSettings.shared.channel)/register/"
+
+        var filteredUrn = urn
+
+        if filteredUrn.hasPrefix("fcm:") {
+            filteredUrn = String(filteredUrn.dropFirst(4))
         }
 
-        let name = contact.name ?? ""
-        let params = ["contact_uuid": uid,
-                      "urn": urn,
+        var params = ["urn": filteredUrn,
                       "name": name,
-                      "fcm_token": token] as [String: Any]
+                      "fcm_token": fcmToken] as [String: Any]
 
-        AF.request("\(FCMChannelSettings.shared.handlerURL)/register/\(FCMChannelSettings.shared.channel)/", method: .post, parameters: params).responseJSON( completionHandler: { response in
+        if let contactUuid = contactUuid {
+            params["contact_uuid"] = contactUuid
+        }
+
+        Alamofire.request(url, method: .post, parameters: params).responseJSON( completionHandler: { response in
 
             switch response.result {
 
