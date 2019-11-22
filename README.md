@@ -19,7 +19,7 @@ fcm-channel-ios is available through [CocoaPods](http://cocoapods.org). To insta
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'fcm-channel-ios', :git => 'https://github.com/push-flow/fcm-channel-ios.git', :branch => 'master'
+pod 'fcm-channel-ios', :git => 'https://github.com/push-flow/fcm-channel-ios.git', :branch => 'ios9'
 ```
 
 ## License
@@ -66,6 +66,7 @@ Add this to your MessagingDelegate class:
         }
         
         switch type {
+        case "rapidpro":
             NotificationCenter.default.post(name: Notification.Name(rawValue: "newMessageReceived"), object: userInfo)
         default:
             break
