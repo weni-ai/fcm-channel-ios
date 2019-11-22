@@ -13,7 +13,7 @@ class FCMChannelSettings: NSObject {
     var token: String = ""
     var channel: String = ""
     var url: String = ""
-    var handlerURL: String = "https://push.ilhasoft.mobi/c/fcm/"
+    var handlerURL: String = ""
 
     let preferedLanguageKey = "language"
     let defaultLanguage = "en"
@@ -25,10 +25,12 @@ class FCMChannelSettings: NSObject {
 
     static func setup(_ token: String,
                       channel: String,
-                      url: String = "https://push.ilhasoft.mobi/api/") {
+                      url: String = "https://push.ilhasoft.mobi/api/",
+                      handler: String = "https://push.ilhasoft.mobi/c/fcm/") {
         shared.token = token
         shared.channel = channel
         shared.url = url
+        shared.handlerURL = handler
     }
 
     func savePreferedLanguage(_ language: String) {

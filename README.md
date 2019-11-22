@@ -35,7 +35,7 @@ Make sure that you have a working Firebase project and that your app is setup co
 ### Configure Messages:
 Before making any Push calls or using the chat view, configure the fcm-channel by calling:
 
-`FCMClient.setup("<push authorization token>", channel: "<channel id>", url: "<push url(optional)>")`
+`FCMClient.setup("<push authorization token>", channel: "<channel id>", url: "<push url(optional)>, handler: <push handler url(optional)>")`
 
 Replace the values in brackets with their appropriate values.
 FCMClient is responsible for making calls to Push API.
