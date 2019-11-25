@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -59,7 +58,7 @@
                                         <action selector="btSendTapped:" destination="-1" eventType="touchUpInside" id="xtt-wk-UXp"/>
                                     </connections>
                                 </button>
-                                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bah-VZ-yid" customClass="ISScrollViewPage" customModule="ISScrollViewPageSwift">
+                                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bah-VZ-yid" customClass="ISScrollViewPage" customModule="ISScrollViewPageSwift">
                                     <rect key="frame" x="8" y="-46" width="359" height="46"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="46" id="U0l-vr-Lfh"/>
@@ -118,12 +117,13 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="AQ5-2z-LmB" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="0hu-Lb-WQg"/>
-                <constraint firstAttribute="bottom" secondItem="AQ5-2z-LmB" secondAttribute="bottom" id="his-NU-hdh"/>
-                <constraint firstItem="AQ5-2z-LmB" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="jw3-b5-a1A"/>
-                <constraint firstAttribute="trailing" secondItem="AQ5-2z-LmB" secondAttribute="trailing" id="yWt-LP-56y"/>
+                <constraint firstItem="AQ5-2z-LmB" firstAttribute="bottom" secondItem="sdv-BY-Kmq" secondAttribute="bottom" id="4bh-Kw-VWp"/>
+                <constraint firstItem="AQ5-2z-LmB" firstAttribute="leading" secondItem="sdv-BY-Kmq" secondAttribute="leading" id="CRj-aw-5t7"/>
+                <constraint firstItem="AQ5-2z-LmB" firstAttribute="top" secondItem="sdv-BY-Kmq" secondAttribute="top" id="Neb-lT-AMV"/>
+                <constraint firstItem="sdv-BY-Kmq" firstAttribute="trailing" secondItem="AQ5-2z-LmB" secondAttribute="trailing" id="w7A-DL-nhP"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
+            <viewLayoutGuide key="safeArea" id="sdv-BY-Kmq"/>
             <point key="canvasLocation" x="33.5" y="57.5"/>
         </view>
     </objects>
