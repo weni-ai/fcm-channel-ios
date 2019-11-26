@@ -52,7 +52,6 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
         buttonTitleColor = outgoingLabelMsgColor
         self.choiceAnswerBorderColor = choiceAnswerBorderColor
         self.choiceAnswerButtonColor = choiceAnswerButtonColor
-
         super.init(nibName: nibName, bundle: bundle)
 
         presenter = ChatPresenter(view: self,

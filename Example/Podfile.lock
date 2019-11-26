@@ -177,7 +177,11 @@ SPEC CHECKSUMS:
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   FBSDKCoreKit: d7829f5a69901cd7296105328e4c3c3fc7da6518
   FBSDKLoginKit: 6b92bd65f319d669d2b0730e49db495ef1660566
+<<<<<<< HEAD
   fcm-channel-ios: 3b52c60aaf01309ae05ba07b7b61dcac60a48c3b
+=======
+  fcm-channel-ios: 45444df5c22c89ecb7740855b859d06ee02ced19
+>>>>>>> 14519a38bc564b081d35f09a7e60f35a97d84aae
   Firebase: 0c8cf33f266410c61ab3e2265cfa412200351d9c
   FirebaseAnalytics: ece1aa57a4f43c64d53a648b5a5e05151aae947b
   FirebaseAnalyticsInterop: d48b6ab67bcf016a05e55b71fc39c61c0cb6b7f3

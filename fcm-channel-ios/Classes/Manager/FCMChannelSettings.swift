@@ -24,9 +24,9 @@ class FCMChannelSettings: NSObject {
     private override init() {}
 
     static func setup(_ token: String,
-                      channel: String,
-                      url: String = "https://push.ilhasoft.mobi/api/",
-                      handler: String = "https://push.ilhasoft.mobi/c/fcm/") {
+                      channel: String
+                      url: String,
+                      handler: String) {
         shared.token = token
         shared.channel = channel
         shared.url = url

@@ -181,12 +181,19 @@ class RestServices {
     }
 
     func loadContact(fromUUID uuid: String, completion: @escaping (_ contact: FCMChannelContact?, _ error: Error?) -> Void) {
-        let url: URL! = URL(string: "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.shared.V2)contacts.json?uuid=\(uuid)")
+
+        guard let url = URL(string: "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.shared.V2)contacts.json?uuid=\(uuid)") else {
+            completion(nil, FCMChannelError.invalidURL)
+            return
+        }
         loadContact(fromURL: url, completion: completion)
     }
 
     func loadContact(fromUrn urn: String, completion: @escaping (_ contact: FCMChannelContact?, _ error: Error?) -> Void) {
-        let url: URL! = URL(string: "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.shared.V2)contacts.json?urn=\(urn)")
+        guard let url = URL(string: "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.shared.V2)contacts.json?urn=\(urn)") else {
+            completion(nil, FCMChannelError.invalidURL)
+            return
+        }
         loadContact(fromURL: url, completion: completion)
     }
 

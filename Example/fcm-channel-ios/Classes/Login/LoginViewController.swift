@@ -58,7 +58,6 @@ class LoginViewController: UIViewController {
             User.current.contact = contact
             let chatVC = FCMChannelChatViewController(contact: contact, botName: "SANDBOX", loadMessagesOnInit: true)
             self.present(UINavigationController(rootViewController: chatVC), animated: true, completion: nil)
-
         }
     }
 }
