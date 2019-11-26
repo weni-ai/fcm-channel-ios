@@ -19,7 +19,7 @@ fcm-channel-ios is available through [CocoaPods](http://cocoapods.org). To insta
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'fcm-channel-ios', :git => 'https://github.com/push-flow/fcm-channel-ios.git', :branch => 'master'
+pod 'fcm-channel-ios', :git => 'https://github.com/push-flow/fcm-channel-ios.git', :branch => 'ios9'
 ```
 
 ## License
@@ -35,7 +35,7 @@ Make sure that you have a working Firebase project and that your app is setup co
 ### Configure Messages:
 Before making any Push calls or using the chat view, configure the fcm-channel by calling:
 
-`FCMClient.setup("<push authorization token>", channel: "<channel id>", url: "<push url(optional)>")`
+`FCMClient.setup("<push authorization token>", channel: "<channel id>", url: "<push url(optional)>, handler: <push handler url(optional)>")`
 
 Replace the values in brackets with their appropriate values.
 FCMClient is responsible for making calls to Push API.
@@ -66,6 +66,7 @@ Add this to your MessagingDelegate class:
         }
         
         switch type {
+        case "rapidpro":
             NotificationCenter.default.post(name: Notification.Name(rawValue: "newMessageReceived"), object: userInfo)
         default:
             break
