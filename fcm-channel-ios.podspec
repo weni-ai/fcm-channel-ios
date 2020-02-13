@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'fcm-channel-ios'
-  s.version          = '0.4.1'
+  s.version          = '0.4.2'
   s.summary          = 'FCM Channel iOS is a client library for Rapid Pro platform.'
 
 # This description is used to generate tags and improve search results.
@@ -28,7 +28,7 @@ FCM Channel iOS is a client library for Rapid Pro platform that can be used insi
   s.source           = { :git => 'https://github.com/push-flow/fcm-channel-ios.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '10.0'
+  s.ios.deployment_target = '9.0'
 
   s.source_files = 'fcm-channel-ios/Classes/**/*'
 

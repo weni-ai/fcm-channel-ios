@@ -10,7 +10,8 @@ import Alamofire
 import AlamofireObjectMapper
 import ObjectMapper
 
-class RestServices {
+class RestServices: RestServicesProtocol {
+
     static var shared = RestServices()
 
     private var headers: HTTPHeaders {
@@ -19,7 +20,7 @@ class RestServices {
             "Accept": "application/json"]
     }
 
-   init() {}
+   private init() {}
 
     // MARK: - Flow
    func getFlowDefinition(flowUuid: String, completion: @escaping (FCMChannelFlowDefinition?, _ error: Error?) -> Void) {
@@ -105,7 +106,11 @@ class RestServices {
         }
     }
 
-    func loadMessages(contactId: String, pageToken: String? = nil, completion: @escaping (_ messages: APIResponse<FCMChannelMessage>?, _ error: Error?) -> Void ) {
+    func loadMessages(contactId: String, completion: @escaping (APIResponse<FCMChannelMessage>?, Error?) -> Void) {
+        loadMessages(contactId: contactId, pageToken: nil, completion: completion)
+    }
+
+    func loadMessages(contactId: String, pageToken: String?, completion: @escaping (_ messages: APIResponse<FCMChannelMessage>?, _ error: Error?) -> Void ) {
 
         var url = "\(FCMChannelSettings.shared.url)\(FCMChannelSettings.shared.V2)messages.json?contact=\(contactId)"
 
@@ -231,7 +236,11 @@ class RestServices {
         }
     }
 
-    func registerFCMContact(urn: String, name: String, fcmToken: String, contactUuid: String? = nil, completion: @escaping (_ uuid: String?, _ error: Error?) -> Void) {
+    func registerFCMContact(urn: String, name: String, fcmToken: String, completion: @escaping (String?, Error?) -> Void) {
+        registerFCMContact(urn: urn, name: name, fcmToken: fcmToken, contactUuid: nil, completion: completion)
+    }
+
+    func registerFCMContact(urn: String, name: String, fcmToken: String, contactUuid: String?, completion: @escaping (_ uuid: String?, _ error: Error?) -> Void) {
 
         let url = "\(FCMChannelSettings.shared.handlerURL)\(FCMChannelSettings.shared.channel)/register/"
 

@@ -13,6 +13,7 @@ enum FCMChannelError: Error {
     case mappingError
     case noContact
     case invalidURL
+    case safeModeError
 }
 
 extension FCMChannelError: LocalizedError {
@@ -28,6 +29,8 @@ extension FCMChannelError: LocalizedError {
             return "Erro ao decodificar contato"
         case .noContact:
             return "Nenhum contato encontrado"
+        case .safeModeError:
+            return "Essa função não está habilitada"
         default:
             return "Um erro ocorreu"
         }
