@@ -11,13 +11,24 @@ import UIKit
 public class FCMClient: NSObject {
 
     static var sendingAnswers: Bool = false
-    static var dataSource: RestServices = RestServices()
+    static var dataSource: RestServicesProtocol {
+        return isSafeModeEnabled ? SafeRestServices.shared : RestServices.shared
+    }
+
+    static var isSafeModeEnabled: Bool {
+        get {
+            return FCMChannelSettings.isSafeModeEnabled
+        } set {
+            FCMChannelSettings.isSafeModeEnabled = newValue
+        }
+    }
 
     open class func setup(_ token: String,
                           channel: String,
                           url: String = "https://push.ilhasoft.mobi/api/",
-                          handler: String = "https://push.ilhasoft.mobi/c/fcm/") {
-        FCMChannelSettings.setup(token, channel: channel, url: url, handler: handler)
+                          handler: String = "https://push.ilhasoft.mobi/c/fcm/",
+                          safeMode: Bool = false) {
+        FCMChannelSettings.setup(token, channel: channel, url: url, handler: handler, safeMode: safeMode)
     }
 
     // MARK: - Flow
@@ -83,4 +94,3 @@ public class FCMClient: NSObject {
         return FCMChannelSettings.shared.getPreferedLanguage()
     }
 }
-

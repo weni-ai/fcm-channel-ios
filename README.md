@@ -19,7 +19,7 @@ fcm-channel-ios is available through [CocoaPods](http://cocoapods.org). To insta
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'fcm-channel-ios', :git => 'https://github.com/push-flow/fcm-channel-ios.git', :branch => 'ios9'
+pod 'fcm-channel-ios', :git => 'https://github.com/push-flow/fcm-channel-ios.git', :branch => 'master'
 ```
 
 ## License
@@ -35,10 +35,12 @@ Make sure that you have a working Firebase project and that your app is setup co
 ### Configure Messages:
 Before making any Push calls or using the chat view, configure the fcm-channel by calling:
 
-`FCMClient.setup("<push authorization token>", channel: "<channel id>", url: "<push url(optional)>, handler: <push handler url(optional)>")`
+`FCMClient.setup("<push authorization token>", channel: "<channel id>", url: "<push url(optional)>, handler: <push handler url(optional)>, safeMode: <enable safe mode(optional)>")`
 
 Replace the values in brackets with their appropriate values.
 FCMClient is responsible for making calls to Push API.
+
+With 'Safe mode enabled', all requests besides contact registering and message sending will be blocked. Enable this if you prefer not to set a push authorization token. If enabling safe mode, the push authorization token can be passed as an empty string. Safe mode can also be toggled by modifying ` FCMClient.isSafeModeEnabled `.
 
 You'll have to notify FCMChannel library when new messages arrive. This will be done using Firebase.
 In AppDelegate, add this piece of code to application(_ , didFinishLaunchingWithOptions):

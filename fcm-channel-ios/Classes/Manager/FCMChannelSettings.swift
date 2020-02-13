@@ -14,6 +14,7 @@ class FCMChannelSettings: NSObject {
     var channel: String = ""
     var url: String = ""
     var handlerURL: String = ""
+    var safeMode: Bool = false
 
     let preferedLanguageKey = "language"
     let defaultLanguage = "en"
@@ -21,16 +22,27 @@ class FCMChannelSettings: NSObject {
 
     static var shared = FCMChannelSettings()
 
+    static var isSafeModeEnabled: Bool {
+        get {
+            return shared.safeMode
+        }
+        set {
+            shared.safeMode = newValue
+        }
+    }
+
     private override init() {}
 
-    static func setup(_ token: String,
-                      channel: String
+    static func setup(_ token: String = "",
+                      channel: String,
                       url: String,
-                      handler: String) {
+                      handler: String,
+                      safeMode: Bool = false) {
         shared.token = token
         shared.channel = channel
         shared.url = url
         shared.handlerURL = handler
+        shared.safeMode = safeMode
     }
 
     func savePreferedLanguage(_ language: String) {
