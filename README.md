@@ -45,15 +45,15 @@ With 'Safe mode enabled', all requests besides contact registering and message s
 You'll have to notify FCMChannel library when new messages arrive. This will be done using Firebase.
 In AppDelegate, add this piece of code to application(_ , didFinishLaunchingWithOptions):
 
-~~~~
+```swift
     FirebaseApp.configure()
     Messaging.messaging().delegate = self
     Messaging.messaging().shouldEstablishDirectChannel = true
-~~~~
+````
 
 Add this to your MessagingDelegate class:
 
-~~~~
+```swift
     func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingRemoteMessage) {
         var notificationType: String? = nil
         
@@ -74,16 +74,16 @@ Add this to your MessagingDelegate class:
             break
         }
     }
-~~~~
+```
 
 ### Configure contact:
 
 When Firebase returns a refreshed FCM token, you'll need to update this on your Push contact.
 Call function:
 
-~~~~
+```swift
     registerFCMContact(urn: String, name: String, fcmToken: String, contactUuid: String? = nil, completion: @escaping (_ uuid: String?, _ error: Error?) -> Void)    
-~~~~
+```
 
 with the correct contact info including contact uuid and the refreshed token.
 
