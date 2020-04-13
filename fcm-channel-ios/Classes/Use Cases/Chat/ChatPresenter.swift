@@ -51,8 +51,8 @@ class ChatPresenter {
     }
 
     init(view: ChatViewContract,
-         fcmToken: String,
-         urn: String,
+         fcmToken: String?,
+         urn: String?,
          incomingBubleMsgColor: UIColor = UIColor(with: "#2F97F8"),
          incomingLabelMsgColor: UIColor = UIColor.black,
          botName: String,
@@ -172,7 +172,7 @@ class ChatPresenter {
     }
 
     private func loadData(replace: Bool = false) {
-        guard let contact = self.contact else return
+        guard let contact = self.contact else { return }
         view?.setLoading(to: true)
         FCMClient.loadMessages(contactId: contact.uuid, pageToken: nextPageToken) { (response, error) in
             self.view?.setLoading(to: false)
