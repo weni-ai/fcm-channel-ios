@@ -35,7 +35,9 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
     private var presenter: ChatPresenter?
     open private(set) var messages: [ChatCellViewModel] = []
     
-    public init( contact: FCMChannelContact,
+    public init( contact: FCMChannelContact? = nil,
+                 urn: String? = nil,
+                 fcmToken: String? = nil,
                  incomingBubleMsgColor: UIColor = UIColor(with: "#2F97F8"),
                  incomingLabelMsgColor: UIColor = UIColor.black,
                  botName: String,
@@ -54,14 +56,25 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
         self.choiceAnswerButtonColor = choiceAnswerButtonColor
         super.init(nibName: nibName, bundle: bundle)
 
-        presenter = ChatPresenter(view: self,
-                                  contact: contact,
-                                  incomingBubleMsgColor: incomingBubleMsgColor,
-                                  incomingLabelMsgColor: incomingLabelMsgColor,
-                                  botName: botName,
-                                  outgoingBubleMsgColor: outgoingBubleMsgColor,
-                                  outgoingLabelMsgColor: outgoingLabelMsgColor,
-                                  loadMessagesOnInit: loadMessagesOnInit)
+        if let contact = contact {
+            presenter = ChatPresenter(view: self,
+                                    contact: contact,
+                                    incomingBubleMsgColor: incomingBubleMsgColor,
+                                    incomingLabelMsgColor: incomingLabelMsgColor,
+                                    botName: botName,
+                                    outgoingBubleMsgColor: outgoingBubleMsgColor,
+                                    outgoingLabelMsgColor: outgoingLabelMsgColor,
+                                    loadMessagesOnInit: loadMessagesOnInit)
+        } else {
+            presenter = ChatPresenter(view: self,
+                                    fcmToken: fcmToken,
+                                    urn: urn,
+                                    incomingBubleMsgColor: incomingBubleMsgColor,
+                                    incomingLabelMsgColor: incomingLabelMsgColor,
+                                    botName: botName,
+                                    outgoingBubleMsgColor: outgoingBubleMsgColor,
+                                    outgoingLabelMsgColor: outgoingLabelMsgColor)
+        }
     }
     
     required public init?(coder aDecoder: NSCoder) {

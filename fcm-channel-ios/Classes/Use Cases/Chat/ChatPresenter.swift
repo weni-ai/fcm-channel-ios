@@ -11,9 +11,10 @@ class ChatPresenter {
     private weak var view: ChatViewContract?
 
     private var messageList = [FCMChannelMessage]()
-    private var contact: FCMChannelContact
-
+    private var contact: FCMChannelContact?
     private var loadMessagesOnInit = false
+    private var urn: String?
+    private var fcmToken: String?
 
     open var incomingBubleMsgColor: UIColor
     open var incomingLabelMsgColor: UIColor
@@ -21,6 +22,14 @@ class ChatPresenter {
     open var outgoingLabelMsgColor: UIColor
     open var botName: String
     private var nextPageToken: String?
+    
+    private var contactToken: String? {
+        return self.contact?.fcmToken ?? fcmToken
+    }
+
+    private var contactUrn: String? {
+        return self.contact?.urn ?? urn
+    }
 
     init(view: ChatViewContract,
          contact: FCMChannelContact,
@@ -41,6 +50,25 @@ class ChatPresenter {
         self.loadMessagesOnInit = loadMessagesOnInit
     }
 
+    init(view: ChatViewContract,
+         fcmToken: String,
+         urn: String,
+         incomingBubleMsgColor: UIColor = UIColor(with: "#2F97F8"),
+         incomingLabelMsgColor: UIColor = UIColor.black,
+         botName: String,
+         outgoingBubleMsgColor: UIColor = UIColor.groupTableViewBackground,
+         outgoingLabelMsgColor: UIColor = UIColor.gray) {
+
+        self.view = view
+        self.fcmToken = fcmToken,
+        self.urn = urn,
+        self.incomingBubleMsgColor = incomingBubleMsgColor
+        self.incomingLabelMsgColor = incomingLabelMsgColor
+        self.botName = botName
+        self.outgoingBubleMsgColor = outgoingBubleMsgColor
+        self.outgoingLabelMsgColor = outgoingLabelMsgColor
+    }
+
     // MARK: - Action
 
     func onReachTop() {
@@ -51,12 +79,12 @@ class ChatPresenter {
 
     func onSendMessage(with text: String) {
 
-        guard let urn = contact.urn else {
+        guard let urn = contactUrn else {
             print("FCMChannel Error: Missing contact urn")
             return
         }
 
-        guard let fcmToken = contact.fcmToken else {
+        guard let fcmToken = contactToken else {
             print("FCMChannel Error: Missing contact token")
             return
         }
@@ -144,6 +172,7 @@ class ChatPresenter {
     }
 
     private func loadData(replace: Bool = false) {
+        guard let contact = self.contact else return
         view?.setLoading(to: true)
         FCMClient.loadMessages(contactId: contact.uuid, pageToken: nextPageToken) { (response, error) in
             self.view?.setLoading(to: false)
@@ -176,8 +205,8 @@ class ChatPresenter {
                     self?.view?.addQuickRepliesOptions(quickReplies)
                 }
             }
-        } else {
-            FCMClient.getFlowRuns(contactId: self.contact.uuid) { (flowRuns: [FCMChannelFlowRun]?, error: Error?) in
+        } else if let contact = self.contact {
+            FCMClient.getFlowRuns(contactId: contact.uuid) { (flowRuns: [FCMChannelFlowRun]?, error: Error?) in
                 if error == nil, let flowRun = flowRuns?.first {
                     self.getLastRuleset(from: flowRun)
                 }
