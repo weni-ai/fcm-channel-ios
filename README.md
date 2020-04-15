@@ -95,7 +95,9 @@ You can connect directly to the message stream with our customizable class FCMCh
 
 | Parameter               | Type              | Description                                            |
 |-------------------------|-------------------|--------------------------------------------------------|
-| contact                 | FCMChannelContact | The contact that will connect to the chat. Required.   |
+| contact                 | FCMChannelContact?| The contact that will connect to the chat. Can be ommited on safe mode.            |
+| urn                     | String?           | Optional. Urn to be used to send messages. This will be used when contact is not especified.             |
+| fcmToken                | String?           | Optional. fcmToken to be used to send messages. This will be used when contact is not especified.             |
 | incomingBubleMsgColor   | UIColor           | Color of the chat bubble from messages from the server |
 | incomingLabelMsgColor   | UIColor           | Color of the text from messages from the server        |
 | botName                 | String            | Name to appear on messages from the server. Required.  |
