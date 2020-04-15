@@ -60,8 +60,8 @@ class ChatPresenter {
          outgoingLabelMsgColor: UIColor = UIColor.gray) {
 
         self.view = view
-        self.fcmToken = fcmToken,
-        self.urn = urn,
+        self.fcmToken = fcmToken
+        self.urn = urn
         self.incomingBubleMsgColor = incomingBubleMsgColor
         self.incomingLabelMsgColor = incomingLabelMsgColor
         self.botName = botName

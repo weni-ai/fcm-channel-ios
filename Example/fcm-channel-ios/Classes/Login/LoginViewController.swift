@@ -36,7 +36,6 @@ class LoginViewController: UIViewController {
         }
 
         FCMClient.loadContact(fromUrn: "fcm:\(urn)") { contact, error in
-
             if let error = error {
                 let alert = UIAlertController(title: "Erro", message: error.localizedDescription, preferredStyle: .alert)
                 let action = UIAlertAction(title: "OK", style: .cancel, handler: nil)

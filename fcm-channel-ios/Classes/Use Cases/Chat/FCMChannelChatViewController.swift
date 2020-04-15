@@ -215,7 +215,7 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
     open func setupTableView() {
         self.tableView.separatorStyle = .none
         self.tableView.delegate = self
-        self.tableView.backgroundColor = UIColor.white
+        self.tableView.backgroundColor = UIColor.clear
         self.tableView.estimatedRowHeight = 75
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.register(UINib(nibName: "FCMChannelIncomingChatMessageViewCell", bundle: Bundle(for: FCMChannelChatViewController.self)), forCellReuseIdentifier: NSStringFromClass(FCMChannelIncomingChatMessageViewCell.self))
