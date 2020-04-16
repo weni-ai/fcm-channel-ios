@@ -42,7 +42,7 @@ class FCMChannelManager {
                 handlerUrl = dict["HANDLER_URL"] as? String ?? ""
             }
         }
-        
+
         FCMClient.setup(token, channel: channel, url: apiPrefix, handler: handlerUrl, safeMode: false)
     }
     

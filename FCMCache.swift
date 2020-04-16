@@ -7,32 +7,32 @@
 
 import Foundation
 
-class FCMCache {
+open class FCMCache {
     private static var messages: [FCMChannelMessage] = []
     private static var lastMessage: FCMChannelMessage?
     
-    static func addMessage(_ message: FCMChannelMessage) {
+    open class func addMessage(_ message: FCMChannelMessage) {
         messages.append(message)
     }
     
-    static func addMessages(_ messages: [FCMChannelMessage]) {
+    open class func addMessages(_ messages: [FCMChannelMessage]) {
         FCMCache.messages.append(contentsOf: messages)
     }
     
-    static func clear() {
+    open class func clear() {
         messages = []
         lastMessage = nil
     }
     
-    static func getMessages() -> [FCMChannelMessage] {
+    open class func getMessages() -> [FCMChannelMessage] {
         return messages
     }
     
-    static func addLastMessage(_ message: FCMChannelMessage) {
+    open class func addLastMessage(_ message: FCMChannelMessage) {
         lastMessage = message
     }
     
-    static func getLastMessage() -> FCMChannelMessage? {
+    open class func getLastMessage() -> FCMChannelMessage? {
         return lastMessage
     }
 }
