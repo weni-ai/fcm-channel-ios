@@ -12,5 +12,6 @@ public struct ChatCellViewModel {
     public let bubbleColor: UIColor
     public let userName: String?
     public let text: String?
+    public let image: UIImage?
     public let fromUser: Bool
 }

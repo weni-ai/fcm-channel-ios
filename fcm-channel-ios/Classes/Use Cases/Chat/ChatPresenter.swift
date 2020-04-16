@@ -15,6 +15,7 @@ class ChatPresenter {
     private var loadMessagesOnInit = false
     private var urn: String?
     private var fcmToken: String?
+    private var botImage: UIImage?
 
     open var incomingBubleMsgColor: UIColor
     open var incomingLabelMsgColor: UIColor
@@ -33,6 +34,7 @@ class ChatPresenter {
 
     init(view: ChatViewContract,
          contact: FCMChannelContact,
+         botImage: UIImage? = nil,
          incomingBubleMsgColor: UIColor = UIColor(with: "#2F97F8"),
          incomingLabelMsgColor: UIColor = UIColor.black,
          botName: String,
@@ -42,6 +44,7 @@ class ChatPresenter {
 
         self.view = view
         self.contact = contact
+        self.botImage = botImage
         self.incomingBubleMsgColor = incomingBubleMsgColor
         self.incomingLabelMsgColor = incomingLabelMsgColor
         self.botName = botName
@@ -53,6 +56,7 @@ class ChatPresenter {
     init(view: ChatViewContract,
          fcmToken: String?,
          urn: String?,
+         botImage: UIImage? = nil,
          incomingBubleMsgColor: UIColor = UIColor(with: "#2F97F8"),
          incomingLabelMsgColor: UIColor = UIColor.black,
          botName: String,
@@ -62,6 +66,7 @@ class ChatPresenter {
         self.view = view
         self.fcmToken = fcmToken
         self.urn = urn
+        self.botImage = botImage
         self.incomingBubleMsgColor = incomingBubleMsgColor
         self.incomingLabelMsgColor = incomingLabelMsgColor
         self.botName = botName
@@ -128,10 +133,8 @@ class ChatPresenter {
         message.text = text
         message.id = Int(object?["message_id"] as? String ?? "")
 
-        if let metadata = object?["metadata"] as? String, let json = convertStringToDictionary(json: metadata) {
-            if let quick_replies = json["quick_replies"] as? [String] {
-                message.quickReplies = quick_replies.map { FCMChannelQuickReply($0) }
-            }
+        if let quick_replies = object?["quick_replies"] as? [String] {
+            message.quickReplies = quick_replies.map { FCMChannelQuickReply($0) }
         }
 
         //TODO: temporary workaround for duplicated push notifications. Remove as soon as Push fixes this.
@@ -247,11 +250,13 @@ class ChatPresenter {
             let msgColor = fromUser ? incomingLabelMsgColor : outgoingLabelMsgColor
             let bubbleColor = fromUser ? incomingBubleMsgColor : outgoingBubleMsgColor
             let username: String? = fromUser ? nil : botName
+            let image: UIImage? = fromUser ? nil : botImage
 
             return ChatCellViewModel(msgColor: msgColor,
                                     bubbleColor: bubbleColor,
                                     userName: username,
                                     text: message.text,
+                                    image: image,
                                     fromUser: fromUser)
         }
     }

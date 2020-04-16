@@ -43,7 +43,7 @@ class FCMChannelManager {
             }
         }
         
-        FCMClient.setup(token, channel: channel, url: apiPrefix)
+        FCMClient.setup(token, channel: channel, url: apiPrefix, safeMode: false)
     }
     
     class func loadContact(urn: String, completion: @escaping (FCMChannelContact?) -> Void) {
