@@ -174,7 +174,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   fcm-channel-ios:
-    :commit: 2c592358a6ededb9f8037006efe4b67ef2e2fa59
+    :commit: 5187c491c27eae4e5d27055bf8c3d8c545420cb3
     :git: https://github.com/push-platform/fcm-channel-ios
 
 SPEC CHECKSUMS:

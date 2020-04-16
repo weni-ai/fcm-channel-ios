@@ -1,8 +1,7 @@
 use_frameworks!
 
 target 'fcm-channel-ios_Example' do
-#  pod 'fcm-channel-ios', :path => '../'
-  pod 'fcm-channel-ios', :git => 'https://github.com/push-platform/fcm-channel-ios', :branch => 'bugfix/cache'
+  pod 'fcm-channel-ios', :path => '../'
 
   pod 'SwiftLint'
 
