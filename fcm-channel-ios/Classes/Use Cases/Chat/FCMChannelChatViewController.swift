@@ -50,7 +50,8 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
                  buttonHeight: CGFloat = CGFloat(20),
                  nibName: String = "FCMChannelChatViewController",
                  bundle: Bundle = Bundle(for: FCMChannelChatViewController.self),
-                 loadMessagesOnInit: Bool = true ) {
+                 loadMessagesOnInit: Bool = true,
+                 useLocalCache: Bool = false) {
 
         defaultFieldBottonHeight = buttonHeight
         self.buttonTitleColor = choiceAnswerLabelColor
@@ -67,7 +68,8 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
                                     botName: botName,
                                     outgoingBubleMsgColor: outgoingBubleMsgColor,
                                     outgoingLabelMsgColor: outgoingLabelMsgColor,
-                                    loadMessagesOnInit: loadMessagesOnInit)
+                                    loadMessagesOnInit: loadMessagesOnInit,
+                                    useLocalCache: useLocalCache)
         } else {
             presenter = ChatPresenter(view: self,
                                     fcmToken: fcmToken,
@@ -77,7 +79,8 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
                                     incomingLabelMsgColor: incomingLabelMsgColor,
                                     botName: botName,
                                     outgoingBubleMsgColor: outgoingBubleMsgColor,
-                                    outgoingLabelMsgColor: outgoingLabelMsgColor)
+                                    outgoingLabelMsgColor: outgoingLabelMsgColor,
+                                    useLocalCache: useLocalCache)
         }
     }
     
@@ -333,7 +336,7 @@ extension FCMChannelChatViewController: ChatViewContract {
             self.insertRowInIndex(indexPath)
         }
 
-        if let scroll = scroll {
+        if scroll != nil {
             tableViewScrollToBottom(false)
         }
     }

@@ -13,10 +13,10 @@ class FCMChannelManager {
     
     static let keyFCMToken = "KEY_FCM_TOKEN"
     
-    static var apiPrefix = "https://push.ilhasoft.mobi/api/"
-    static var token = "a1a1428ce1a6bd748a70d6c888c17e5840939299"
-    static var channel = "303bb2f6-8819-42a2-879c-cf659665f978" //7e464e15-1a20-4668-8792-7c785118bb71"
-    static var handlerUrl = "https://push.ilhasoft.mobi/handlers/fcm/"
+    static var apiPrefix = "https://new.push.al/api/"
+    static var token = "b46da7e68e448631391352e8f447557cdc3c910a"
+    static var channel = "749046f1-41f0-4ce7-bc93-2ca3fdbbffa9"
+    static var handlerUrl = "https://new.push.al/c/fcm/"
     
     static func setup() {
         var rootDictionary: NSDictionary?
@@ -43,7 +43,7 @@ class FCMChannelManager {
             }
         }
         
-        FCMClient.setup(token, channel: channel, url: apiPrefix, safeMode: false)
+        FCMClient.setup(token, channel: channel, url: apiPrefix, handler: handlerUrl, safeMode: false)
     }
     
     class func loadContact(urn: String, completion: @escaping (FCMChannelContact?) -> Void) {

@@ -24,6 +24,19 @@ class LoginViewController: UIViewController {
         let registerViewController = RegisterViewController()
         present(registerViewController, animated: true)
     }
+    
+    @IBAction func didChangeSafeModeSwitch(_ sender: UISwitch) {
+        FCMClient.isSafeModeEnabled = sender.isOn
+        tfURN.isEnabled = !FCMClient.isSafeModeEnabled
+        loginBtn.isEnabled = !FCMClient.isSafeModeEnabled
+    }
+    
+    @IBAction func testChat() {
+        let image = #imageLiteral(resourceName: "placeholder")
+        FCMClient.registerFCMContact(urn: "31347", name: "Test", fcmToken: FCMChannelManager.getFCMToken() ?? "", contactUuid: "dad09ae4-fbd8-4a2c-98be-a637777e156b") { _, _ in}
+        let chatVC = FCMChannelChatViewController(urn: "fcm:31347", fcmToken: FCMChannelManager.getFCMToken(), botImage: image, botName: "SANDBOX", useLocalCache: true)
+        self.present(UINavigationController(rootViewController: chatVC), animated: true, completion: nil)
+    }
 
     @IBAction func loginBtnPressed(_ sender: Any) {
 

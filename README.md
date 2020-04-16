@@ -108,6 +108,8 @@ You can connect directly to the message stream with our customizable class FCMCh
 | choiceAnswerLabelColor | UIColor           | Color of quick reply bubbles' text                  |
 | choiceAnswerBorderColor | UIColor           | Color of quick reply bubbles' border                   |
 | buttonHeight            | CGFloat           | Height of quick reply bubble                           |
+| loadMessagesOnInit           | Bool          | Loads messages from API at start. Does not work with safe mode.  |
+| useLocalCache            | Bool          | Will save messages locally and display when the view controller reopens. Clears when the app closes.  |
 
 Use this class as you would with any other UIViewController.
 

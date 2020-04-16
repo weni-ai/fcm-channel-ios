@@ -15,7 +15,7 @@ public class FCMClient: NSObject {
         return isSafeModeEnabled ? SafeRestServices.shared : RestServices.shared
     }
 
-    static var isSafeModeEnabled: Bool {
+    open class var isSafeModeEnabled: Bool {
         get {
             return FCMChannelSettings.isSafeModeEnabled
         } set {
@@ -29,6 +29,10 @@ public class FCMClient: NSObject {
                           handler: String = "https://push.ilhasoft.mobi/c/fcm/",
                           safeMode: Bool = false) {
         FCMChannelSettings.setup(token, channel: channel, url: url, handler: handler, safeMode: safeMode)
+    }
+    
+    open class func clearCache() {
+        FCMCache.clear()
     }
 
     // MARK: - Flow
