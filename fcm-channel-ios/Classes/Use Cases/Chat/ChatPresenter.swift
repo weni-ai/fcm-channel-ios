@@ -113,7 +113,6 @@ class ChatPresenter {
             self.messageList.append(message)
             if useLocalCache {
                 FCMCache.addMessage(message)
-                FCMCache.addLastMessage(message)
             } else {
                 FCMChannelMessage.addLastMessage(message: message)
             }
@@ -171,12 +170,10 @@ class ChatPresenter {
         
         if useLocalCache {
             FCMCache.addMessage(message)
-            FCMCache.addLastMessage(message)
-            loadCurrentRuleset()
-            return
+        } else {
+            FCMChannelMessage.addLastMessage(message: message)
         }
         
-        FCMChannelMessage.addLastMessage(message: message)
         loadCurrentRuleset()
     }
 
