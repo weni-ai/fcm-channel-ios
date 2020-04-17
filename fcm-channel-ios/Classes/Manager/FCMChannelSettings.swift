@@ -15,10 +15,12 @@ class FCMChannelSettings: NSObject {
     var url: String = ""
     var handlerURL: String = ""
     var safeMode: Bool = false
+    var initialPayload: String?
 
     let preferedLanguageKey = "language"
     let defaultLanguage = "en"
     let V2 = "v2/"
+    
 
     static var shared = FCMChannelSettings()
 
@@ -37,12 +39,14 @@ class FCMChannelSettings: NSObject {
                       channel: String,
                       url: String,
                       handler: String,
+                      initialPayload: String? = nil,
                       safeMode: Bool = false) {
         shared.token = token
         shared.channel = channel
         shared.url = url
         shared.handlerURL = handler
         shared.safeMode = safeMode
+        shared.initialPayload = initialPayload
     }
 
     func savePreferedLanguage(_ language: String) {
@@ -58,5 +62,9 @@ class FCMChannelSettings: NSObject {
         } else {
             return defaultLanguage
         }
+    }
+    
+    static func getInitialPayload() -> String? {
+        return shared.initialPayload
     }
 }

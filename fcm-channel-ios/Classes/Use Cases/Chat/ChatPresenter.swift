@@ -32,6 +32,10 @@ class ChatPresenter {
     private var contactUrn: String? {
         return self.contact?.urn ?? urn
     }
+    
+    private var initialPayload: String? {
+        return FCMChannelSettings.getInitialPayload()
+    }
 
     init(view: ChatViewContract,
          contact: FCMChannelContact,
@@ -87,7 +91,7 @@ class ChatPresenter {
         }
     }
 
-    func onSendMessage(with text: String) {
+    func onSendMessage(with text: String, show: Bool = true) {
 
         guard let urn = contactUrn else {
             print("FCMChannel Error: Missing contact urn")
@@ -101,30 +105,35 @@ class ChatPresenter {
         
         let message = FCMChannelMessage(msg: text)
 
-        self.messageList.append(message)
-        self.loadCurrentRuleset()
-
         FCMClient.sendReceivedMessage(urn: urn, token: fcmToken, message: text, completion: { error in
             if error != nil {}
         })
         
-        if(useLocalCache) {
-            FCMCache.addMessage(message)
+        if show {
+            self.messageList.append(message)
+            if useLocalCache {
+                FCMCache.addMessage(message)
+                FCMCache.addLastMessage(message)
+            } else {
+                FCMChannelMessage.addLastMessage(message: message)
+            }
         }
+        
+        self.loadCurrentRuleset()
 
         didUpdateMessages()
     }
 
     func onViewDidLoad() {
-        if loadMessagesOnInit {
-            loadData()
-        }
-
+        
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(newMessageReceived),
                                                name: NSNotification.Name(rawValue: "newMessageReceived"),
                                                object: nil)
-        if(useLocalCache) {
+        
+        if loadMessagesOnInit {
+            loadData()
+        } else if(useLocalCache) {
             loadDataFromCache()
             return
         }
@@ -132,7 +141,6 @@ class ChatPresenter {
 
     func onReload() {
         nextPageToken = nil
-        
         loadData(replace: true)
         loadCurrentRuleset()
     }
@@ -202,6 +210,11 @@ class ChatPresenter {
     
     private func loadDataFromCache() {
         messageList = FCMCache.getMessages()
+        
+        if messageList.isEmpty, let initialPayload = self.initialPayload {
+            onSendMessage(with: initialPayload, show: false)
+        }
+        
         loadCurrentRuleset()
         self.didUpdateMessages()
     }
@@ -226,6 +239,10 @@ class ChatPresenter {
             }
 
             self.nextPageToken = response?.next
+            
+            if self.messageList.isEmpty, let initialPayload = self.initialPayload {
+                self.onSendMessage(with: initialPayload, show: false)
+            }
 
             self.didUpdateMessages()
             self.loadCurrentRuleset()
@@ -236,11 +253,9 @@ class ChatPresenter {
 
         if let message = useLocalCache ?
                 FCMCache.getLastMessage() : FCMChannelMessage.lastMessage(),
-            message.id == messageList.last?.id {
+            (message.direction == FCMChannelMessageDirection.In.rawValue || message.id == messageList.last?.id) {
             DispatchQueue.main.async { [weak self] in
-                if let quickReplies = message.quickReplies {
-                    self?.view?.addQuickRepliesOptions(quickReplies)
-                }
+                self?.view?.addQuickRepliesOptions(message.quickReplies ?? [])
             }
         } else if let contact = self.contact {
             FCMClient.getFlowRuns(contactId: contact.uuid) { (flowRuns: [FCMChannelFlowRun]?, error: Error?) in

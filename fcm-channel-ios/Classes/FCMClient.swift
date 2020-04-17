@@ -27,8 +27,14 @@ public class FCMClient: NSObject {
                           channel: String,
                           url: String = "https://push.ilhasoft.mobi/api/",
                           handler: String = "https://push.ilhasoft.mobi/c/fcm/",
+                          initialPayload: String? = nil,
                           safeMode: Bool = false) {
-        FCMChannelSettings.setup(token, channel: channel, url: url, handler: handler, safeMode: safeMode)
+        FCMChannelSettings.setup(token,
+                                 channel: channel,
+                                 url: url,
+                                 handler: handler,
+                                 initialPayload: initialPayload,
+                                 safeMode: safeMode)
     }
     
     open class func clearCache() {
