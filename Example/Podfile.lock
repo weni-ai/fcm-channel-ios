@@ -125,7 +125,7 @@ DEPENDENCIES:
   - AlamofireObjectMapper (= 5.2.0)
   - FBSDKCoreKit (= 4.23.0)
   - FBSDKLoginKit (= 4.23.0)
-  - fcm-channel-ios (from `https://github.com/push-platform/fcm-channel-ios`, branch `bugfix/cache`)
+  - fcm-channel-ios (from `../`)
   - Firebase/Auth (= 5.20.2)
   - Firebase/Core (= 5.20.2)
   - Firebase/Database (= 5.20.2)
@@ -169,13 +169,7 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   fcm-channel-ios:
-    :branch: bugfix/cache
-    :git: https://github.com/push-platform/fcm-channel-ios
-
-CHECKOUT OPTIONS:
-  fcm-channel-ios:
-    :commit: 5187c491c27eae4e5d27055bf8c3d8c545420cb3
-    :git: https://github.com/push-platform/fcm-channel-ios
+    :path: "../"
 
 SPEC CHECKSUMS:
   Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
@@ -208,6 +202,6 @@ SPEC CHECKSUMS:
   SwiftLint: c078a14d7d7ade75e5507795d185e3da41d844d2
   TPKeyboardAvoiding: cb69d5ddbe90ce0170e4bc2db1e5e41d4a3ad9a4
 
-PODFILE CHECKSUM: b589a6660fde060c002e7901d9fe5544384bb209
+PODFILE CHECKSUM: e13317ca92b083bcb1503109b3e0423678162ae0
 
 COCOAPODS: 1.8.4
