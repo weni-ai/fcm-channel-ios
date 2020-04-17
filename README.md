@@ -35,9 +35,10 @@ Make sure that you have a working Firebase project and that your app is setup co
 ### Configure Messages:
 Before making any Push calls or using the chat view, configure the fcm-channel by calling:
 
-`FCMClient.setup("<push authorization token>", channel: "<channel id>", url: "<push url(optional)>, handler: <push handler url(optional)>, safeMode: <enable safe mode(optional)>")`
+`FCMClient.setup("<push authorization token>", channel: "<channel id>", url: "<push url(optional)>, handler: <push handler url(optional)>, initalPayload: <message>, safeMode: <enable safe mode(optional)>")`
 
 Replace the values in brackets with their appropriate values.
+The initial payload will be sent if no messages are present.
 FCMClient is responsible for making calls to Push API.
 
 With 'Safe mode enabled', all requests besides contact registering and message sending will be blocked. Enable this if you prefer not to set a push authorization token. If enabling safe mode, the push authorization token can be passed as an empty string. Safe mode can also be toggled by modifying ` FCMClient.isSafeModeEnabled `.
@@ -85,7 +86,7 @@ Call function:
     registerFCMContact(urn: String, name: String, fcmToken: String, contactUuid: String? = nil, completion: @escaping (_ uuid: String?, _ error: Error?) -> Void)    
 ```
 
-with the correct contact info including contact uuid and the refreshed token.
+with the correct contact info including contact uuid and the refreshed token. If no contactUuid is especified, a new one will be registered.
 
 
 This will notify FCMChannel library when messages from RapidPro arrive.
