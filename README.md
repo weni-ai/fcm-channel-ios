@@ -98,14 +98,18 @@ You can connect directly to the message stream with our customizable class FCMCh
 | contact                 | FCMChannelContact?| The contact that will connect to the chat. Can be ommited on safe mode.            |
 | urn                     | String?           | Optional. Urn to be used to send messages. This will be used when contact is not especified.             |
 | fcmToken                | String?           | Optional. fcmToken to be used to send messages. This will be used when contact is not especified.             |
+| botImage   | UIImage?           |Avatar image to be shown on the side of incoming messages|
 | incomingBubleMsgColor   | UIColor           | Color of the chat bubble from messages from the server |
 | incomingLabelMsgColor   | UIColor           | Color of the text from messages from the server        |
 | botName                 | String            | Name to appear on messages from the server. Required.  |
 | outgoingBubleMsgColor   | UIColor           | Color of the chat bubble from messages from the user   |
 | outgoingLabelMsgColor   | UIColor           | Color of the text from messages from the user          |
 | choiceAnswerButtonColor | UIColor           | Color of quick reply bubbles                           |
+| choiceAnswerLabelColor | UIColor           | Color of quick reply bubbles' text                  |
 | choiceAnswerBorderColor | UIColor           | Color of quick reply bubbles' border                   |
 | buttonHeight            | CGFloat           | Height of quick reply bubble                           |
+| loadMessagesOnInit           | Bool          | Loads messages from API at start. Does not work with safe mode.  |
+| useLocalCache            | Bool          | Will save messages locally and display when the view controller reopens. Clears when the app closes.  |
 
 Use this class as you would with any other UIViewController.
 

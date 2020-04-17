@@ -13,8 +13,10 @@ class ChatPresenter {
     private var messageList = [FCMChannelMessage]()
     private var contact: FCMChannelContact?
     private var loadMessagesOnInit = false
+    private var useLocalCache = false
     private var urn: String?
     private var fcmToken: String?
+    private var botImage: UIImage?
 
     open var incomingBubleMsgColor: UIColor
     open var incomingLabelMsgColor: UIColor
@@ -33,40 +35,48 @@ class ChatPresenter {
 
     init(view: ChatViewContract,
          contact: FCMChannelContact,
+         botImage: UIImage? = nil,
          incomingBubleMsgColor: UIColor = UIColor(with: "#2F97F8"),
          incomingLabelMsgColor: UIColor = UIColor.black,
          botName: String,
          outgoingBubleMsgColor: UIColor = UIColor.groupTableViewBackground,
          outgoingLabelMsgColor: UIColor = UIColor.gray,
-         loadMessagesOnInit: Bool = true) {
+         loadMessagesOnInit: Bool = true,
+         useLocalCache: Bool = false) {
 
         self.view = view
         self.contact = contact
+        self.botImage = botImage
         self.incomingBubleMsgColor = incomingBubleMsgColor
         self.incomingLabelMsgColor = incomingLabelMsgColor
         self.botName = botName
         self.outgoingBubleMsgColor = outgoingBubleMsgColor
         self.outgoingLabelMsgColor = outgoingLabelMsgColor
         self.loadMessagesOnInit = loadMessagesOnInit
+        self.useLocalCache = useLocalCache
     }
 
     init(view: ChatViewContract,
          fcmToken: String?,
          urn: String?,
+         botImage: UIImage? = nil,
          incomingBubleMsgColor: UIColor = UIColor(with: "#2F97F8"),
          incomingLabelMsgColor: UIColor = UIColor.black,
          botName: String,
          outgoingBubleMsgColor: UIColor = UIColor.groupTableViewBackground,
-         outgoingLabelMsgColor: UIColor = UIColor.gray) {
+         outgoingLabelMsgColor: UIColor = UIColor.gray,
+         useLocalCache: Bool = false) {
 
         self.view = view
         self.fcmToken = fcmToken
         self.urn = urn
+        self.botImage = botImage
         self.incomingBubleMsgColor = incomingBubleMsgColor
         self.incomingLabelMsgColor = incomingLabelMsgColor
         self.botName = botName
         self.outgoingBubleMsgColor = outgoingBubleMsgColor
         self.outgoingLabelMsgColor = outgoingLabelMsgColor
+        self.useLocalCache = useLocalCache
     }
 
     // MARK: - Action
@@ -88,13 +98,19 @@ class ChatPresenter {
             print("FCMChannel Error: Missing contact token")
             return
         }
+        
+        let message = FCMChannelMessage(msg: text)
 
-        self.messageList.append(FCMChannelMessage(msg: text))
+        self.messageList.append(message)
         self.loadCurrentRuleset()
 
         FCMClient.sendReceivedMessage(urn: urn, token: fcmToken, message: text, completion: { error in
             if error != nil {}
         })
+        
+        if(useLocalCache) {
+            FCMCache.addMessage(message)
+        }
 
         didUpdateMessages()
     }
@@ -108,10 +124,15 @@ class ChatPresenter {
                                                selector: #selector(newMessageReceived),
                                                name: NSNotification.Name(rawValue: "newMessageReceived"),
                                                object: nil)
+        if(useLocalCache) {
+            loadDataFromCache()
+            return
+        }
     }
 
     func onReload() {
         nextPageToken = nil
+        
         loadData(replace: true)
         loadCurrentRuleset()
     }
@@ -128,10 +149,10 @@ class ChatPresenter {
         message.text = text
         message.id = Int(object?["message_id"] as? String ?? "")
 
-        if let metadata = object?["metadata"] as? String, let json = convertStringToDictionary(json: metadata) {
-            if let quick_replies = json["quick_replies"] as? [String] {
-                message.quickReplies = quick_replies.map { FCMChannelQuickReply($0) }
-            }
+        if let quick_replies = object?["quick_replies"] as? String,
+            let json = try? JSONSerialization.jsonObject(with: Data("{\"quick_replies\": \(quick_replies)}".utf8), options: []) as? [String: Any],
+            let quickReplies = json["quick_replies"] as? [String] {
+            message.quickReplies = quickReplies.map { FCMChannelQuickReply($0) }
         }
 
         //TODO: temporary workaround for duplicated push notifications. Remove as soon as Push fixes this.
@@ -139,6 +160,14 @@ class ChatPresenter {
 
         messageList.append(message)
         didUpdateMessages()
+        
+        if useLocalCache {
+            FCMCache.addMessage(message)
+            FCMCache.addLastMessage(message)
+            loadCurrentRuleset()
+            return
+        }
+        
         FCMChannelMessage.addLastMessage(message: message)
         loadCurrentRuleset()
     }
@@ -170,6 +199,12 @@ class ChatPresenter {
             }
         }
     }
+    
+    private func loadDataFromCache() {
+        messageList = FCMCache.getMessages()
+        loadCurrentRuleset()
+        self.didUpdateMessages()
+    }
 
     private func loadData(replace: Bool = false) {
         guard let contact = self.contact else { return }
@@ -199,7 +234,9 @@ class ChatPresenter {
 
     private func loadCurrentRuleset() {
 
-        if let message = FCMChannelMessage.lastMessage(), message.id == messageList.last?.id {
+        if let message = useLocalCache ?
+                FCMCache.getLastMessage() : FCMChannelMessage.lastMessage(),
+            message.id == messageList.last?.id {
             DispatchQueue.main.async { [weak self] in
                 if let quickReplies = message.quickReplies {
                     self?.view?.addQuickRepliesOptions(quickReplies)
@@ -247,11 +284,13 @@ class ChatPresenter {
             let msgColor = fromUser ? incomingLabelMsgColor : outgoingLabelMsgColor
             let bubbleColor = fromUser ? incomingBubleMsgColor : outgoingBubleMsgColor
             let username: String? = fromUser ? nil : botName
+            let image: UIImage? = fromUser ? nil : botImage
 
             return ChatCellViewModel(msgColor: msgColor,
                                     bubbleColor: bubbleColor,
                                     userName: username,
                                     text: message.text,
+                                    image: image,
                                     fromUser: fromUser)
         }
     }

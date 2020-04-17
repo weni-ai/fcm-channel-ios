@@ -38,20 +38,23 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
     public init( contact: FCMChannelContact? = nil,
                  urn: String? = nil,
                  fcmToken: String? = nil,
+                 botImage: UIImage? = nil,
                  incomingBubleMsgColor: UIColor = UIColor(with: "#2F97F8"),
                  incomingLabelMsgColor: UIColor = UIColor.black,
                  botName: String,
                  outgoingBubleMsgColor: UIColor = UIColor.groupTableViewBackground,
                  outgoingLabelMsgColor: UIColor = UIColor.gray,
-                 choiceAnswerButtonColor: UIColor = UIColor.white,
+                 choiceAnswerButtonColor: UIColor = UIColor.blue,
+                 choiceAnswerLabelColor: UIColor = UIColor.white,
                  choiceAnswerBorderColor: CGColor = UIColor.clear.cgColor,
                  buttonHeight: CGFloat = CGFloat(20),
                  nibName: String = "FCMChannelChatViewController",
                  bundle: Bundle = Bundle(for: FCMChannelChatViewController.self),
-                 loadMessagesOnInit: Bool = true ) {
+                 loadMessagesOnInit: Bool = true,
+                 useLocalCache: Bool = false) {
 
         defaultFieldBottonHeight = buttonHeight
-        buttonTitleColor = outgoingLabelMsgColor
+        self.buttonTitleColor = choiceAnswerLabelColor
         self.choiceAnswerBorderColor = choiceAnswerBorderColor
         self.choiceAnswerButtonColor = choiceAnswerButtonColor
         super.init(nibName: nibName, bundle: bundle)
@@ -59,21 +62,25 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
         if let contact = contact {
             presenter = ChatPresenter(view: self,
                                     contact: contact,
+                                    botImage: botImage,
                                     incomingBubleMsgColor: incomingBubleMsgColor,
                                     incomingLabelMsgColor: incomingLabelMsgColor,
                                     botName: botName,
                                     outgoingBubleMsgColor: outgoingBubleMsgColor,
                                     outgoingLabelMsgColor: outgoingLabelMsgColor,
-                                    loadMessagesOnInit: loadMessagesOnInit)
+                                    loadMessagesOnInit: loadMessagesOnInit,
+                                    useLocalCache: useLocalCache)
         } else {
             presenter = ChatPresenter(view: self,
                                     fcmToken: fcmToken,
                                     urn: urn,
+                                    botImage: botImage,
                                     incomingBubleMsgColor: incomingBubleMsgColor,
                                     incomingLabelMsgColor: incomingLabelMsgColor,
                                     botName: botName,
                                     outgoingBubleMsgColor: outgoingBubleMsgColor,
-                                    outgoingLabelMsgColor: outgoingLabelMsgColor)
+                                    outgoingLabelMsgColor: outgoingLabelMsgColor,
+                                    useLocalCache: useLocalCache)
         }
     }
     
@@ -203,7 +210,6 @@ open class FCMChannelChatViewController: UIViewController, UITableViewDataSource
                 let indexPath = IndexPath(row: numberOfRows-1, section: (numberOfSections-1))
                 self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: animated)
             }
-            
         })
     }
     
@@ -330,7 +336,7 @@ extension FCMChannelChatViewController: ChatViewContract {
             self.insertRowInIndex(indexPath)
         }
 
-        if let scroll = scroll {
+        if scroll != nil {
             tableViewScrollToBottom(false)
         }
     }

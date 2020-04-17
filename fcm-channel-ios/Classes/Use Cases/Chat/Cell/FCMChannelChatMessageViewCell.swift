@@ -17,6 +17,9 @@ open class FCMChannelChatMessageViewCell: UITableViewCell, MDHTMLLabelDelegate {
     @IBOutlet weak var lbUserName: UILabel?
     @IBOutlet weak var lbSentTime: UILabel!
     @IBOutlet weak public var contentMediaView: UIView!
+    @IBOutlet weak var imgUserWidth: NSLayoutConstraint?
+    
+    private let imageSize: CGFloat = 44
     
 //    var msgColor: UIColor!
 //    var bubbleColor: UIColor!
@@ -45,6 +48,16 @@ open class FCMChannelChatMessageViewCell: UITableViewCell, MDHTMLLabelDelegate {
 
         baloonView.backgroundColor = model.bubbleColor
         lbMessage.textColor = model.msgColor
+        
+        if let image = model.image {
+            imgUser?.layer.cornerRadius = (imgUser?.frame.width ?? 0)/2
+            imgUser?.image = image
+            imgUserWidth?.constant = imageSize
+            imgUser?.isHidden = false
+        } else {
+            imgUserWidth?.constant = 0
+            imgUser?.isHidden = true
+        }
     }
     
     //MARK: MDHTMLLabelDelegate
